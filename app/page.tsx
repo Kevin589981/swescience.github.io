@@ -1,3 +1,4 @@
+import { benchmarkData } from "@/lib/benchmark";
 import { BenchmarkExplorer } from "./BenchmarkExplorer";
 import { AnimatedStat, ThemeToggle } from "./SiteEnhancements";
 
@@ -28,14 +29,14 @@ export default function Home() {
             Measuring whether coding agents can repair repository-level scientific software while preserving its scientific contracts.
           </p>
           <dl className="benchmark-stats" aria-label="Benchmark statistics">
-            <div><dt>Tasks</dt><dd><AnimatedStat value={119} /></dd></div>
-            <div><dt>Repositories</dt><dd><AnimatedStat value={98} /></dd></div>
-            <div><dt>Domains</dt><dd><AnimatedStat value={33} /></dd></div>
+            <div><dt>Tasks</dt><dd><AnimatedStat value={benchmarkData.summary.tasks} /></dd></div>
+            <div><dt>Repositories</dt><dd><AnimatedStat value={benchmarkData.summary.repositories} /></dd></div>
+            <div><dt>Domains</dt><dd><AnimatedStat value={benchmarkData.summary.domains} /></dd></div>
           </dl>
         </div>
       </section>
 
-      <BenchmarkExplorer />
+      <BenchmarkExplorer data={benchmarkData} />
 
       <footer>
         <span>SWE-bench Science</span>

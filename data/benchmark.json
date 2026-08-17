@@ -1,0 +1,83 @@
+{
+  "version": 1,
+  "updatedAt": "2026-08-16",
+  "summary": {
+    "tasks": 119,
+    "repositories": 98,
+    "domains": 33
+  },
+  "models": [
+    {
+      "id": "opus",
+      "family": "Claude-Opus-5",
+      "reasoningDepth": "max",
+      "harness": "Claude Code",
+      "scores": { "public": 96.64, "private": 75.11, "fail2Pass": 68.6, "pass2Pass": 97.37, "overall": 47.9, "issue": 38.46, "expert": 65.31, "engineering": 27.78 },
+      "tokens": { "input": 7.048, "output": 0.11 }
+    },
+    {
+      "id": "deepseek-pro",
+      "family": "DeepSeek-V4-Pro",
+      "reasoningDepth": "max",
+      "harness": "Claude Code",
+      "scores": { "public": 100, "private": 73.16, "fail2Pass": 65.77, "pass2Pass": 96.58, "overall": 42.02, "issue": 26.92, "expert": 57.14, "engineering": 44.44 },
+      "tokens": { "input": 11.43, "output": 0.092 }
+    },
+    {
+      "id": "kimi",
+      "family": "Kimi-K3",
+      "reasoningDepth": "max",
+      "harness": "Kimi Code",
+      "scores": { "public": 98.32, "private": 66.34, "fail2Pass": 57.55, "pass2Pass": 94.94, "overall": 35.29, "issue": 25, "expert": 44.9, "engineering": 38.89 },
+      "tokens": { "input": 4.926, "output": 0.06 }
+    },
+    {
+      "id": "glm",
+      "family": "GLM-5.2",
+      "reasoningDepth": "max",
+      "harness": "Codex",
+      "scores": { "public": 94.12, "private": 63.61, "fail2Pass": 53.81, "pass2Pass": 97.53, "overall": 31.93, "issue": 17.31, "expert": 46.94, "engineering": 33.33 },
+      "tokens": { "input": 3.345, "output": 0.094 }
+    },
+    {
+      "id": "gpt",
+      "family": "GPT-5.6-sol",
+      "reasoningDepth": "max",
+      "harness": "Codex",
+      "scores": { "public": 99.16, "private": 78.82, "fail2Pass": 72.3, "pass2Pass": 97.66, "overall": 46.22, "issue": 36.54, "expert": 59.18, "engineering": 38.89 },
+      "tokens": { "input": 4.199, "output": 0.025 }
+    },
+    {
+      "id": "nex",
+      "family": "Nex N2",
+      "reasoningDepth": "default",
+      "harness": "Codex",
+      "scores": { "public": 93.28, "private": 61.89, "fail2Pass": 51.09, "pass2Pass": 94.92, "overall": 24.37, "issue": 11.54, "expert": 36.73, "engineering": 27.78 },
+      "tokens": { "input": 8.033, "output": 0.136 }
+    },
+    {
+      "id": "deepseek-max",
+      "family": "DeepSeek-V4-flash",
+      "reasoningDepth": "max",
+      "harness": "Claude Code",
+      "scores": { "public": 98.32, "private": 61.41, "fail2Pass": 52.34, "pass2Pass": 95.74, "overall": 23.53, "issue": 19.23, "expert": 26.53, "engineering": 27.78 },
+      "tokens": { "input": 21.99, "output": 0.156 }
+    },
+    {
+      "id": "deepseek-high",
+      "family": "DeepSeek-V4-flash",
+      "reasoningDepth": "high",
+      "harness": "Claude Code",
+      "scores": { "public": 100, "private": 58.77, "fail2Pass": 47.67, "pass2Pass": 95.02, "overall": 19.33, "issue": 11.54, "expert": 28.57, "engineering": 16.67 },
+      "tokens": { "input": 7.238, "output": 0.164 }
+    },
+    {
+      "id": "qwen",
+      "family": "Qwen3.5-397B",
+      "reasoningDepth": "default",
+      "harness": "Codex",
+      "scores": { "public": 96.64, "private": 51.79, "fail2Pass": 38.33, "pass2Pass": 95.16, "overall": 14.29, "issue": 5.77, "expert": 24.49, "engineering": 11.11 },
+      "tokens": { "input": 6.376, "output": 0.031 }
+    }
+  ]
+}

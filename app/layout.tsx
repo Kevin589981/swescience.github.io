@@ -1,45 +1,34 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import { headers } from "next/headers";
+import { benchmarkData } from "@/lib/benchmark";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 const title = "SWE-bench Science — Leaderboard";
-const description = "A repository-level benchmark for scientific software engineering across 119 tasks, 98 repositories, and 33 scientific domains.";
+const description = `A repository-level benchmark for scientific software engineering across ${benchmarkData.summary.tasks} tasks, ${benchmarkData.summary.repositories} repositories, and ${benchmarkData.summary.domains} scientific domains.`;
 const themeScript = `(function(){try{var stored=localStorage.getItem("swe-science-theme");var theme=stored==="light"||stored==="dark"?stored:(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.dataset.theme=theme}catch(error){document.documentElement.dataset.theme="light"}})();`;
+const [repositoryOwner = "OpenMOSS", repositoryName = "SWE-bench-Science"] = (process.env.GITHUB_REPOSITORY ?? "OpenMOSS/SWE-bench-Science").split("/");
+const isGitHubPagesBuild = process.env.GITHUB_ACTIONS === "true";
+const isAccountSite = repositoryName.endsWith(".github.io");
+const pagesPath = isGitHubPagesBuild && !isAccountSite ? `/${repositoryName}` : "";
+const siteUrl = new URL(process.env.NEXT_PUBLIC_SITE_URL ?? (isGitHubPagesBuild ? `https://${repositoryOwner.toLowerCase()}.github.io${pagesPath}/` : "http://localhost:3000/"));
+const imageUrl = new URL("og.png", siteUrl).toString();
 
-export async function generateMetadata(): Promise<Metadata> {
-  const requestHeaders = await headers();
-  const host = requestHeaders.get("x-forwarded-host") ?? requestHeaders.get("host") ?? "localhost:3000";
-  const protocol = requestHeaders.get("x-forwarded-proto") ?? (host.startsWith("localhost") ? "http" : "https");
-  const imageUrl = `${protocol}://${host}/og.png`;
-
-  return {
+export const metadata: Metadata = {
+  metadataBase: siteUrl,
+  title,
+  description,
+  openGraph: {
     title,
     description,
-    openGraph: {
-      title,
-      description,
-      type: "website",
-      images: [{ url: imageUrl, width: 1736, height: 909, alt: "SWE-bench Science leaderboard" }],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      images: [imageUrl],
-    },
-  };
-}
+    type: "website",
+    images: [{ url: imageUrl, width: 1736, height: 909, alt: "SWE-bench Science leaderboard" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+    images: [imageUrl],
+  },
+};
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
@@ -47,7 +36,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>{children}</body>
+      <body>{children}</body>
     </html>
   );
 }

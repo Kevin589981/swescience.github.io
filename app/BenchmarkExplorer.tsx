@@ -1,5 +1,7 @@
 "use client";
 
+import { formatUpdatedAt, getModelDisplayName } from "@/lib/benchmark";
+import type { BenchmarkData } from "@/lib/benchmark";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   CartesianGrid,
@@ -30,26 +32,55 @@ type ModelResult = {
   engineering: number;
   input: number;
   output: number;
+  family: string;
+  depth: string;
 };
 
-const MODELS: ModelResult[] = [
-  { id: "opus", model: "Claude-Opus-5 (max)", harness: "Claude Code", color: "#ec5b3f", shape: "circle", publicScore: 96.64, privateScore: 75.11, fail2Pass: 68.60, pass2Pass: 97.37, overall: 47.90, issue: 38.46, expert: 65.31, engineering: 27.78, input: 7.048, output: 0.110 },
-  { id: "deepseek-pro", model: "DeepSeek-V4-Pro (max)", harness: "Claude Code", color: "#f0a202", shape: "circle", publicScore: 100.00, privateScore: 73.16, fail2Pass: 65.77, pass2Pass: 96.58, overall: 42.02, issue: 26.92, expert: 57.14, engineering: 44.44, input: 11.430, output: 0.092 },
-  { id: "kimi", model: "Kimi-K3 (max)", harness: "Kimi Code", color: "#7c3aed", shape: "circle", publicScore: 98.32, privateScore: 66.34, fail2Pass: 57.55, pass2Pass: 94.94, overall: 35.29, issue: 25.00, expert: 44.90, engineering: 38.89, input: 4.926, output: 0.060 },
-  { id: "glm", model: "GLM-5.2 (max)", harness: "Codex", color: "#d83c91", shape: "circle", publicScore: 94.12, privateScore: 63.61, fail2Pass: 53.81, pass2Pass: 97.53, overall: 31.93, issue: 17.31, expert: 46.94, engineering: 33.33, input: 3.345, output: 0.094 },
-  { id: "gpt", model: "GPT-5.6-sol (max)", harness: "Codex", color: "#1967d2", shape: "circle", publicScore: 99.16, privateScore: 78.82, fail2Pass: 72.30, pass2Pass: 97.66, overall: 46.22, issue: 36.54, expert: 59.18, engineering: 38.89, input: 4.199, output: 0.025 },
-  { id: "nex", model: "Nex N2", harness: "Codex", color: "#0ea5b7", shape: "circle", publicScore: 93.28, privateScore: 61.89, fail2Pass: 51.09, pass2Pass: 94.92, overall: 24.37, issue: 11.54, expert: 36.73, engineering: 27.78, input: 8.033, output: 0.136 },
-  { id: "deepseek-max", model: "DeepSeek-V4-flash (max)", harness: "Claude Code", color: "#159b76", shape: "circle", publicScore: 98.32, privateScore: 61.41, fail2Pass: 52.34, pass2Pass: 95.74, overall: 23.53, issue: 19.23, expert: 26.53, engineering: 27.78, input: 21.990, output: 0.156 },
-  { id: "deepseek-high", model: "DeepSeek-V4-flash (high)", harness: "Claude Code", color: "#159b76", shape: "circle", publicScore: 100.00, privateScore: 58.77, fail2Pass: 47.67, pass2Pass: 95.02, overall: 19.33, issue: 11.54, expert: 28.57, engineering: 16.67, input: 7.238, output: 0.164 },
-  { id: "qwen", model: "Qwen3.5-397B", harness: "Codex", color: "#d97706", shape: "circle", publicScore: 96.64, privateScore: 51.79, fail2Pass: 38.33, pass2Pass: 95.16, overall: 14.29, issue: 5.77, expert: 24.49, engineering: 11.11, input: 6.376, output: 0.031 },
-];
+const FAMILY_COLORS: Record<string, string> = {
+  "Claude-Opus-5": "#ec5b3f",
+  "DeepSeek-V4-Pro": "#f0a202",
+  "DeepSeek-V4-flash": "#159b76",
+  "GLM-5.2": "#d83c91",
+  "GPT-5.6-sol": "#1967d2",
+  "Kimi-K3": "#7c3aed",
+  "Nex N2": "#0ea5b7",
+  "Qwen3.5-397B": "#d97706",
+};
+const FALLBACK_COLORS = ["#1967d2", "#159b76", "#d83c91", "#d97706", "#7c3aed"];
+const DEPTH_ORDER = { default: 0, high: 1, max: 2, xhigh: 3 } as const;
 
-const DEPTH_CONNECTIONS = [
-  { from: "deepseek-high", to: "deepseek-max" },
-] as const;
+function toModelResults(data: BenchmarkData): ModelResult[] {
+  return data.models.map((model, index) => ({
+    id: model.id,
+    model: getModelDisplayName(model),
+    family: model.family,
+    depth: model.reasoningDepth,
+    harness: model.harness,
+    color: FAMILY_COLORS[model.family] ?? FALLBACK_COLORS[index % FALLBACK_COLORS.length],
+    shape: "circle",
+    publicScore: model.scores.public,
+    privateScore: model.scores.private,
+    fail2Pass: model.scores.fail2Pass,
+    pass2Pass: model.scores.pass2Pass,
+    overall: model.scores.overall,
+    issue: model.scores.issue,
+    expert: model.scores.expert,
+    engineering: model.scores.engineering,
+    input: model.tokens.input,
+    output: model.tokens.output,
+  }));
+}
 
-const getModelFamily = (modelName: string) => modelName.replace(/\s*\((?:xhigh|high|max)\)$/, "");
-const getReasoningDepth = (modelName: string) => modelName.match(/\((xhigh|high|max)\)$/)?.[1] ?? "default";
+function getDepthConnections(models: ModelResult[]) {
+  const families = new Map<string, ModelResult[]>();
+  models.forEach((model) => families.set(model.family, [...(families.get(model.family) ?? []), model]));
+
+  return [...families.values()].flatMap((family) => {
+    if (family.length < 2) return [];
+    const ordered = [...family].sort((a, b) => DEPTH_ORDER[a.depth as keyof typeof DEPTH_ORDER] - DEPTH_ORDER[b.depth as keyof typeof DEPTH_ORDER]);
+    return ordered.slice(1).map((model, index) => ({ from: ordered[index], to: model }));
+  });
+}
 
 const SCORE_COLUMNS = [
   ["publicScore", "Public"], ["privateScore", "Private"], ["fail2Pass", "Fail2Pass"],
@@ -60,7 +91,6 @@ const SCORE_COLUMNS = [
 type ScoreKey = typeof SCORE_COLUMNS[number][0];
 type SortKey = ScoreKey | "model" | "harness";
 type TokenMetric = "input" | "output";
-type ChartStyle = "paper" | "console";
 
 const SORT_OPTIONS: ReadonlyArray<readonly [SortKey, string]> = [
   ["model", "LLM"], ["harness", "Harness"],
@@ -72,8 +102,6 @@ const formatPct = (value: number) => `${value.toFixed(2)}%`;
 type ChartDatum = ModelResult & {
   x: number;
   y: number;
-  family: string;
-  depth: string;
 };
 
 type LabelPlacement = {
@@ -182,12 +210,12 @@ function ChartTooltip({ active, payload }: TooltipContentProps) {
   );
 }
 
-export function BenchmarkExplorer() {
+export function BenchmarkExplorer({ data }: { data: BenchmarkData }) {
+  const models = useMemo(() => toModelResults(data), [data]);
   const [tokenMetric, setTokenMetric] = useState<TokenMetric>("input");
-  const [activeId, setActiveId] = useState<string>(MODELS[0].id);
+  const [activeId, setActiveId] = useState<string>(() => data.models[0].id);
   const [sortKey, setSortKey] = useState<SortKey>("overall");
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
-  const [chartStyle, setChartStyle] = useState<ChartStyle>("paper");
   const [chartWidth, setChartWidth] = useState(960);
   const chartRef = useRef<HTMLElement>(null);
 
@@ -201,30 +229,25 @@ export function BenchmarkExplorer() {
     return () => observer.disconnect();
   }, []);
 
-  const sorted = useMemo(() => [...MODELS].sort((a, b) => {
+  const sorted = useMemo(() => [...models].sort((a, b) => {
     const leftValue = a[sortKey];
     const rightValue = b[sortKey];
     const difference = typeof leftValue === "string"
       ? leftValue.localeCompare(String(rightValue))
       : leftValue - Number(rightValue);
     return sortDirection === "desc" ? -difference : difference;
-  }), [sortDirection, sortKey]);
+  }), [models, sortDirection, sortKey]);
 
-  const activeModel = MODELS.find((model) => model.id === activeId) ?? MODELS[0];
-  const isConsoleChart = chartStyle === "console";
+  const activeModel = models.find((model) => model.id === activeId) ?? models[0];
   const chartColors = { grid: "var(--chart-grid)", axis: "var(--chart-axis)", text: "var(--chart-text)", pointSurface: "var(--surface)", label: "var(--ink)" };
   const metricMax = tokenMetric === "input" ? 24 : 0.18;
   const ticks = tokenMetric === "input" ? [0, 5, 10, 15, 20] : [0, 0.03, 0.06, 0.09, 0.12, 0.15, 0.18];
-  const chartData = useMemo<ChartDatum[]>(() => MODELS.map((model) => {
-    const family = getModelFamily(model.model);
-    return {
-      ...model,
-      x: model[tokenMetric],
-      y: model.overall,
-      family,
-      depth: getReasoningDepth(model.model),
-    };
-  }), [tokenMetric]);
+  const chartData = useMemo<ChartDatum[]>(() => models.map((model) => ({
+    ...model,
+    x: model[tokenMetric],
+    y: model.overall,
+  })), [models, tokenMetric]);
+  const depthConnections = useMemo(() => getDepthConnections(models), [models]);
   const labelLayout = useMemo(() => createLabelLayout(chartData, metricMax, chartWidth), [chartData, chartWidth, metricMax]);
 
   function renderPoint(props: ScatterShapeProps) {
@@ -267,7 +290,7 @@ export function BenchmarkExplorer() {
             <span className="section-number">01</span>
             <h2 id="leaderboard-title">Leaderboard</h2>
           </div>
-          <p><time className="updated-at" dateTime="2026-08-16">Updated Aug 16, 2026</time>Pass@1 versus mean token consumption per task. Select a point or model to inspect the configuration.</p>
+          <p><time className="updated-at" dateTime={data.updatedAt}>Updated {formatUpdatedAt(data.updatedAt)}</time>Pass@1 versus mean token consumption per task. Select a point or model to inspect the configuration.</p>
         </div>
 
         <div className="chart-toolbar">
@@ -275,10 +298,6 @@ export function BenchmarkExplorer() {
             <div className="segmented-control" aria-label="Token metric">
               <button className={tokenMetric === "input" ? "active" : ""} onClick={() => setTokenMetric("input")}>Input tokens</button>
               <button className={tokenMetric === "output" ? "active" : ""} onClick={() => setTokenMetric("output")}>Output tokens</button>
-            </div>
-            <div className="segmented-control chart-style-toggle" aria-label="Chart appearance">
-              <button className={chartStyle === "paper" ? "active" : ""} onClick={() => setChartStyle("paper")} aria-pressed={chartStyle === "paper"}>Paper</button>
-              <button className={chartStyle === "console" ? "active" : ""} onClick={() => setChartStyle("console")} aria-pressed={chartStyle === "console"}>Console</button>
             </div>
           </div>
           <div className="chart-summary" aria-live="polite">
@@ -289,11 +308,11 @@ export function BenchmarkExplorer() {
           </div>
         </div>
 
-        <figure ref={chartRef} className={`interactive-chart chart-${chartStyle}`} onMouseDown={(event) => event.preventDefault()}>
+        <figure ref={chartRef} className="interactive-chart chart-paper" onMouseDown={(event) => event.preventDefault()}>
           <figcaption className="sr-only">Interactive scatter plot of model Pass@1 against mean token use.</figcaption>
           <ResponsiveContainer width="100%" height="100%">
             <ScatterChart accessibilityLayer={false} margin={{ top: 22, right: 14, bottom: 8, left: 0 }}>
-              <CartesianGrid vertical={isConsoleChart} stroke={chartColors.grid} strokeDasharray={isConsoleChart ? "3 5" : undefined} />
+              <CartesianGrid vertical={false} stroke={chartColors.grid} />
               <XAxis
                 type="number"
                 dataKey="x"
@@ -335,17 +354,15 @@ export function BenchmarkExplorer() {
                 ifOverflow="hidden"
                 zIndex={100}
               />
-              {DEPTH_CONNECTIONS.map(({ from, to }) => {
-                const first = MODELS.find((model) => model.id === from)!;
-                const second = MODELS.find((model) => model.id === to)!;
+              {depthConnections.map(({ from, to }) => {
                 return (
                   <ReferenceLine
-                    key={`${from}-${to}`}
+                    key={`${from.id}-${to.id}`}
                     segment={[
-                      { x: first[tokenMetric], y: first.overall },
-                      { x: second[tokenMetric], y: second.overall },
+                      { x: from[tokenMetric], y: from.overall },
+                      { x: to[tokenMetric], y: to.overall },
                     ]}
-                    stroke={first.color}
+                    stroke={from.color}
                     strokeWidth={2}
                     strokeOpacity={0.7}
                     ifOverflow="hidden"
@@ -367,14 +384,14 @@ export function BenchmarkExplorer() {
         </figure>
 
         <div className="model-legend" aria-label="Model configurations">
-          {MODELS.map((model) => (
+          {models.map((model) => (
             <button key={model.id} className={activeId === model.id ? "active" : ""} onClick={() => setActiveId(model.id)}>
               <span className={`legend-shape shape-${model.shape}${model.hollow ? " hollow" : ""}`} style={{ "--point-color": model.color } as React.CSSProperties} />
               {model.model}
             </button>
           ))}
         </div>
-        <p className="chart-note">All configurations are evaluated on the same 119 tasks. Token counts are per-task means; same-color lines connect different reasoning depths of the same model.</p>
+        <p className="chart-note">All configurations are evaluated on the same {data.summary.tasks} tasks. Token counts are per-task means; same-color lines connect different reasoning depths of the same model.</p>
       </section>
 
       <section className="results-section" aria-labelledby="results-title">
@@ -387,7 +404,7 @@ export function BenchmarkExplorer() {
         </div>
 
         <div className="table-meta">
-          <span>9 configurations</span>
+          <span>{models.length} configurations</span>
           <div className="table-sort-controls" aria-label="Table sorting options">
             <label>
               <span>Sort by</span>
