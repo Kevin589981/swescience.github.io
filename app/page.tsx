@@ -1,4 +1,5 @@
 import { BenchmarkExplorer } from "./BenchmarkExplorer";
+import { AnimatedStat, ThemeToggle } from "./SiteEnhancements";
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
           <a href="https://github.com/OpenMOSS/SWE-bench-Science" target="_blank" rel="noreferrer">
             GitHub <span aria-hidden="true">↗</span>
           </a>
+          <ThemeToggle />
         </nav>
       </header>
 
@@ -26,9 +28,9 @@ export default function Home() {
             Measuring whether coding agents can repair repository-level scientific software while preserving its scientific contracts.
           </p>
           <dl className="benchmark-stats" aria-label="Benchmark statistics">
-            <div><dt>Tasks</dt><dd>119</dd></div>
-            <div><dt>Repositories</dt><dd>98</dd></div>
-            <div><dt>Domains</dt><dd>33</dd></div>
+            <div><dt>Tasks</dt><dd><AnimatedStat value={119} /></dd></div>
+            <div><dt>Repositories</dt><dd><AnimatedStat value={98} /></dd></div>
+            <div><dt>Domains</dt><dd><AnimatedStat value={33} /></dd></div>
           </dl>
         </div>
       </section>
@@ -37,7 +39,6 @@ export default function Home() {
 
       <footer>
         <span>SWE-bench Science</span>
-        <span>OpenMOSS · 2026</span>
       </footer>
     </main>
   );

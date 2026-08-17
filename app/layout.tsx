@@ -15,6 +15,7 @@ const geistMono = Geist_Mono({
 
 const title = "SWE-bench Science — Leaderboard";
 const description = "A repository-level benchmark for scientific software engineering across 119 tasks, 98 repositories, and 33 scientific domains.";
+const themeScript = `(function(){try{var stored=localStorage.getItem("swe-science-theme");var theme=stored==="light"||stored==="dark"?stored:(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.dataset.theme=theme}catch(error){document.documentElement.dataset.theme="light"}})();`;
 
 export async function generateMetadata(): Promise<Metadata> {
   const requestHeaders = await headers();
@@ -42,7 +43,10 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>{children}</body>
     </html>
   );
