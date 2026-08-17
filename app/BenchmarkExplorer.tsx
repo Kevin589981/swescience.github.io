@@ -124,20 +124,28 @@ function overlapArea(first: LabelBox, second: LabelBox) {
 }
 
 function createLabelLayout(data: ChartDatum[], metricMax: number, chartWidth: number) {
-  const compact = chartWidth <= 520;
+  const compact = chartWidth <= 640;
   const chartHeight = chartWidth <= 800 ? 400 : 470;
   const plotLeft = 62;
   const plotRight = Math.max(plotLeft + 180, chartWidth - 22);
   const plotTop = 22;
   const plotBottom = chartHeight - 72;
   const fontFactor = compact ? 5.3 : 6.35;
-  const labelHeight = compact ? 13 : 15;
+  const depthFontFactor = compact ? 4.3 : 5;
+  const labelAscent = compact ? 11 : 13;
+  const labelDescent = compact ? 12 : 14;
+  const safeBounds = {
+    left: 8,
+    right: chartWidth - 8,
+    top: 6,
+    bottom: plotBottom + 22,
+  };
 
   const points = data.map((datum) => ({
     datum,
     x: plotLeft + (datum.x / metricMax) * (plotRight - plotLeft),
     y: plotTop + (1 - datum.y / 50) * (plotBottom - plotTop),
-    width: datum.family.length * fontFactor + datum.depth.length * (compact ? 4.3 : 5) + 12,
+    width: Math.max(datum.family.length * fontFactor, datum.depth.length * depthFontFactor),
   }));
 
   const pointBoxes = points.map(({ datum, x, y }) => ({
@@ -151,21 +159,25 @@ function createLabelLayout(data: ChartDatum[], metricMax: number, chartWidth: nu
   const layout: Record<string, LabelPlacement> = {};
 
   [...points].sort((a, b) => b.width - a.width).forEach(({ datum, x, y, width }) => {
-    const preferLeft = datum.x / metricMax > 0.64;
-    const preferBelow = datum.y / 50 > 0.82;
+    const wouldOverflowLeft = x - width - 10 < safeBounds.left;
+    const wouldOverflowRight = x + width + 10 > safeBounds.right;
+    const preferLeft = wouldOverflowRight || (!wouldOverflowLeft && datum.x / metricMax > 0.64);
+    const wouldOverflowTop = y - 24 - labelAscent < safeBounds.top;
+    const wouldOverflowBottom = y + 18 + labelDescent > safeBounds.bottom;
+    const preferBelow = wouldOverflowTop || (!wouldOverflowBottom && datum.y / 50 > 0.82);
     const horizontal = preferLeft
       ? [{ dx: -10, anchor: "end" as const }, { dx: 10, anchor: "start" as const }]
       : [{ dx: 10, anchor: "start" as const }, { dx: -10, anchor: "end" as const }];
-    const vertical = preferBelow ? [18, -11] : [-11, 18];
+    const vertical = preferBelow ? [18, -24] : [-24, 18];
     const candidates: LabelPlacement[] = [
       { ...horizontal[0], dy: vertical[0] },
       { ...horizontal[1], dy: vertical[0] },
       { ...horizontal[0], dy: vertical[1] },
       { ...horizontal[1], dy: vertical[1] },
-      { dx: 0, dy: preferBelow ? 29 : -22, anchor: "middle" },
-      { dx: 0, dy: preferBelow ? -22 : 29, anchor: "middle" },
-      { ...horizontal[0], dy: preferBelow ? 37 : -30 },
-      { ...horizontal[1], dy: preferBelow ? -30 : 37 },
+      { dx: 0, dy: preferBelow ? 30 : -36, anchor: "middle" },
+      { dx: 0, dy: preferBelow ? -36 : 30, anchor: "middle" },
+      { ...horizontal[0], dy: preferBelow ? 40 : -46 },
+      { ...horizontal[1], dy: preferBelow ? -46 : 40 },
     ];
 
     const evaluated = candidates.map((candidate, priority) => {
@@ -174,23 +186,48 @@ function createLabelLayout(data: ChartDatum[], metricMax: number, chartWidth: nu
       const box: LabelBox = {
         left,
         right: left + width,
-        top: y + candidate.dy - labelHeight,
-        bottom: y + candidate.dy + 2,
+        top: y + candidate.dy - labelAscent,
+        bottom: y + candidate.dy + labelDescent,
       };
       const labelCollision = placed.reduce((total, other) => total + overlapArea(box, other), 0);
       const pointCollision = pointBoxes.reduce((total, other) => {
         if (other.id === datum.id) return total;
         return total + overlapArea(box, other);
       }, 0);
-      const overflow = Math.max(0, 8 - box.left)
-        + Math.max(0, box.right - (chartWidth - 8))
-        + Math.max(0, 6 - box.top)
-        + Math.max(0, box.bottom - (plotBottom + 22));
-      const score = labelCollision * 120 + pointCollision * 45 + overflow * 1000 + priority;
-      return { candidate, box, score };
+      const inBounds = box.left >= safeBounds.left
+        && box.right <= safeBounds.right
+        && box.top >= safeBounds.top
+        && box.bottom <= safeBounds.bottom;
+      const score = labelCollision * 120 + pointCollision * 45 + priority;
+      return { candidate, box, inBounds, score };
     });
 
-    const best = evaluated.reduce((current, option) => option.score < current.score ? option : current);
+    const bounded = evaluated.filter((option) => option.inBounds);
+    const best = bounded.length
+      ? bounded.reduce((current, option) => option.score < current.score ? option : current)
+      : (() => {
+          const preferredDy = preferBelow ? 18 : -24;
+          const labelX = Math.min(
+            safeBounds.right - width / 2,
+            Math.max(safeBounds.left + width / 2, x),
+          );
+          const labelY = Math.min(
+            safeBounds.bottom - labelDescent,
+            Math.max(safeBounds.top + labelAscent, y + preferredDy),
+          );
+          const box: LabelBox = {
+            left: labelX - width / 2,
+            right: labelX + width / 2,
+            top: labelY - labelAscent,
+            bottom: labelY + labelDescent,
+          };
+          return {
+            candidate: { dx: labelX - x, dy: labelY - y, anchor: "middle" as const },
+            box,
+            inBounds: true,
+            score: Number.MAX_SAFE_INTEGER,
+          };
+        })();
     layout[datum.id] = best.candidate;
     placed.push(best.box);
   });
@@ -259,6 +296,7 @@ export function BenchmarkExplorer({ data }: { data: BenchmarkData }) {
     const placement = labelLayout[datum.id] ?? { dx: 9, dy: -11, anchor: "start" as const };
     const labelX = cx + placement.dx;
     const labelY = cy + placement.dy;
+    const depthLineOffset = chartWidth <= 640 ? 10 : 12;
 
     return (
       <g className={`chart-point${selected ? " selected" : ""}`} style={{ color: datum.color }}>
@@ -267,8 +305,8 @@ export function BenchmarkExplorer({ data }: { data: BenchmarkData }) {
         <circle className="chart-point-ring" cx={cx} cy={cy} r={selected ? 8 : 6} fill={chartColors.pointSurface} stroke={datum.color} strokeWidth={1.5} />
         <circle className="chart-point-core" cx={cx} cy={cy} r={selected ? 5.5 : 4} fill={datum.color} />
         <text className="chart-point-label" x={labelX} y={labelY} fill={chartColors.label} textAnchor={placement.anchor} aria-hidden="true">
-          {datum.family}
-          <tspan className="chart-point-depth" dx={4} fill={datum.color}>{datum.depth}</tspan>
+          <tspan x={labelX}>{datum.family}</tspan>
+          <tspan className="chart-point-depth" x={labelX} dy={depthLineOffset} fill={datum.color}>{datum.depth}</tspan>
         </text>
       </g>
     );
@@ -308,10 +346,11 @@ export function BenchmarkExplorer({ data }: { data: BenchmarkData }) {
           </div>
         </div>
 
-        <figure ref={chartRef} className="interactive-chart chart-paper" onMouseDown={(event) => event.preventDefault()}>
-          <figcaption className="sr-only">Interactive scatter plot of model Pass@1 against mean token use.</figcaption>
-          <ResponsiveContainer width="100%" height="100%">
-            <ScatterChart accessibilityLayer={false} margin={{ top: 22, right: 14, bottom: 8, left: 0 }}>
+        <div className="chart-scroll" role="region" aria-label="Scrollable benchmark chart" tabIndex={0}>
+          <figure ref={chartRef} className="interactive-chart chart-paper" onMouseDown={(event) => event.preventDefault()}>
+            <figcaption className="sr-only">Interactive scatter plot of model Pass@1 against mean token use.</figcaption>
+            <ResponsiveContainer width="100%" height="100%">
+              <ScatterChart accessibilityLayer={false} margin={{ top: 22, right: 14, bottom: 8, left: 0 }}>
               <CartesianGrid vertical={false} stroke={chartColors.grid} />
               <XAxis
                 type="number"
@@ -379,9 +418,10 @@ export function BenchmarkExplorer({ data }: { data: BenchmarkData }) {
                 onMouseEnter={(point) => setActiveId((point.payload as ChartDatum).id)}
                 onClick={(point) => setActiveId((point.payload as ChartDatum).id)}
               />
-            </ScatterChart>
-          </ResponsiveContainer>
-        </figure>
+              </ScatterChart>
+            </ResponsiveContainer>
+          </figure>
+        </div>
 
         <div className="model-legend" aria-label="Model configurations">
           {models.map((model) => (
@@ -400,7 +440,6 @@ export function BenchmarkExplorer({ data }: { data: BenchmarkData }) {
             <span className="section-number">02</span>
             <h2 id="results-title">Model results</h2>
           </div>
-          <p>Task-level means from Table 2. Select any column heading or use the sorting controls to reorder the table.</p>
         </div>
 
         <div className="table-meta">
