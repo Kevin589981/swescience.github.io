@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-16",
+  "updatedAt": "2026-08-21",
   "summary": {
     "tasks": 119,
     "repositories": 98,
@@ -78,6 +78,14 @@
       "harness": "Codex",
       "scores": { "public": 96.64, "private": 51.79, "fail2Pass": 38.33, "pass2Pass": 95.16, "overall": 14.29, "issue": 5.77, "expert": 24.49, "engineering": 11.11 },
       "tokens": { "input": 6.376, "output": 0.031 }
+    },
+    {
+      "id": "qwen-3-8-27b",
+      "family": "Qwen3.8-27B",
+      "reasoningDepth": "max",
+      "harness": "Codex",
+      "scores": { "public": 100, "private": 65.75, "fail2Pass": 56.46, "pass2Pass": 97.36, "overall": 29.41, "issue": 25.00, "expert": 38.78, "engineering": 16.67 },
+      "tokens": { "input": 0.108, "output": 0.180 }
     }
   ]
 }
