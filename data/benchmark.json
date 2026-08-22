@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-16",
+  "updatedAt": "2026-08-22",
   "summary": {
     "tasks": 119,
     "repositories": 98,
@@ -78,6 +78,14 @@
       "harness": "Codex",
       "scores": { "public": 96.64, "private": 51.79, "fail2Pass": 38.33, "pass2Pass": 95.16, "overall": 14.29, "issue": 5.77, "expert": 24.49, "engineering": 11.11 },
       "tokens": { "input": 6.376, "output": 0.031 }
+    },
+    {
+      "id": "agents-a1",
+      "family": "Agents-A1",
+      "reasoningDepth": "max",
+      "harness": "Claude Code",
+      "scores": { "public": 96.64, "private": 51.35, "fail2Pass": 37.90, "pass2Pass": 93.55, "overall": 15.13, "issue": 9.62, "expert": 24.49, "engineering": 5.56 },
+      "tokens": { "input": 0.085, "output": 0.112 }
     }
   ]
 }
