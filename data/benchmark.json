@@ -85,7 +85,7 @@
       "reasoningDepth": "max",
       "harness": "Claude Code",
       "scores": { "public": 96.64, "private": 50.39, "fail2Pass": 36.81, "pass2Pass": 92.88, "overall": 15.13, "issue": 5.77, "expert": 22.45, "engineering": 22.22 },
-      "tokens": { "input": 0.132, "output": 0.205 }
+      "tokens": { "input": 6.732, "output": 0.205 }
     }
   ]
 }
