@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-16",
+  "updatedAt": "2026-08-24",
   "summary": {
     "tasks": 119,
     "repositories": 98,
@@ -78,6 +78,14 @@
       "harness": "Codex",
       "scores": { "public": 96.64, "private": 51.79, "fail2Pass": 38.33, "pass2Pass": 95.16, "overall": 14.29, "issue": 5.77, "expert": 24.49, "engineering": 11.11 },
       "tokens": { "input": 6.376, "output": 0.031 }
+    },
+    {
+      "id": "intern-s2-preview-397b",
+      "family": "Intern-S2-Preview-397B",
+      "reasoningDepth": "max",
+      "harness": "Claude Code",
+      "scores": { "public": 97.48, "private": 55.96, "fail2Pass": 42.68, "pass2Pass": 96.67, "overall": 21.01, "issue": 9.62, "expert": 32.65, "engineering": 22.22 },
+      "tokens": { "input": 0.158, "output": 0.097 }
     }
   ]
 }

@@ -45,6 +45,7 @@ const FAMILY_COLORS: Record<string, string> = {
   "Kimi-K3": "#7c3aed",
   "Nex N2": "#0ea5b7",
   "Qwen3.5-397B": "#d97706",
+  "Intern-S2-Preview-397B": "#65a30d",
 };
 const FALLBACK_COLORS = ["#1967d2", "#159b76", "#d83c91", "#d97706", "#7c3aed"];
 const DEPTH_ORDER = { default: 0, high: 1, max: 2, xhigh: 3 } as const;
