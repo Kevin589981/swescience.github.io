@@ -94,6 +94,14 @@
       "harness": "Claude Code",
       "scores": { "public": 100, "private": 65.75, "fail2Pass": 56.46, "pass2Pass": 97.36, "overall": 29.41, "issue": 25.00, "expert": 38.78, "engineering": 16.67 },
       "tokens": { "input": 5.024, "output": 0.180 }
+    },
+    {
+      "id": "bigbang-v1",
+      "family": "BigBang-v1",
+      "reasoningDepth": "max",
+      "harness": "Claude Code",
+      "scores": { "public": 96.64, "private": 50.39, "fail2Pass": 36.81, "pass2Pass": 92.88, "overall": 15.13, "issue": 5.77, "expert": 22.45, "engineering": 22.22 },
+      "tokens": { "input": 6.732, "output": 0.205 }
     }
   ]
 }
