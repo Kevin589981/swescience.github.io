@@ -45,6 +45,7 @@ const FAMILY_COLORS: Record<string, string> = {
   "Kimi-K3": "#7c3aed",
   "Nex N2": "#0ea5b7",
   "Qwen3.5-397B": "#d97706",
+  "Agents-A1": "#0891b2",
   "Qwen3.8-27B": "#0f9f9a",
 };
 const FALLBACK_COLORS = ["#1967d2", "#159b76", "#d83c91", "#d97706", "#7c3aed"];
