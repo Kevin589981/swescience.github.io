@@ -46,6 +46,7 @@ const FAMILY_COLORS: Record<string, string> = {
   "Nex N2": "#0ea5b7",
   "Qwen3.5-397B": "#d97706",
   "Agents-A1": "#0891b2",
+  "Qwen3.8-27B": "#0f9f9a",
 };
 const FALLBACK_COLORS = ["#1967d2", "#159b76", "#d83c91", "#d97706", "#7c3aed"];
 const DEPTH_ORDER = { default: 0, high: 1, max: 2, xhigh: 3 } as const;

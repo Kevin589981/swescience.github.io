@@ -86,6 +86,14 @@
       "harness": "Claude Code",
       "scores": { "public": 96.64, "private": 51.35, "fail2Pass": 37.90, "pass2Pass": 93.55, "overall": 15.13, "issue": 9.62, "expert": 24.49, "engineering": 5.56 },
       "tokens": { "input": 2.514, "output": 0.112 }
+    },
+    {
+      "id": "qwen-3-8-27b",
+      "family": "Qwen3.8-27B",
+      "reasoningDepth": "max",
+      "harness": "Claude Code",
+      "scores": { "public": 100, "private": 65.75, "fail2Pass": 56.46, "pass2Pass": 97.36, "overall": 29.41, "issue": 25.00, "expert": 38.78, "engineering": 16.67 },
+      "tokens": { "input": 5.024, "output": 0.180 }
     }
   ]
 }
