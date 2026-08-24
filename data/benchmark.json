@@ -102,6 +102,14 @@
       "harness": "Claude Code",
       "scores": { "public": 96.64, "private": 50.39, "fail2Pass": 36.81, "pass2Pass": 92.88, "overall": 15.13, "issue": 5.77, "expert": 22.45, "engineering": 22.22 },
       "tokens": { "input": 6.732, "output": 0.205 }
+    },
+    {
+      "id": "intern-s2-preview-397b",
+      "family": "Intern-S2-Preview-397B",
+      "reasoningDepth": "max",
+      "harness": "Claude Code",
+      "scores": { "public": 97.48, "private": 55.96, "fail2Pass": 42.68, "pass2Pass": 96.67, "overall": 21.01, "issue": 9.62, "expert": 32.65, "engineering": 22.22 },
+      "tokens": { "input": 8.028, "output": 0.097 }
     }
   ]
 }
