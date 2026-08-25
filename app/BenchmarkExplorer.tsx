@@ -49,6 +49,9 @@ const FAMILY_COLORS: Record<string, string> = {
   "Qwen3.8-27B": "#0f9f9a",
   "BigBang-v1": "#c026d3",
   "Intern-S2-Preview-397B": "#65a30d",
+  "Qwen3.5-9B": "#f59e0b",
+  "Qwen3.6-35B-A3B": "#e11d48",
+  "Nex-N2-mini": "#06b6d4",
 };
 const FALLBACK_COLORS = ["#1967d2", "#159b76", "#d83c91", "#d97706", "#7c3aed"];
 const DEPTH_ORDER = { default: 0, high: 1, max: 2, xhigh: 3 } as const;
@@ -281,8 +284,8 @@ export function BenchmarkExplorer({ data }: { data: BenchmarkData }) {
 
   const activeModel = models.find((model) => model.id === activeId) ?? models[0];
   const chartColors = { grid: "var(--chart-grid)", axis: "var(--chart-axis)", text: "var(--chart-text)", pointSurface: "var(--surface)", label: "var(--ink)" };
-  const metricMax = tokenMetric === "input" ? 24 : 0.18;
-  const ticks = tokenMetric === "input" ? [0, 5, 10, 15, 20] : [0, 0.03, 0.06, 0.09, 0.12, 0.15, 0.18];
+  const metricMax = tokenMetric === "input" ? 24 : 0.24;
+  const ticks = tokenMetric === "input" ? [0, 5, 10, 15, 20] : [0, 0.04, 0.08, 0.12, 0.16, 0.20, 0.24];
   const chartData = useMemo<ChartDatum[]>(() => models.map((model) => ({
     ...model,
     x: model[tokenMetric],
