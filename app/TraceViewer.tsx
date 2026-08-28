@@ -104,8 +104,9 @@ type Experiment = { id: string; label: string; harness: string; path: string; ta
 
 const DATA_ROOT = "../../traces";
 
-function formatNumber(value: number | null | undefined) {
-  return value === null || value === undefined ? "-" : new Intl.NumberFormat("en-US").format(value);
+function formatNumber(value: number | null | undefined, options?: { zeroAsDash?: boolean }) {
+  if (value === null || value === undefined || (options?.zeroAsDash && value === 0)) return "-";
+  return new Intl.NumberFormat("en-US").format(value);
 }
 
 function formatCost(value: number | null | undefined) {
@@ -271,7 +272,7 @@ function TraceSummary({ trace }: { trace: TraceRecord }) {
         <div><dt>Output tokens</dt><dd>{formatNumber(usage.outputTokens)}</dd></div>
         <div><dt>Total tokens</dt><dd>{formatNumber(usage.totalTokens)}</dd></div>
         <div><dt>Cache read</dt><dd>{formatNumber(usage.cacheReadTokens)}</dd></div>
-        <div><dt>Cache creation</dt><dd>{formatNumber(usage.cacheCreationTokens)}</dd></div>
+        <div><dt>Cache creation</dt><dd>{formatNumber(usage.cacheCreationTokens, { zeroAsDash: true })}</dd></div>
         <div><dt>API calls</dt><dd>{formatNumber(usage.callCount)}</dd></div>
         <div><dt>Estimated cost</dt><dd>{formatCost(usage.costUsd)}</dd></div>
         <div><dt>Raw events</dt><dd>{formatNumber(summary.rawEventCount)}</dd></div>
