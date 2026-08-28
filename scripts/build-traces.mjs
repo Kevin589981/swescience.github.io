@@ -135,6 +135,55 @@ function normalizeTimestamp(value) {
   return Number.isFinite(time) ? new Date(time).toISOString() : null;
 }
 
+function findFiles(root, predicate) {
+  if (!fs.existsSync(root)) return [];
+  const files = [];
+  const pending = [root];
+  while (pending.length) {
+    const directory = pending.pop();
+    const entries = fs.readdirSync(directory, { withFileTypes: true }).sort((left, right) => left.name.localeCompare(right.name));
+    for (const entry of entries) {
+      const file = path.join(directory, entry.name);
+      if (entry.isDirectory()) pending.push(file);
+      else if (predicate(file, entry.name)) files.push(file);
+    }
+  }
+  return files.sort();
+}
+
+// Codex's canonical trajectory can omit reasoning items even though the local
+// rollout stream retained them. Keep only their positions; private text is
+// deliberately never copied into the published trace.
+function readCodexReasoningAnchors(runRoot) {
+  const homeRoots = [path.join(runRoot, ".codex-home"), path.join(runRoot, "artifacts/.codex-home")];
+  const rolloutFiles = homeRoots.flatMap((root) => findFiles(root, (_file, name) => /^rollout-.*\.jsonl$/.test(name)));
+  const anchors = [];
+  let visibleAnchor = 0;
+
+  for (const file of rolloutFiles) {
+    const lines = fs.readFileSync(file, "utf8").split(/\r?\n/);
+    for (const line of lines) {
+      if (!line) continue;
+      let event;
+      try {
+        event = JSON.parse(line);
+      } catch {
+        continue;
+      }
+      if (event.type !== "response_item" || !event.payload) continue;
+      const item = event.payload;
+      if (item.type === "reasoning") {
+        anchors.push(visibleAnchor);
+      } else if ((item.type === "message" && item.role === "assistant")
+        || ["function_call", "custom_tool_call", "computer_call", "local_shell_call"].includes(item.type)) {
+        visibleAnchor += 1;
+      }
+    }
+  }
+
+  return anchors;
+}
+
 function normalizeClaudeEvents(events, runRoot) {
   const normalized = [];
   const toolItems = new Map();
@@ -264,10 +313,12 @@ function normalizeClaudeEvents(events, runRoot) {
   });
 }
 
-function normalizeCodexEvents(events, runRoot, model) {
+function normalizeCodexEvents(events, runRoot, model, reasoningAnchors = []) {
   const completed = events.filter((event) => event.type === "item.completed");
   const lastAgentMessage = completed.findLastIndex((event) => event.item?.type === "agent_message");
   const normalized = [];
+  let reasoningIndex = 0;
+  let visibleAnchor = 0;
 
   const add = (kind, fields = {}) => {
     normalized.push({
@@ -280,6 +331,19 @@ function normalizeCodexEvents(events, runRoot, model) {
     });
   };
 
+  const flushReasoning = () => {
+    while (reasoningIndex < reasoningAnchors.length && reasoningAnchors[reasoningIndex] <= visibleAnchor) {
+      add("thinking", { label: "Reasoning block", redacted: true });
+      reasoningIndex += 1;
+    }
+  };
+
+  const addAnchored = (kind, fields = {}) => {
+    flushReasoning();
+    add(kind, fields);
+    visibleAnchor += 1;
+  };
+
   add("lifecycle", {
     label: "Session start",
     details: { cwd: "/workspace/task", model, tools: ["Shell", "File edit"] },
@@ -287,9 +351,10 @@ function normalizeCodexEvents(events, runRoot, model) {
 
   completed.forEach((event, completedIndex) => {
     const item = event.item ?? {};
+    flushReasoning();
     if (item.type === "agent_message") {
       const output = preview(item.text, completedIndex === lastAgentMessage ? maxFinalChars : maxPreviewChars, runRoot);
-      add(completedIndex === lastAgentMessage ? "final" : "assistant", {
+      addAnchored(completedIndex === lastAgentMessage ? "final" : "assistant", {
         text: output.text,
         truncated: output.truncated,
       });
@@ -307,7 +372,7 @@ function normalizeCodexEvents(events, runRoot, model) {
       const result = omitResult || /^diff --git /m.test(rawResult)
         ? { text: "[agent patch content omitted from the published trace]", truncated: false }
         : preview(rawResult, maxPreviewChars, runRoot);
-      add("tool", {
+      addAnchored("tool", {
         toolUseId: item.id ?? null,
         name: "Shell",
         input: { command: preview(item.command, 1800, runRoot).text },
@@ -321,7 +386,7 @@ function normalizeCodexEvents(events, runRoot, model) {
     }
 
     if (item.type === "file_change") {
-      add("tool", {
+      addAnchored("tool", {
         toolUseId: item.id ?? null,
         name: "File edit",
         input: {
@@ -335,7 +400,7 @@ function normalizeCodexEvents(events, runRoot, model) {
     if (item.type === "todo_list") {
       const text = (item.items ?? []).map((todo) => `${todo.completed ? "[x]" : "[ ]"} ${todo.text}`).join("\n");
       const output = preview(text, maxPreviewChars, runRoot);
-      add("message", { label: "Plan update", text: output.text, truncated: output.truncated });
+      addAnchored("message", { label: "Plan update", text: output.text, truncated: output.truncated });
       return;
     }
 
@@ -344,6 +409,12 @@ function normalizeCodexEvents(events, runRoot, model) {
       add("message", { label: "Runtime notice", text: output.text, truncated: output.truncated });
     }
   });
+
+  flushReasoning();
+  while (reasoningIndex < reasoningAnchors.length) {
+    add("thinking", { label: "Reasoning block", redacted: true });
+    reasoningIndex += 1;
+  }
 
   return normalized;
 }
@@ -527,8 +598,10 @@ function buildTask(experiment, legacyTaskId, runMap) {
   const publishedTaskId = legacyTaskId === "120" ? "001" : legacyTaskId;
   const publishedTask = taskById.get(publishedTaskId);
   if (!publishedTask) throw new Error(`Missing published task ${publishedTaskId} in data/tasks.csv`);
+  const trajectoryHasReasoning = trajectory.events?.some((event) => event.item?.type === "reasoning");
+  const reasoningAnchors = experiment.parser === "codex" && !trajectoryHasReasoning ? readCodexReasoningAnchors(runRoot) : [];
   const events = experiment.parser === "codex"
-    ? normalizeCodexEvents(trajectory.events ?? [], runRoot, experiment.model)
+    ? normalizeCodexEvents(trajectory.events ?? [], runRoot, experiment.model, reasoningAnchors)
     : normalizeClaudeEvents(trajectory.events ?? [], runRoot);
   const directUsage = trial.agent_run?.usage ?? {};
   const trajectoryUsage = trajectory.events?.findLast((event) => event.type === "turn.completed" && event.usage)?.usage ?? {};

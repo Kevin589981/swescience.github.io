@@ -61,4 +61,9 @@ test("publishes four sanitized model trace records per task", async () => {
       assert.doesNotMatch(text, /api\.modelverse\.cn|\.sii\.edu\.cn|linux\/amd64|UCloud|host\.docker\.internal/);
     }
   }
+
+  const glmTask = JSON.parse(await readFile(new URL("../public/traces/glm-5-2-max/task-002.json", import.meta.url), "utf8"));
+  assert.ok(glmTask.events.some((event) => event.kind === "thinking"), "GLM reasoning from .codex-home should be represented");
+  const gptTokenFillTask = JSON.parse(await readFile(new URL("../public/traces/gpt-5-6-sol-max/task-013.json", import.meta.url), "utf8"));
+  assert.ok(gptTokenFillTask.events.some((event) => event.kind === "thinking"), "GPT reasoning from hidden Codex rollout should be represented");
 });
