@@ -152,6 +152,12 @@ function eventLabel(event: TraceEvent) {
   return event.label ?? event.kind;
 }
 
+function isFocusEvent(event: TraceEvent) {
+  if (event.kind === "thinking") return false;
+  if (event.kind !== "tool") return true;
+  return /edit/i.test(event.name ?? "") || Boolean(event.result?.isError);
+}
+
 function SummaryMetric({ label, metric }: { label: string; metric: Metric | null }) {
   return (
     <div className="trace-summary-metric">
@@ -202,15 +208,16 @@ function EventBody({ event }: { event: TraceEvent }) {
 
 function TraceTimeline({ events }: { events: TraceEvent[] }) {
   const [viewMode, setViewMode] = useState<"focus" | "full">("focus");
-  const visibleEvents = viewMode === "full" ? events : events.filter((event) => event.kind !== "thinking");
+  const focusEvents = useMemo(() => events.filter(isFocusEvent), [events]);
+  const visibleEvents = viewMode === "full" ? events : focusEvents;
 
   return (
     <section className="trace-panel trace-timeline-panel">
       <div className="trace-panel-heading">
-        <div><span className="trace-eyebrow">Run trace</span><h2>{events.length} normalized events</h2></div>
+        <div><span className="trace-eyebrow">Run trace</span><h2>{visibleEvents.length}{viewMode === "focus" && visibleEvents.length !== events.length ? ` of ${events.length}` : ""} normalized events</h2></div>
         <div className="trace-view-toggle" role="group" aria-label="Trace event visibility">
-          <button className={viewMode === "focus" ? "active" : ""} onClick={() => setViewMode("focus")}>Focus</button>
-          <button className={viewMode === "full" ? "active" : ""} onClick={() => setViewMode("full")}>Full</button>
+          <button type="button" className={viewMode === "focus" ? "active" : ""} aria-pressed={viewMode === "focus"} onClick={() => setViewMode("focus")}>Focus <span aria-hidden="true">{focusEvents.length}</span></button>
+          <button type="button" className={viewMode === "full" ? "active" : ""} aria-pressed={viewMode === "full"} onClick={() => setViewMode("full")}>Full <span aria-hidden="true">{events.length}</span></button>
         </div>
       </div>
       <div className="trace-timeline" aria-label="Normalized agent event timeline">
