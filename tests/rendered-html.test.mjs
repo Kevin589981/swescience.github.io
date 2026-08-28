@@ -31,31 +31,33 @@ test("keeps trace entry points inside task details", async () => {
   assert.doesNotMatch(html, /Trace browser/);
 });
 
-test("publishes one sanitized Opus UCloud trace record per task", async () => {
-  const root = new URL("../public/traces/claude-opus-5-max/", import.meta.url);
+test("publishes three sanitized model trace records per task", async () => {
   const registry = JSON.parse(await readFile(new URL("../public/traces/index.json", import.meta.url), "utf8"));
-  assert.equal(registry.experiments.length, 1);
-  assert.equal(registry.experiments[0].path, "claude-opus-5-max");
-  const index = JSON.parse(await readFile(new URL("index.json", root), "utf8"));
-  assert.equal(index.taskCount, 119);
-  assert.equal(index.tasks.length, 119);
-  assert.equal(index.tasks[0].publishedTaskId, "001");
-  assert.equal(index.tasks[1].publishedTaskId, "002");
-  assert.equal(index.tasks.at(-1).publishedTaskId, "119");
+  assert.deepEqual(registry.experiments.map((experiment) => experiment.id), ["claude-opus-5-max", "glm-5-2-max", "qwen3-8-27b-max"]);
 
-  const builder = await readFile(new URL("../scripts/build-opus-traces.mjs", import.meta.url), "utf8");
+  const builder = await readFile(new URL("../scripts/build-traces.mjs", import.meta.url), "utf8");
   assert.match(builder, /legacyTaskId === "120" \? "001" : legacyTaskId/);
 
-  for (const entry of index.tasks) {
-    await access(new URL(entry.file, root));
-    const text = await readFile(new URL(entry.file, root), "utf8");
-    const trace = JSON.parse(text);
-    assert.equal(trace.task.publishedTaskId, entry.publishedTaskId);
-    assert.equal(Object.hasOwn(trace, "workspace"), false);
-    assert.equal(typeof trace.evaluation.verifierLog, "string");
-    assert.match(trace.evaluation.verifierLog, /science-bench/);
-    assert.doesNotMatch(text, /\/Users\/fnlp/);
-    assert.doesNotMatch(text, /diff --git a\/source\//);
-    assert.doesNotMatch(text, /api\.modelverse\.cn|linux\/amd64|UCloud/);
+  for (const experiment of registry.experiments) {
+    const root = new URL(`../public/traces/${experiment.path}/`, import.meta.url);
+    const index = JSON.parse(await readFile(new URL("index.json", root), "utf8"));
+    assert.equal(index.taskCount, 119);
+    assert.equal(index.tasks.length, 119);
+    assert.equal(index.tasks[0].publishedTaskId, "001");
+    assert.equal(index.tasks[1].publishedTaskId, "002");
+    assert.equal(index.tasks.at(-1).publishedTaskId, "119");
+
+    for (const entry of index.tasks) {
+      await access(new URL(entry.file, root));
+      const text = await readFile(new URL(entry.file, root), "utf8");
+      const trace = JSON.parse(text);
+      assert.equal(trace.task.publishedTaskId, entry.publishedTaskId);
+      assert.equal(Object.hasOwn(trace, "workspace"), false);
+      assert.equal(typeof trace.evaluation.verifierLog, "string");
+      assert.match(trace.evaluation.verifierLog, /science-bench/);
+      assert.doesNotMatch(text, /\/Users\/fnlp/);
+      assert.doesNotMatch(text, /diff --git a\/source\//);
+      assert.doesNotMatch(text, /api\.modelverse\.cn|\.sii\.edu\.cn|linux\/amd64|UCloud|host\.docker\.internal/);
+    }
   }
 });

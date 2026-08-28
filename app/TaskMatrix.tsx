@@ -64,7 +64,12 @@ function formatMetric(metric: Metric) {
 }
 
 function traceHref(taskId: string, modelId: string, harness: string) {
-  const params = new URLSearchParams({ task: taskId, model: modelId, harness });
+  const experimentByModel: Record<string, string> = {
+    opus: "claude-opus-5-max",
+    glm: "glm-5-2-max",
+    "qwen-3-8-27b": "qwen3-8-27b-max",
+  };
+  const params = new URLSearchParams({ task: taskId, experiment: experimentByModel[modelId] ?? "", model: modelId, harness });
   return `/task-matrix/trace?${params.toString()}`;
 }
 
@@ -108,7 +113,7 @@ function TaskDetail({ task, models }: { task: MatrixTask; models: MatrixModel[] 
                     </span>
                   </td>
                   <td>
-                    {model.id === "opus" ? (
+                    {["opus", "glm", "qwen-3-8-27b"].includes(model.id) ? (
                       <a className="task-trace-link" href={traceHref(task.publishedTaskId, model.id, model.harness)}>
                         Open trace <span aria-hidden="true">↗</span>
                       </a>
