@@ -58,6 +58,70 @@ function MatrixCell({ result }: { result: MatrixResult }) {
   );
 }
 
+function formatMetric(metric: Metric) {
+  if (!metric.total) return "-";
+  return `${metric.passed}/${metric.total} (${((metric.passed / metric.total) * 100).toFixed(1)}%)`;
+}
+
+function traceHref(taskId: string, modelId: string, harness: string) {
+  const params = new URLSearchParams({ task: taskId, model: modelId, harness });
+  return `/task-matrix/trace?${params.toString()}`;
+}
+
+function TaskDetail({ task, models }: { task: MatrixTask; models: MatrixModel[] }) {
+  const rows = models.map((model) => ({ model, result: task.results[model.id] })).filter((row) => row.result);
+  const passedModels = rows.filter(({ result }) => result.reward === 1).length;
+
+  return (
+    <details className="task-detail">
+      <summary className="task-detail-summary">
+        <span className="task-detail-title">
+          <strong>{task.publishedTaskId}</strong>
+          {task.scientificKnowledgeAblation && <span className="task-detail-ablation">Ablation</span>}
+        </span>
+        <span className="task-detail-meta">{passedModels}/{rows.length} model Pass@1</span>
+        <span className="task-detail-caret" aria-hidden="true">›</span>
+      </summary>
+      <div className="task-detail-body">
+        <div className="task-detail-table-wrap">
+          <table className="task-detail-table">
+            <thead>
+              <tr>
+                <th scope="col">Model</th>
+                <th scope="col">Harness</th>
+                <th scope="col">Public</th>
+                <th scope="col">Private</th>
+                <th scope="col">Pass@1</th>
+                <th scope="col">Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map(({ model, result }) => (
+                <tr key={model.id}>
+                  <th scope="row">{getModelDisplayName(model)}</th>
+                  <td>{model.harness}</td>
+                  <td className="task-detail-metric">{formatMetric(result.public)}</td>
+                  <td className="task-detail-metric">{formatMetric(result.private)}</td>
+                  <td>
+                    <span className={`task-result-badge ${result.reward === 1 ? "is-pass" : "is-fail"}`}>
+                      {result.reward === 1 ? "PASS" : "FAIL"}
+                    </span>
+                  </td>
+                  <td>
+                    <a className="task-trace-link" href={traceHref(task.publishedTaskId, model.id, model.harness)}>
+                      Open trace <span aria-hidden="true">↗</span>
+                    </a>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </details>
+  );
+}
+
 export function TaskMatrix() {
   const [query, setQuery] = useState("");
   const [ablationOnly, setAblationOnly] = useState(false);
@@ -128,6 +192,16 @@ export function TaskMatrix() {
           </tbody>
         </table>
       </div>
+
+      <section className="task-details-section" aria-label="Task-level run details">
+        <div className="task-details-heading">
+          <h2>Task details</h2>
+          <p>Expand a task to compare model, harness, test, and trace entries.</p>
+        </div>
+        <div className="task-details-list">
+          {tasks.map((task) => <TaskDetail key={task.publishedTaskId} task={task} models={models} />)}
+        </div>
+      </section>
 
       <p className="matrix-footnote">
         Results are task-level private-test Pass@1 values from the current Feishu audit summaries. Kimi-K3 and DeepSeek-V4-Pro are listed as pending until their per-task summaries arrive.
