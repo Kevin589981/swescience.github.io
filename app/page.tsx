@@ -17,6 +17,9 @@ export default function Home() {
           <a href="https://github.com/OpenMOSS/SWE-bench-Science" target="_blank" rel="noreferrer">
             GitHub <span aria-hidden="true">↗</span>
           </a>
+          <a href="/task-matrix" aria-label="Open task-level Pass@1 matrix">
+            Matrix <span aria-hidden="true">↗</span>
+          </a>
           <ThemeToggle />
         </nav>
       </header>

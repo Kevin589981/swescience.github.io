@@ -1,0 +1,7126 @@
+{
+  "version": 1,
+  "generatedAt": "2026-08-28",
+  "referenceModel": {
+    "id": "nex",
+    "label": "Nex N2",
+    "overallPassAt1": 24.37,
+    "note": "Reference threshold from the current leaderboard snapshot; no complete Feishu per-task table is available."
+  },
+  "selectionRule": "Models with benchmark.json overall Pass@1 above Nex N2 (24.37%).",
+  "includedModels": [
+    "opus",
+    "gpt",
+    "glm",
+    "qwen-3-8-27b"
+  ],
+  "pendingModels": [
+    "deepseek-pro",
+    "kimi"
+  ],
+  "models": [
+    {
+      "id": "opus",
+      "family": "Claude-Opus-5",
+      "reasoningDepth": "max",
+      "harness": "Claude Code",
+      "scores": {
+        "public": 96.64,
+        "private": 75.11,
+        "fail2Pass": 68.6,
+        "pass2Pass": 97.37,
+        "overall": 47.9,
+        "issue": 38.46,
+        "expert": 65.31,
+        "engineering": 27.78
+      },
+      "tokens": {
+        "input": 7.048,
+        "output": 0.11
+      }
+    },
+    {
+      "id": "gpt",
+      "family": "GPT-5.6-sol",
+      "reasoningDepth": "max",
+      "harness": "Codex",
+      "scores": {
+        "public": 99.16,
+        "private": 78.82,
+        "fail2Pass": 72.3,
+        "pass2Pass": 97.66,
+        "overall": 46.22,
+        "issue": 36.54,
+        "expert": 59.18,
+        "engineering": 38.89
+      },
+      "tokens": {
+        "input": 4.199,
+        "output": 0.025
+      }
+    },
+    {
+      "id": "glm",
+      "family": "GLM-5.2",
+      "reasoningDepth": "max",
+      "harness": "Codex",
+      "scores": {
+        "public": 94.12,
+        "private": 63.61,
+        "fail2Pass": 53.81,
+        "pass2Pass": 97.53,
+        "overall": 31.93,
+        "issue": 17.31,
+        "expert": 46.94,
+        "engineering": 33.33
+      },
+      "tokens": {
+        "input": 3.345,
+        "output": 0.094
+      }
+    },
+    {
+      "id": "qwen-3-8-27b",
+      "family": "Qwen3.8-27B",
+      "reasoningDepth": "max",
+      "harness": "Claude Code",
+      "scores": {
+        "public": 100,
+        "private": 65.75,
+        "fail2Pass": 56.46,
+        "pass2Pass": 97.36,
+        "overall": 29.41,
+        "issue": 25,
+        "expert": 38.78,
+        "engineering": 16.67
+      },
+      "tokens": {
+        "input": 5.024,
+        "output": 0.18
+      }
+    }
+  ],
+  "tasks": [
+    {
+      "publishedTaskId": "001",
+      "legacyTaskId": "120",
+      "scientificKnowledgeAblation": false,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 1,
+            "total": 3
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 1,
+            "total": 3
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 1,
+            "total": 3
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 1,
+            "total": 3
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "002",
+      "legacyTaskId": "119",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 10
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 10
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 10
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 10
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "003",
+      "legacyTaskId": "118",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 9
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 9,
+            "total": 9
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 9
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 9
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "004",
+      "legacyTaskId": "117",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 6,
+            "total": 6
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "005",
+      "legacyTaskId": "116",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 91,
+            "total": 93
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 85,
+            "total": 93
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 85,
+            "total": 93
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 85,
+            "total": 93
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "006",
+      "legacyTaskId": "115",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 97,
+            "total": 97
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 97,
+            "total": 97
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 97,
+            "total": 97
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 93,
+            "total": 97
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "007",
+      "legacyTaskId": "114",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 13,
+            "total": 15
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 15,
+            "total": 15
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 13,
+            "total": 15
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 13,
+            "total": 15
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "008",
+      "legacyTaskId": "113",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 11,
+            "total": 13
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 7,
+            "total": 13
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 9,
+            "total": 13
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 7,
+            "total": 13
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "009",
+      "legacyTaskId": "112",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 5
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 5
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 5
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 5
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "010",
+      "legacyTaskId": "111",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 6,
+            "total": 10
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 6,
+            "total": 10
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 6,
+            "total": 10
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 6,
+            "total": 10
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "011",
+      "legacyTaskId": "110",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 10
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 10
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 10
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 10
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "012",
+      "legacyTaskId": "109",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 0,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 1,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 1,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 1,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "013",
+      "legacyTaskId": "108",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 17,
+            "total": 23
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 19,
+            "total": 23
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 21,
+            "total": 23
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 23,
+            "total": 23
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "014",
+      "legacyTaskId": "107",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 3
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 3
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 3
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 3
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "015",
+      "legacyTaskId": "106",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 37,
+            "total": 37
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 37,
+            "total": 37
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 35,
+            "total": 37
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 37,
+            "total": 37
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "016",
+      "legacyTaskId": "105",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 4
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 4
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 4
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 4
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "017",
+      "legacyTaskId": "104",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 0,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 0,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 0,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 0,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "018",
+      "legacyTaskId": "103",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 4
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 4
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 4
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 4
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "019",
+      "legacyTaskId": "102",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 4
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 4
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 4
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 4
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "020",
+      "legacyTaskId": "101",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 0,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 10
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 10,
+            "total": 10
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 10,
+            "total": 10
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 10
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "021",
+      "legacyTaskId": "100",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 7,
+            "total": 8
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 7,
+            "total": 8
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 7,
+            "total": 8
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 7,
+            "total": 8
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "022",
+      "legacyTaskId": "099",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 4
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 4
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 4
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 4
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "023",
+      "legacyTaskId": "098",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 11
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 11
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 11
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 11
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "024",
+      "legacyTaskId": "097",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 6,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 0,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 0,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 6,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "025",
+      "legacyTaskId": "096",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 8
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 8
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 8
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 8
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "026",
+      "legacyTaskId": "095",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 8
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 8
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 8
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 8
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "027",
+      "legacyTaskId": "094",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 5
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 0,
+            "total": 5
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 0,
+            "total": 5
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 0,
+            "total": 5
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "028",
+      "legacyTaskId": "093",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 4
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 4
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 4
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 0,
+            "total": 4
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "029",
+      "legacyTaskId": "092",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 9
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 9
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 9
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 7,
+            "total": 9
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "030",
+      "legacyTaskId": "091",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 3
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 3
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 3
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 0,
+            "total": 3
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "031",
+      "legacyTaskId": "090",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "032",
+      "legacyTaskId": "089",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 4
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 4
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 4
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 4
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "033",
+      "legacyTaskId": "088",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 1,
+            "total": 5
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 5
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 5
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 5
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "034",
+      "legacyTaskId": "087",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 0,
+            "total": 5
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 5
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 1,
+            "total": 5
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 5
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "035",
+      "legacyTaskId": "086",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 4
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 4
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 4
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 4
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "036",
+      "legacyTaskId": "085",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 10
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 10
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 10
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 10
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "037",
+      "legacyTaskId": "084",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 7,
+            "total": 7
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 7,
+            "total": 7
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "038",
+      "legacyTaskId": "083",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 1,
+            "total": 3
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 1,
+            "total": 3
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 1,
+            "total": 3
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 1,
+            "total": 3
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "039",
+      "legacyTaskId": "082",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 1,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 1,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 1,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 1,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "040",
+      "legacyTaskId": "081",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 5
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 5
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 5
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 5
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "041",
+      "legacyTaskId": "080",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 14,
+            "total": 15
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 10,
+            "total": 15
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 15,
+            "total": 15
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 10,
+            "total": 15
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "042",
+      "legacyTaskId": "079",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 14
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 14,
+            "total": 14
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 13,
+            "total": 14
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 13,
+            "total": 14
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "043",
+      "legacyTaskId": "078",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 38,
+            "total": 42
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 42,
+            "total": 42
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 42,
+            "total": 42
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 38,
+            "total": 42
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "044",
+      "legacyTaskId": "077",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 12,
+            "total": 13
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 12,
+            "total": 13
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 13,
+            "total": 13
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 12,
+            "total": 13
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "045",
+      "legacyTaskId": "076",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 7,
+            "total": 7
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 1,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 1,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 6,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "046",
+      "legacyTaskId": "075",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 0,
+            "total": 8
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 1,
+            "total": 8
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 0,
+            "total": 8
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 8
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "047",
+      "legacyTaskId": "074",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 10,
+            "total": 10
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 6,
+            "total": 10
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 10,
+            "total": 10
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 7,
+            "total": 10
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "048",
+      "legacyTaskId": "073",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "049",
+      "legacyTaskId": "072",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 1,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 6,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "050",
+      "legacyTaskId": "071",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 5
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 5
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 5
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 5
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "051",
+      "legacyTaskId": "070",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 9,
+            "total": 9
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 9
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 0,
+            "total": 9
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 1,
+            "total": 9
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "052",
+      "legacyTaskId": "069",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 4
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 4
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 4
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 4
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "053",
+      "legacyTaskId": "068",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 0,
+            "total": 3
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 0,
+            "total": 3
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 0,
+            "total": 3
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 0,
+            "total": 3
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "054",
+      "legacyTaskId": "067",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 6,
+            "total": 6
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "055",
+      "legacyTaskId": "066",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "056",
+      "legacyTaskId": "065",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 6,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 6,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 6,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "057",
+      "legacyTaskId": "064",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 8
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 8
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 8
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 8
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "058",
+      "legacyTaskId": "063",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 18,
+            "total": 18
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 18,
+            "total": 18
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 18,
+            "total": 18
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 17,
+            "total": 18
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "059",
+      "legacyTaskId": "062",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 17,
+            "total": 17
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 17,
+            "total": 17
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 17,
+            "total": 17
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 11,
+            "total": 17
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "060",
+      "legacyTaskId": "061",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 8
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 8
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 8
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 8
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "061",
+      "legacyTaskId": "060",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 11
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 11
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 11
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 11
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "062",
+      "legacyTaskId": "059",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 1,
+            "total": 9
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 9
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 7,
+            "total": 9
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 9,
+            "total": 9
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "063",
+      "legacyTaskId": "058",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 0,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 9
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 9
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 9
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 9,
+            "total": 9
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "064",
+      "legacyTaskId": "057",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 11,
+            "total": 11
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 11,
+            "total": 11
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 11,
+            "total": 11
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 11,
+            "total": 11
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "065",
+      "legacyTaskId": "056",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 10,
+            "total": 10
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 10,
+            "total": 10
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 10,
+            "total": 10
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 10,
+            "total": 10
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "066",
+      "legacyTaskId": "055",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 12,
+            "total": 18
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 18
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 18
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 10,
+            "total": 18
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "067",
+      "legacyTaskId": "054",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "068",
+      "legacyTaskId": "053",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 6,
+            "total": 6
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 6,
+            "total": 6
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "069",
+      "legacyTaskId": "052",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 15,
+            "total": 16
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 12,
+            "total": 16
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 11,
+            "total": 16
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 9,
+            "total": 16
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "070",
+      "legacyTaskId": "051",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 6,
+            "total": 6
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 0,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "071",
+      "legacyTaskId": "050",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 9,
+            "total": 11
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 9,
+            "total": 11
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 9,
+            "total": 11
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 11
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "072",
+      "legacyTaskId": "049",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 10,
+            "total": 13
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 11,
+            "total": 13
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 11,
+            "total": 13
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 7,
+            "total": 13
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "073",
+      "legacyTaskId": "048",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 13,
+            "total": 13
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 13,
+            "total": 13
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 12,
+            "total": 13
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 0,
+            "total": 1
+          },
+          "private": {
+            "passed": 12,
+            "total": 13
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "074",
+      "legacyTaskId": "047",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 1,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "075",
+      "legacyTaskId": "046",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 6,
+            "total": 10
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 6,
+            "total": 10
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 6,
+            "total": 10
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 10
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "076",
+      "legacyTaskId": "045",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 16,
+            "total": 16
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 16,
+            "total": 16
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 16,
+            "total": 16
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 16,
+            "total": 16
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "077",
+      "legacyTaskId": "044",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 15
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 15
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 15
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 15
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "078",
+      "legacyTaskId": "043",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 8
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 8
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 8
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 8
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "079",
+      "legacyTaskId": "042",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 6,
+            "total": 16
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 6,
+            "total": 16
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 7,
+            "total": 16
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 15,
+            "total": 16
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "080",
+      "legacyTaskId": "041",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 24
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 24
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 7,
+            "total": 24
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 24
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "081",
+      "legacyTaskId": "040",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 1,
+            "total": 3
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 1,
+            "total": 3
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 0,
+            "total": 3
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 3
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "082",
+      "legacyTaskId": "039",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 11
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 11
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 11
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 10,
+            "total": 11
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "083",
+      "legacyTaskId": "038",
+      "scientificKnowledgeAblation": false,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 15,
+            "total": 15
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 15,
+            "total": 15
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 15,
+            "total": 15
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 15,
+            "total": 15
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "084",
+      "legacyTaskId": "037",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 13
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 13
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 10,
+            "total": 13
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 13
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "085",
+      "legacyTaskId": "036",
+      "scientificKnowledgeAblation": false,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 9
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 9
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 9
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 9
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "086",
+      "legacyTaskId": "035",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 14
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 14
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 14
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 9,
+            "total": 14
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "087",
+      "legacyTaskId": "034",
+      "scientificKnowledgeAblation": false,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 8
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 8
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 1,
+            "total": 8
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 8
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "088",
+      "legacyTaskId": "033",
+      "scientificKnowledgeAblation": false,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 6,
+            "total": 10
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 6,
+            "total": 10
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 6,
+            "total": 10
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 6,
+            "total": 10
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "089",
+      "legacyTaskId": "032",
+      "scientificKnowledgeAblation": false,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 21,
+            "total": 21
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 21,
+            "total": 21
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 13,
+            "total": 21
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 21,
+            "total": 21
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "090",
+      "legacyTaskId": "031",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 41,
+            "total": 41
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 41,
+            "total": 41
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 41,
+            "total": 41
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 41,
+            "total": 41
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "091",
+      "legacyTaskId": "030",
+      "scientificKnowledgeAblation": false,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 10,
+            "total": 10
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 10,
+            "total": 10
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 10,
+            "total": 10
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 10,
+            "total": 10
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "092",
+      "legacyTaskId": "029",
+      "scientificKnowledgeAblation": false,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 14,
+            "total": 29
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 14,
+            "total": 29
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 14,
+            "total": 29
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 29,
+            "total": 29
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "093",
+      "legacyTaskId": "028",
+      "scientificKnowledgeAblation": false,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 10,
+            "total": 10
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 10,
+            "total": 10
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 10,
+            "total": 10
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 10,
+            "total": 10
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "094",
+      "legacyTaskId": "027",
+      "scientificKnowledgeAblation": false,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 21,
+            "total": 21
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 21,
+            "total": 21
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 21,
+            "total": 21
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 21,
+            "total": 21
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "095",
+      "legacyTaskId": "026",
+      "scientificKnowledgeAblation": false,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 9,
+            "total": 9
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 9
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 9,
+            "total": 9
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 9,
+            "total": 9
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "096",
+      "legacyTaskId": "025",
+      "scientificKnowledgeAblation": false,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 7,
+            "total": 7
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 7,
+            "total": 7
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 7,
+            "total": 7
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "097",
+      "legacyTaskId": "024",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 8
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 8
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 8
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 7,
+            "total": 8
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "098",
+      "legacyTaskId": "023",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 8
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 8
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 8
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 8
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "099",
+      "legacyTaskId": "022",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 11,
+            "total": 12
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 12,
+            "total": 12
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 11,
+            "total": 12
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 12,
+            "total": 12
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "100",
+      "legacyTaskId": "021",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 11,
+            "total": 15
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 10,
+            "total": 15
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 9,
+            "total": 15
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 15,
+            "total": 15
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "101",
+      "legacyTaskId": "020",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 11,
+            "total": 12
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 11,
+            "total": 12
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 10,
+            "total": 12
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 12,
+            "total": 12
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "102",
+      "legacyTaskId": "019",
+      "scientificKnowledgeAblation": false,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 12,
+            "total": 14
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 13,
+            "total": 14
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 13,
+            "total": 14
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 13,
+            "total": 14
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "103",
+      "legacyTaskId": "018",
+      "scientificKnowledgeAblation": false,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 5
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 5
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 5
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 5
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "104",
+      "legacyTaskId": "017",
+      "scientificKnowledgeAblation": false,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 12,
+            "total": 12
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 12,
+            "total": 12
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 11,
+            "total": 12
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 12,
+            "total": 12
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "105",
+      "legacyTaskId": "016",
+      "scientificKnowledgeAblation": false,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 12,
+            "total": 12
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 12,
+            "total": 12
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 12,
+            "total": 12
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 12,
+            "total": 12
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "106",
+      "legacyTaskId": "015",
+      "scientificKnowledgeAblation": false,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 30,
+            "total": 31
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 31,
+            "total": 31
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 31,
+            "total": 31
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 31,
+            "total": 31
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "107",
+      "legacyTaskId": "014",
+      "scientificKnowledgeAblation": false,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "108",
+      "legacyTaskId": "013",
+      "scientificKnowledgeAblation": false,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 5
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 5
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 5
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 5
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "109",
+      "legacyTaskId": "012",
+      "scientificKnowledgeAblation": false,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 9,
+            "total": 10
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 10,
+            "total": 10
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 10,
+            "total": 10
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 9,
+            "total": 10
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "110",
+      "legacyTaskId": "011",
+      "scientificKnowledgeAblation": false,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 5
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 5
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 5
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 5
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "111",
+      "legacyTaskId": "010",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 11,
+            "total": 11
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 11,
+            "total": 11
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 6,
+            "total": 11
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 11,
+            "total": 11
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "112",
+      "legacyTaskId": "009",
+      "scientificKnowledgeAblation": false,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 9
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 9,
+            "total": 9
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 9
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 9
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "113",
+      "legacyTaskId": "008",
+      "scientificKnowledgeAblation": false,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 0,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 0,
+            "total": 1
+          },
+          "private": {
+            "passed": 0,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 1,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 6,
+            "total": 6
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "114",
+      "legacyTaskId": "007",
+      "scientificKnowledgeAblation": true,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 6,
+            "total": 6
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "115",
+      "legacyTaskId": "006",
+      "scientificKnowledgeAblation": false,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 11,
+            "total": 13
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 10,
+            "total": 13
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 11,
+            "total": 13
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 10,
+            "total": 13
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "116",
+      "legacyTaskId": "005",
+      "scientificKnowledgeAblation": false,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 0,
+            "total": 4
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 0,
+            "total": 4
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 1,
+            "total": 4
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 1,
+            "total": 4
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "117",
+      "legacyTaskId": "004",
+      "scientificKnowledgeAblation": false,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 15,
+            "total": 15
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 15,
+            "total": 15
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 15,
+            "total": 15
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 14,
+            "total": 15
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "118",
+      "legacyTaskId": "003",
+      "scientificKnowledgeAblation": false,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    },
+    {
+      "publishedTaskId": "119",
+      "legacyTaskId": "002",
+      "scientificKnowledgeAblation": false,
+      "results": {
+        "opus": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 8
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: Claude Opus Max Public/Private audit"
+        },
+        "glm": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 8
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Feishu: GLM-5.2 Public/Private audit"
+        },
+        "qwen-3-8-27b": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 7,
+            "total": 8
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: Qwen3.8-27B Public/Private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 6,
+            "total": 8
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Feishu: GPT-5.6-sol comparison audit"
+        }
+      }
+    }
+  ]
+}
