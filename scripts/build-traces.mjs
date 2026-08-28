@@ -1,10 +1,18 @@
-import fs from "node:fs";
+import fs, { mkdtempSync } from "node:fs";
 import path from "node:path";
+import { execFileSync } from "node:child_process";
+import { tmpdir } from "node:os";
 
 const repoRoot = path.resolve(new URL("..", import.meta.url).pathname);
 const runsRoot = process.env.TRACE_RUNS_ROOT ?? "/Users/fnlp/workspace/agent/opus-test/runs";
 const benchmarkRoot = path.dirname(runsRoot);
 const reportsRoot = path.join(benchmarkRoot, "reports");
+const gptSelectionFile = path.join(repoRoot, "scripts/data/gpt-run-selection.json");
+const gptMacPrimaryRoot = process.env.GPT_MAC_PRIMARY_ROOT ?? "/Users/fnlp/workspace/agent/my_science_bench";
+const gptMacPlatformRoot = process.env.GPT_MAC_PLATFORM_ROOT ?? "/Users/fnlp/workspace/agent/my_science_bench_platform_amd64";
+const gptWslArchive = process.env.GPT_WSL_ARCHIVE ?? "/Users/fnlp/Downloads/wsl_selected_runs_without_agent_verifier.tar.gz";
+const gptWslRunsRoot = process.env.GPT_WSL_RUNS_ROOT ?? null;
+let gptExtractedRunsRoot = null;
 const obsoleteOutputRoot = path.join(repoRoot, "public/traces/opus-5-max-ucloud");
 const runSuffix = "claude-opus-5-max-ucloud-withaux-002-120-20260814-r1";
 const maxPreviewChars = 1200;
@@ -73,6 +81,8 @@ function sanitizeText(value, runRoot) {
     .replace(/api\.modelverse\.cn/gi, "<redacted>")
     .replace(/[a-z0-9.-]+\.sii\.edu\.cn/gi, "<redacted>")
     .replace(/host\.docker\.internal(?::\d+)?/gi, "<redacted>")
+    .replace(/\bartifacts\/model\.patch\b/gi, "<patch-omitted>")
+    .replace(/\bmodel\.patch\b/gi, "<patch-omitted>")
     .replace(/\bUCloud\b/g, "<redacted>")
     .replace(/\b((?:ANTHROPIC|OPENAI|HF|HUGGINGFACE|DOCKER)[A-Z0-9_]*_API_KEY)\s*=\s*[^\s]+/gi, "$1=<redacted>")
     .replace(/\b(?:sk|rk)-[A-Za-z0-9_-]{12,}\b/g, "<redacted>");
@@ -286,6 +296,11 @@ function normalizeCodexEvents(events, runRoot, model) {
       return;
     }
 
+    if (item.type === "reasoning") {
+      add("thinking", { label: "Reasoning block", redacted: true });
+      return;
+    }
+
     if (item.type === "command_execution") {
       const omitResult = /(?:^|\/)artifacts\/model\.patch\b/.test(item.command ?? "");
       const rawResult = String(item.aggregated_output ?? "");
@@ -386,6 +401,40 @@ function locateOpusRun(legacyTaskId) {
   return path.join(directory, name);
 }
 
+function ensureGptWslRunsRoot() {
+  if (gptWslRunsRoot) {
+    if (!fs.existsSync(gptWslRunsRoot)) throw new Error(`GPT_WSL_RUNS_ROOT does not exist: ${gptWslRunsRoot}`);
+    return gptWslRunsRoot;
+  }
+  if (!fs.existsSync(gptWslArchive)) {
+    throw new Error(`GPT WSL source is unavailable. Set GPT_WSL_RUNS_ROOT to an extracted archive or GPT_WSL_ARCHIVE to the tarball (missing ${gptWslArchive}).`);
+  }
+  if (!gptExtractedRunsRoot) {
+    gptExtractedRunsRoot = mkdtempSync(path.join(tmpdir(), "swe-science-gpt-"));
+    execFileSync("tar", ["-xzf", gptWslArchive, "-C", gptExtractedRunsRoot], { stdio: "inherit" });
+  }
+  return gptExtractedRunsRoot;
+}
+
+function locateGptRun(entry) {
+  const root = entry.source === "mac-primary"
+    ? gptMacPrimaryRoot
+    : entry.source === "mac-platform-amd64"
+      ? gptMacPlatformRoot
+      : ensureGptWslRunsRoot();
+  const taskRoot = path.join(root, entry.source === "wsl-archive" ? `task_${entry.sourceTaskDir}` : "runs", ...(entry.source === "wsl-archive" ? [] : [`task_${entry.sourceTaskDir}`]));
+  const expected = entry.runName ? path.join(taskRoot, entry.runName) : null;
+  if (expected && fs.existsSync(expected)) return expected;
+  if (!fs.existsSync(taskRoot)) throw new Error(`Missing GPT task directory: ${taskRoot}`);
+  const candidates = fs.readdirSync(taskRoot)
+    .filter((name) => fs.existsSync(path.join(taskRoot, name, "trial.json")))
+    .filter((name) => !name.includes("without_auxiliary"));
+  if (candidates.length === 1) return path.join(taskRoot, candidates[0]);
+  const rerun = candidates.find((name) => name.includes("rerun"));
+  if (rerun) return path.join(taskRoot, rerun);
+  throw new Error(`Missing or ambiguous GPT run ${entry.runName} in ${taskRoot}`);
+}
+
 const experiments = [
   {
     id: "claude-opus-5-max",
@@ -414,9 +463,40 @@ const experiments = [
     outputDir: "qwen3-8-27b-max",
     auditFile: path.join(reportsRoot, "qwen3.8-27b-responses-withaux-002-120-audit/selected_runs_and_token_usage.json"),
   },
+  {
+    id: "gpt-5-6-sol-max",
+    label: "GPT-5.6-sol Max",
+    model: "GPT-5.6-sol",
+    harness: "Codex",
+    parser: "codex",
+    outputDir: "gpt-5-6-sol-max",
+    selectionFile: gptSelectionFile,
+  },
 ];
 
 function selectedRunMap(experiment) {
+  if (experiment.selectionFile) {
+    const selection = readJson(experiment.selectionFile);
+    if (Array.isArray(selection.entries)) {
+      if (selection.entries.length !== 119) throw new Error(`Expected 119 GPT run selections in ${experiment.selectionFile}`);
+      return new Map(selection.entries.map((entry) => [entry.legacyTaskId, entry]));
+    }
+    const macPrimary = new Set(selection.macPrimaryTaskIds ?? []);
+    const macPlatform = new Set(selection.macPlatformTaskIds ?? []);
+    const entries = [];
+    for (let legacy = 2; legacy <= 120; legacy += 1) {
+      const legacyTaskId = String(legacy).padStart(3, "0");
+      const source = macPrimary.has(legacyTaskId) ? "mac-primary" : macPlatform.has(legacyTaskId) ? "mac-platform-amd64" : "wsl-archive";
+      const sourceTaskDir = selection.wslTaskDirOverrides?.[legacyTaskId] ?? legacyTaskId;
+      let runName = null;
+      if (source === "mac-primary") runName = `codex-gpt-5.6-sol-${legacyTaskId}-xhigh-1`;
+      if (source === "mac-platform-amd64") runName = selection.macPlatformRunOverrides?.[legacyTaskId]
+        ?? `gpt-5.6-sol-xhigh-with_auxiliary-${legacyTaskId}-withaux-gpt-5.6-sol-xhigh-fair-20260801T0815Z`;
+      if (source === "wsl-archive") runName = selection.wslRunOverrides?.[legacyTaskId] ?? null;
+      entries.push({ publishedTaskId: legacyTaskId === "120" ? "001" : legacyTaskId, legacyTaskId, source, sourceTaskDir, runName });
+    }
+    return new Map(entries.map((entry) => [entry.legacyTaskId, entry]));
+  }
   if (!experiment.auditFile) return null;
   const selected = readJson(experiment.auditFile);
   const entries = Array.isArray(selected) ? selected : selected.tasks;
@@ -429,7 +509,12 @@ function selectedRunMap(experiment) {
 }
 
 function locateSelectedRun(experiment, legacyTaskId, runMap) {
-  const runRoot = experiment.locateRun ? experiment.locateRun(legacyTaskId) : runMap.get(legacyTaskId);
+  const selected = experiment.locateRun ? null : runMap.get(legacyTaskId);
+  const runRoot = experiment.locateRun
+    ? experiment.locateRun(legacyTaskId)
+    : experiment.selectionFile
+      ? locateGptRun(selected)
+      : selected;
   if (!runRoot || !fs.existsSync(runRoot)) throw new Error(`Missing selected ${experiment.id} run for task ${legacyTaskId}`);
   return runRoot;
 }
@@ -445,7 +530,20 @@ function buildTask(experiment, legacyTaskId, runMap) {
   const events = experiment.parser === "codex"
     ? normalizeCodexEvents(trajectory.events ?? [], runRoot, experiment.model)
     : normalizeClaudeEvents(trajectory.events ?? [], runRoot);
-  const usage = trial.agent_run?.usage ?? {};
+  const directUsage = trial.agent_run?.usage ?? {};
+  const trajectoryUsage = trajectory.events?.findLast((event) => event.type === "turn.completed" && event.usage)?.usage ?? {};
+  const inputTokens = directUsage.input_tokens ?? trajectoryUsage.input_tokens ?? null;
+  const outputTokens = directUsage.output_tokens ?? trajectoryUsage.output_tokens ?? null;
+  const usage = {
+    input_tokens: inputTokens,
+    output_tokens: outputTokens,
+    total_tokens: directUsage.total_tokens ?? trajectoryUsage.total_tokens ?? (inputTokens !== null && outputTokens !== null ? inputTokens + outputTokens : null),
+    cache_read_tokens: directUsage.cache_read_tokens ?? trajectoryUsage.cache_read_tokens ?? trajectoryUsage.cached_input_tokens ?? null,
+    cache_creation_tokens: directUsage.cache_creation_tokens ?? trajectoryUsage.cache_creation_tokens ?? null,
+    call_count: directUsage.call_count ?? trajectoryUsage.call_count ?? null,
+    cost_usd: directUsage.cost_usd ?? trajectoryUsage.cost_usd ?? null,
+    reasoning_output_tokens: directUsage.reasoning_output_tokens ?? trajectoryUsage.reasoning_output_tokens ?? null,
+  };
   const timings = trial.timings ?? {};
   const counts = eventCounts(events);
   const evaluation = parseEvaluation(verifierLog, trial, runRoot);
@@ -489,6 +587,7 @@ function buildTask(experiment, legacyTaskId, runMap) {
       cacheCreationTokens: usage.cache_creation_tokens ?? null,
       callCount: usage.call_count ?? null,
       costUsd: usage.cost_usd ?? null,
+      reasoningOutputTokens: usage.reasoning_output_tokens ?? null,
     },
     evaluation,
     events,

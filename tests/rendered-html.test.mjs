@@ -31,9 +31,9 @@ test("keeps trace entry points inside task details", async () => {
   assert.doesNotMatch(html, /Trace browser/);
 });
 
-test("publishes three sanitized model trace records per task", async () => {
+test("publishes four sanitized model trace records per task", async () => {
   const registry = JSON.parse(await readFile(new URL("../public/traces/index.json", import.meta.url), "utf8"));
-  assert.deepEqual(registry.experiments.map((experiment) => experiment.id), ["claude-opus-5-max", "glm-5-2-max", "qwen3-8-27b-max"]);
+  assert.deepEqual(registry.experiments.map((experiment) => experiment.id), ["claude-opus-5-max", "glm-5-2-max", "qwen3-8-27b-max", "gpt-5-6-sol-max"]);
 
   const builder = await readFile(new URL("../scripts/build-traces.mjs", import.meta.url), "utf8");
   assert.match(builder, /legacyTaskId === "120" \? "001" : legacyTaskId/);
@@ -57,6 +57,7 @@ test("publishes three sanitized model trace records per task", async () => {
       assert.match(trace.evaluation.verifierLog, /science-bench/);
       assert.doesNotMatch(text, /\/Users\/fnlp/);
       assert.doesNotMatch(text, /diff --git a\/source\//);
+      assert.doesNotMatch(text, /(?:artifacts\/)?model\.patch/);
       assert.doesNotMatch(text, /api\.modelverse\.cn|\.sii\.edu\.cn|linux\/amd64|UCloud|host\.docker\.internal/);
     }
   }

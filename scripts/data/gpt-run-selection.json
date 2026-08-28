@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "description": "Audit-selected GPT-5.6-sol xhigh runs. Source roots are configured at build time.",
+  "macPrimaryTaskIds": ["002", "003", "005", "025"],
+  "macPlatformTaskIds": [
+    "006", "007", "008", "009", "010", "011", "012", "014", "015", "017", "018",
+    "020", "021", "022", "023", "024", "026", "027", "028", "029", "030", "031",
+    "033", "034", "037", "038", "039"
+  ],
+  "wslTaskDirOverrides": {
+    "115": "122",
+    "116": "123",
+    "117": "124",
+    "118": "125",
+    "119": "126",
+    "120": "127"
+  },
+  "wslRunOverrides": {
+    "013": "gpt-5.6-sol-xhigh-with_auxiliary-013-withaux-token-fill-20260808T055802Z",
+    "016": "gpt-5.6-sol-xhigh-with_auxiliary-016-withaux-token-fill-20260808T055802Z",
+    "019": "gpt-5.6-sol-xhigh-with_auxiliary-019-withaux-token-fill-20260808T055802Z",
+    "032": "gpt-5.6-sol-xhigh-with_auxiliary-032-withaux-token-fill-20260808T055802Z",
+    "035": "gpt-5.6-sol-xhigh-with_auxiliary-035-withaux-token-fill-20260808T055802Z",
+    "036": "gpt-5.6-sol-xhigh-with_auxiliary-036-withaux-token-fill-20260808T055802Z",
+    "057": "gpt-5.6-sol-xhigh-with_auxiliary-057-withaux-token-fill-20260808T055802Z",
+    "069": "gpt-5.6-sol-xhigh-with_auxiliary-069-withaux-token-fill-20260808T055802Z"
+  },
+  "macPlatformRunOverrides": {
+    "039": "gpt-5.6-sol-xhigh-with_auxiliary-039-withaux-gpt-5.6-sol-xhigh-rerun-039-20260801T1040Z"
+  }
+}
