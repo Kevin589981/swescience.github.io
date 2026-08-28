@@ -108,9 +108,11 @@ function TaskDetail({ task, models }: { task: MatrixTask; models: MatrixModel[] 
                     </span>
                   </td>
                   <td>
-                    <a className="task-trace-link" href={traceHref(task.publishedTaskId, model.id, model.harness)}>
-                      Open trace <span aria-hidden="true">↗</span>
-                    </a>
+                    {model.id === "opus" ? (
+                      <a className="task-trace-link" href={traceHref(task.publishedTaskId, model.id, model.harness)}>
+                        Open trace <span aria-hidden="true">↗</span>
+                      </a>
+                    ) : <span className="task-trace-unavailable">Not available</span>}
                   </td>
                 </tr>
               ))}
@@ -135,6 +137,9 @@ export function TaskMatrix() {
     <main className="matrix-page matrix-gradient">
       <header className="matrix-header">
         <Link className="matrix-wordmark" href="/">SWE-bench Science</Link>
+        <nav className="matrix-nav" aria-label="Matrix navigation">
+          <Link href="/">Home</Link>
+        </nav>
       </header>
 
       <section className="matrix-intro">
@@ -155,6 +160,7 @@ export function TaskMatrix() {
           <input type="checkbox" checked={ablationOnly} onChange={(event) => setAblationOnly(event.target.checked)} />
           <span>Scientific-knowledge ablation only</span>
         </label>
+        <a className="matrix-jump-link" href="#task-details">Task details <span aria-hidden="true">↓</span></a>
       </section>
 
       <section className="matrix-legend" aria-label="Legend">
@@ -193,7 +199,7 @@ export function TaskMatrix() {
         </table>
       </div>
 
-      <section className="task-details-section" aria-label="Task-level run details">
+      <section className="task-details-section" id="task-details" aria-label="Task-level run details">
         <div className="task-details-heading">
           <h2>Task details</h2>
           <p>Expand a task to compare model, harness, test, and trace entries.</p>
