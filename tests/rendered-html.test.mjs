@@ -67,6 +67,8 @@ test("publishes the current model trace records per task", async () => {
   const glmTask = JSON.parse(await readFile(new URL("../public/traces/glm-5-2-max/task-002.json", import.meta.url), "utf8"));
   assert.ok(glmTask.events.some((event) => event.kind === "thinking"), "GLM reasoning from .codex-home should be represented");
   assert.ok(glmTask.events.some((event) => event.kind === "thinking" && event.text && event.redacted === false), "Readable GLM reasoning should be published");
+  assert.ok(glmTask.events.some((event) => event.elapsedSec > 0), "GLM rollout timestamps should produce elapsed event times");
+  assert.match(glmTask.events.find((event) => event.kind === "lifecycle").timestamp ?? "", /^\d{4}-\d{2}-\d{2}T/);
   assert.equal(glmTask.events.some((event) => Object.hasOwn(event, "position")), false, "Reasoning anchor positions stay internal");
   const opusTask = JSON.parse(await readFile(new URL("../public/traces/claude-opus-5-max/task-002.json", import.meta.url), "utf8"));
   assert.ok(opusTask.events.some((event) => event.kind === "thinking" && event.redacted === true), "Encrypted Opus reasoning remains unavailable");
