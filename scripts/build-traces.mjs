@@ -14,7 +14,13 @@ const gptWslArchive = process.env.GPT_WSL_ARCHIVE ?? "/Users/fnlp/Downloads/wsl_
 const gptWslRunsRoot = process.env.GPT_WSL_RUNS_ROOT ?? null;
 let gptExtractedRunsRoot = null;
 const obsoleteOutputRoot = path.join(repoRoot, "public/traces/opus-5-max-ucloud");
-const runSuffix = "claude-opus-5-max-ucloud-withaux-002-120-20260814-r1";
+
+const tokenUsageFiles = {
+  opus: process.env.OPUS_TOKEN_USAGE_FILE
+    ?? path.join(reportsRoot, "ucloud-opus-max-002-120-audit/token_usage_by_run.csv"),
+  glm: process.env.GLM_TOKEN_USAGE_FILE
+    ?? path.join(reportsRoot, "glm-5.2-max-with_auxiliary-002-120-audit/token_usage_by_run.csv"),
+};
 
 function readJson(file) {
   return JSON.parse(fs.readFileSync(file, "utf8"));
@@ -56,6 +62,44 @@ function parseCsv(text) {
   }
   const [headers, ...records] = rows;
   return records.filter((record) => record.some(Boolean)).map((record) => Object.fromEntries(headers.map((header, index) => [header, record[index] ?? ""])));
+}
+
+function numericOrNull(value) {
+  if (value === undefined || value === null || value === "") return null;
+  const number = Number(value);
+  return Number.isFinite(number) ? number : null;
+}
+
+function firstValue(row, keys) {
+  for (const key of keys) {
+    if (row[key] !== undefined && row[key] !== "") return row[key];
+  }
+  return null;
+}
+
+function readTokenUsage(file) {
+  if (!fs.existsSync(file)) throw new Error(`Missing token usage source: ${file}`);
+  const rows = parseCsv(fs.readFileSync(file, "utf8"));
+  if (rows.length !== 119) throw new Error(`Expected 119 token usage rows in ${file}, found ${rows.length}`);
+  const usageByTask = new Map();
+  for (const row of rows) {
+    const taskId = String(firstValue(row, ["task_id", "task"]) ?? "").replace(/^task_/, "").padStart(3, "0");
+    if (!/^\d{3}$/.test(taskId)) throw new Error(`Token usage source has invalid task id in ${file}`);
+    if (usageByTask.has(taskId)) throw new Error(`Token usage source has duplicate task ${taskId}: ${file}`);
+    usageByTask.set(taskId, {
+      input_tokens: numericOrNull(firstValue(row, ["input_tokens", "input"])),
+      output_tokens: numericOrNull(firstValue(row, ["output_tokens", "output"])),
+      total_tokens: numericOrNull(firstValue(row, ["total_tokens", "total"])),
+      cache_read_tokens: numericOrNull(firstValue(row, ["cache_read_tokens", "cache_read"])),
+      cache_creation_tokens: numericOrNull(firstValue(row, ["cache_creation_tokens", "cache_create"])),
+      call_count: numericOrNull(firstValue(row, ["call_count", "calls"])),
+      cost_usd: numericOrNull(firstValue(row, ["cost_usd"])),
+      source_trial_id: firstValue(row, ["trial_id"]),
+      source_run_path: firstValue(row, ["trial_root", "run_dir"]),
+    });
+  }
+  if (usageByTask.size !== 119) throw new Error(`Token usage source has duplicate or missing tasks: ${file}`);
+  return usageByTask;
 }
 
 const taskCsv = parseCsv(fs.readFileSync(path.join(repoRoot, "data/tasks.csv"), "utf8"));
@@ -595,14 +639,6 @@ function eventCounts(events) {
   }, {});
 }
 
-function locateOpusRun(legacyTaskId) {
-  const directory = path.join(runsRoot, `task_${legacyTaskId}`);
-  if (!fs.existsSync(directory)) throw new Error(`Missing task directory: ${directory}`);
-  const name = fs.readdirSync(directory).find((entry) => entry.includes(`-${legacyTaskId}-${runSuffix}`));
-  if (!name) throw new Error(`Missing UCloud Opus run for task ${legacyTaskId}`);
-  return path.join(directory, name);
-}
-
 function ensureGptWslRunsRoot() {
   if (gptWslRunsRoot) {
     if (!fs.existsSync(gptWslRunsRoot)) throw new Error(`GPT_WSL_RUNS_ROOT does not exist: ${gptWslRunsRoot}`);
@@ -645,7 +681,8 @@ const baseExperiments = [
     harness: "Claude Code",
     parser: "claude",
     outputDir: "claude-opus-5-max",
-    locateRun: locateOpusRun,
+    auditFile: path.join(reportsRoot, "ucloud-opus-max-002-120-audit/selected_runs.json"),
+    tokenUsageFile: tokenUsageFiles.opus,
   },
   {
     id: "glm-5-2-max",
@@ -655,6 +692,7 @@ const baseExperiments = [
     parser: "codex",
     outputDir: "glm-5-2-max",
     auditFile: path.join(reportsRoot, "glm-5.2-max-with_auxiliary-002-120-audit/selected_runs_and_evidence.json"),
+    tokenUsageFile: tokenUsageFiles.glm,
   },
   {
     id: "qwen3-8-27b-max",
@@ -711,9 +749,10 @@ function selectedRunMap(experiment) {
   const entries = Array.isArray(selected) ? selected : selected.tasks;
   if (!Array.isArray(entries) || entries.length !== 119) throw new Error(`Expected 119 selected runs in ${experiment.auditFile}`);
   return new Map(entries.map((entry) => {
-    const runPath = entry.trial_root ?? entry.run_path;
-    if (!runPath) throw new Error(`Selected run has no path for task ${entry.task_id}`);
-    return [String(entry.task_id).replace(/^task_/, ""), path.isAbsolute(runPath) ? runPath : path.join(benchmarkRoot, runPath)];
+    const runPath = entry.trial_root ?? entry.run_path ?? entry.run_dir;
+    const taskId = entry.task_id ?? entry.task;
+    if (!runPath) throw new Error(`Selected run has no path for task ${taskId}`);
+    return [String(taskId).replace(/^task_/, ""), path.isAbsolute(runPath) ? runPath : path.join(benchmarkRoot, runPath)];
   }));
 }
 
@@ -728,7 +767,7 @@ function locateSelectedRun(experiment, legacyTaskId, runMap) {
   return runRoot;
 }
 
-function buildTask(experiment, legacyTaskId, runMap) {
+function buildTask(experiment, legacyTaskId, runMap, tokenUsageMap) {
   const runRoot = locateSelectedRun(experiment, legacyTaskId, runMap);
   const trial = readJson(path.join(runRoot, "trial.json"));
   const trajectory = readJson(path.join(runRoot, "logs/trajectory.json"));
@@ -746,16 +785,17 @@ function buildTask(experiment, legacyTaskId, runMap) {
     : normalizeClaudeEvents(trajectory.events ?? [], runRoot);
   const directUsage = trial.agent_run?.usage ?? {};
   const trajectoryUsage = trajectory.events?.findLast((event) => event.type === "turn.completed" && event.usage)?.usage ?? {};
+  const tokenUsage = tokenUsageMap?.get(legacyTaskId) ?? null;
   const inputTokens = directUsage.input_tokens ?? trajectoryUsage.input_tokens ?? null;
   const outputTokens = directUsage.output_tokens ?? trajectoryUsage.output_tokens ?? null;
   const usage = {
-    input_tokens: inputTokens,
-    output_tokens: outputTokens,
-    total_tokens: directUsage.total_tokens ?? trajectoryUsage.total_tokens ?? (inputTokens !== null && outputTokens !== null ? inputTokens + outputTokens : null),
-    cache_read_tokens: directUsage.cache_read_tokens ?? trajectoryUsage.cache_read_tokens ?? trajectoryUsage.cached_input_tokens ?? null,
-    cache_creation_tokens: directUsage.cache_creation_tokens ?? trajectoryUsage.cache_creation_tokens ?? null,
-    call_count: directUsage.call_count ?? trajectoryUsage.call_count ?? null,
-    cost_usd: directUsage.cost_usd ?? trajectoryUsage.cost_usd ?? null,
+    input_tokens: tokenUsage?.input_tokens ?? inputTokens,
+    output_tokens: tokenUsage?.output_tokens ?? outputTokens,
+    total_tokens: tokenUsage?.total_tokens ?? directUsage.total_tokens ?? trajectoryUsage.total_tokens ?? (inputTokens !== null && outputTokens !== null ? inputTokens + outputTokens : null),
+    cache_read_tokens: tokenUsage?.cache_read_tokens ?? directUsage.cache_read_tokens ?? trajectoryUsage.cache_read_tokens ?? trajectoryUsage.cached_input_tokens ?? null,
+    cache_creation_tokens: tokenUsage?.cache_creation_tokens ?? directUsage.cache_creation_tokens ?? trajectoryUsage.cache_creation_tokens ?? null,
+    call_count: tokenUsage?.call_count ?? directUsage.call_count ?? trajectoryUsage.call_count ?? null,
+    cost_usd: tokenUsage?.cost_usd ?? directUsage.cost_usd ?? trajectoryUsage.cost_usd ?? null,
     reasoning_output_tokens: directUsage.reasoning_output_tokens ?? trajectoryUsage.reasoning_output_tokens ?? null,
   };
   const timings = trial.timings ?? {};
@@ -818,9 +858,10 @@ for (const experiment of experiments) {
   fs.mkdirSync(outputRoot, { recursive: true });
 
   const tasks = [];
+  const tokenUsageMap = experiment.tokenUsageFile ? readTokenUsage(experiment.tokenUsageFile) : null;
   for (let legacy = 2; legacy <= 120; legacy += 1) {
     const legacyTaskId = String(legacy).padStart(3, "0");
-    const task = buildTask(experiment, legacyTaskId, runMap);
+    const task = buildTask(experiment, legacyTaskId, runMap, tokenUsageMap);
     const file = `task-${task.task.publishedTaskId}.json`;
     fs.writeFileSync(path.join(outputRoot, file), `${JSON.stringify(task)}\n`);
     tasks.push({
