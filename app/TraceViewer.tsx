@@ -42,8 +42,9 @@ type TraceEvent = {
   text?: string;
   truncated?: boolean;
   redacted?: boolean;
+  reasoningStatus?: "readable" | "encrypted" | "unavailable";
   name?: string;
-  input?: Record<string, string | number | boolean> | null;
+  input?: unknown;
   result?: { isError: boolean; text: string; truncated: boolean };
   details?: { cwd?: string; model?: string; tools?: string[] };
   stopReason?: string | null;
@@ -169,19 +170,45 @@ function SummaryMetric({ label, metric }: { label: string; metric: Metric | null
   );
 }
 
+function EventText({ event, collapseLong = true }: { event: TraceEvent; collapseLong?: boolean }) {
+  const body = <div className="trace-event-text"><p>{event.text || "(empty message)"}</p></div>;
+  if (collapseLong && (event.text?.length ?? 0) > 1600) {
+    return <details className="trace-long-text"><summary>Show full content</summary>{body}</details>;
+  }
+  return body;
+}
+
 function EventBody({ event }: { event: TraceEvent }) {
   if (event.kind === "thinking") {
-    return <details className="trace-thinking"><summary>Reasoning block redacted</summary><p>Private chain-of-thought is omitted from the published trace.</p></details>;
+    if (event.text) {
+      return (
+        <details className="trace-thinking">
+          <summary>Reasoning block</summary>
+          <EventText event={event} collapseLong={false} />
+        </details>
+      );
+    }
+    const message = event.reasoningStatus === "encrypted"
+      ? "The source trace retained this reasoning as encrypted content; no plaintext was available."
+      : "The source trace contains no readable reasoning text.";
+    const title = event.reasoningStatus === "encrypted"
+      ? "Reasoning block unavailable (encrypted)"
+      : "Reasoning block unavailable";
+    return <details className="trace-thinking"><summary>{title}</summary><p>{message}</p></details>;
   }
 
   if (event.kind === "tool") {
+    const input = JSON.stringify(event.input ?? {}, null, 2);
     return (
       <div className="trace-tool-body">
         <div className="trace-code-label">Input</div>
-        <pre>{JSON.stringify(event.input ?? {}, null, 2)}</pre>
+        <details className="trace-tool-input" open={input.length <= 1200}>
+          <summary>Show command input</summary>
+          <pre>{input}</pre>
+        </details>
         {event.result && (
           <details className={`trace-tool-result ${event.result.isError ? "is-error" : ""}`}>
-            <summary>{event.result.isError ? "Tool result · error" : "Tool result"}{event.result.truncated ? " · truncated" : ""}</summary>
+            <summary>{event.result.isError ? "Tool result · error" : "Tool result"}</summary>
             <pre>{event.result.text || "(empty result)"}</pre>
           </details>
         )}
@@ -199,12 +226,7 @@ function EventBody({ event }: { event: TraceEvent }) {
     );
   }
 
-  return (
-    <div className="trace-event-text">
-      <p>{event.text || "(empty message)"}</p>
-      {event.truncated && <span className="trace-truncated">Preview truncated</span>}
-    </div>
-  );
+  return <EventText event={event} />;
 }
 
 function TraceTimeline({ events }: { events: TraceEvent[] }) {

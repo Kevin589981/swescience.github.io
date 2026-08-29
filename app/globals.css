@@ -459,7 +459,11 @@ footer { display: flex; justify-content: space-between; padding: 26px clamp(20px
 .trace-event-final .trace-event-card > header { background: color-mix(in srgb, var(--accent) 8%, var(--panel)); }
 .trace-event-text { padding: 12px; }
 .trace-event-text p { margin: 0; color: var(--body-copy); font-size: 11px; line-height: 1.65; white-space: pre-wrap; }
-.trace-truncated { display: block; margin-top: 8px; color: var(--muted); font-family: var(--font-geist-mono); font-size: 8px; text-transform: uppercase; }
+.trace-long-text summary,
+.trace-tool-input summary { padding: 10px 12px; color: var(--muted); cursor: pointer; font-family: var(--font-geist-mono); font-size: 9px; text-transform: uppercase; }
+.trace-long-text[open] summary,
+.trace-tool-input[open] summary { border-bottom: 1px solid var(--line); }
+.trace-long-text .trace-event-text { max-height: 560px; overflow: auto; }
 .trace-lifecycle-details { display: flex; flex-wrap: wrap; gap: 7px 16px; padding: 12px; }
 .trace-lifecycle-details span { color: var(--muted); font-family: var(--font-geist-mono); font-size: 9px; }
 .trace-code-label { margin-bottom: 7px; }
@@ -477,7 +481,7 @@ footer { display: flex; justify-content: space-between; padding: 26px clamp(20px
   white-space: pre-wrap;
   word-break: break-word;
 }
-.trace-tool-body > pre { max-height: 190px; padding: 11px; border: 1px solid var(--line); background: var(--paper); }
+.trace-tool-input pre { max-height: 420px; padding: 11px; border: 1px solid var(--line); background: var(--paper); }
 .trace-tool-result { margin-top: 10px; border-top: 1px solid var(--line); }
 .trace-tool-result summary,
 .trace-thinking summary { padding: 10px 0 0; color: var(--muted); cursor: pointer; font-family: var(--font-geist-mono); font-size: 9px; }

@@ -15,8 +15,6 @@ const gptWslRunsRoot = process.env.GPT_WSL_RUNS_ROOT ?? null;
 let gptExtractedRunsRoot = null;
 const obsoleteOutputRoot = path.join(repoRoot, "public/traces/opus-5-max-ucloud");
 const runSuffix = "claude-opus-5-max-ucloud-withaux-002-120-20260814-r1";
-const maxPreviewChars = 1200;
-const maxFinalChars = 3200;
 
 function readJson(file) {
   return JSON.parse(fs.readFileSync(file, "utf8"));
@@ -64,12 +62,6 @@ const taskCsv = parseCsv(fs.readFileSync(path.join(repoRoot, "data/tasks.csv"), 
 const taskById = new Map(taskCsv.map((task) => [task.task_id, task]));
 if (taskCsv.length !== 119 || taskById.size !== 119) throw new Error("data/tasks.csv must contain 119 unique published tasks");
 
-function truncate(value, limit = maxPreviewChars) {
-  const text = String(value ?? "");
-  if (text.length <= limit) return { text, truncated: false };
-  return { text: `${text.slice(0, limit)}\n... [truncated]`, truncated: true };
-}
-
 function sanitizeText(value, runRoot) {
   return String(value ?? "")
     .replaceAll(runRoot, "<run>")
@@ -88,25 +80,49 @@ function sanitizeText(value, runRoot) {
     .replace(/\b(?:sk|rk)-[A-Za-z0-9_-]{12,}\b/g, "<redacted>");
 }
 
-function preview(value, limit, runRoot) {
-  const result = truncate(sanitizeText(value, runRoot), limit);
-  return result;
+function fullText(value, runRoot) {
+  return { text: sanitizeText(value, runRoot), truncated: false };
+}
+
+function reasoningText(item) {
+  if (typeof item?.thinking === "string" && item.thinking) return item.thinking;
+  if (typeof item?.text === "string" && item.text) return item.text;
+  const collect = (value) => {
+    if (!Array.isArray(value)) return [];
+    return value.map((block) => {
+      if (typeof block === "string") return block;
+      if (!block || typeof block !== "object") return "";
+      return typeof block.text === "string" ? block.text : "";
+    }).filter(Boolean);
+  };
+
+  // Codex may retain a readable content block alongside an opaque encrypted payload.
+  // Prefer the full content and use summary text only when content is absent.
+  const content = collect(item?.content);
+  if (content.length) return content.join("\n\n");
+  return collect(item?.summary).join("\n\n");
+}
+
+function reasoningFields(item) {
+  const text = reasoningText(item);
+  if (!text) {
+    const encrypted = typeof item?.encrypted_content === "string" && item.encrypted_content.length > 0;
+    return { redacted: true, reasoningStatus: encrypted ? "encrypted" : "unavailable" };
+  }
+  // Readable reasoning is intentionally preserved without sanitization or
+  // truncation; the viewer must show the model's original thought text.
+  return { text, truncated: false, redacted: false, reasoningStatus: "readable" };
 }
 
 function safeInput(input, runRoot) {
   if (!input || typeof input !== "object") return null;
-  const allowed = ["command", "description", "file_path", "path", "limit", "offset", "replace_all", "old_string", "new_string"];
-  const output = {};
-  for (const key of allowed) {
-    if (!(key in input)) continue;
-    const value = input[key];
-    if (typeof value === "string") {
-      output[key] = preview(value, key === "command" ? 1800 : 900, runRoot).text;
-    } else if (typeof value === "number" || typeof value === "boolean") {
-      output[key] = value;
-    }
-  }
-  return output;
+  const copy = (value) => {
+    if (typeof value === "string") return sanitizeText(value, runRoot);
+    if (Array.isArray(value)) return value.map(copy);
+    if (value && typeof value === "object") return Object.fromEntries(Object.entries(value).map(([key, nested]) => [key, copy(nested)]));
+    return value;
+  };
+  return copy(input);
 }
 
 function resultContent(block) {
@@ -152,33 +168,44 @@ function findFiles(root, predicate) {
 }
 
 // Codex's canonical trajectory can omit reasoning items even though the local
-// rollout stream retained them. Keep only their positions; private text is
-// deliberately never copied into the published trace.
+// rollout stream retained them. Keep their positions and any readable text;
+// encrypted-only blocks remain represented without copying the ciphertext.
 function readCodexReasoningAnchors(runRoot) {
-  const homeRoots = [path.join(runRoot, ".codex-home"), path.join(runRoot, "artifacts/.codex-home")];
-  const rolloutFiles = homeRoots.flatMap((root) => findFiles(root, (_file, name) => /^rollout-.*\.jsonl$/.test(name)));
+  const homeRoots = [
+    path.join(runRoot, ".codex-home"),
+    path.join(runRoot, "artifacts/.codex-home"),
+    path.join(runRoot, "artifacts/codex-home"),
+  ];
+  const rolloutFiles = homeRoots
+    .flatMap((root) => findFiles(root, (_file, name) => /^rollout-.*\.jsonl$/.test(name)))
+    .filter((file, index, files) => files.findIndex((candidate) => path.basename(candidate) === path.basename(file)) === index);
   const anchors = [];
+  const seenReasoning = new Set();
   let visibleAnchor = 0;
 
   for (const file of rolloutFiles) {
     const lines = fs.readFileSync(file, "utf8").split(/\r?\n/);
-    for (const line of lines) {
-      if (!line) continue;
+    lines.forEach((line, lineIndex) => {
+      if (!line) return;
       let event;
       try {
         event = JSON.parse(line);
       } catch {
-        continue;
+        return;
       }
-      if (event.type !== "response_item" || !event.payload) continue;
+      if (event.type !== "response_item" || !event.payload) return;
       const item = event.payload;
       if (item.type === "reasoning") {
-        anchors.push(visibleAnchor);
+        const identity = item.id ?? `${file}:${lineIndex}`;
+        if (!seenReasoning.has(identity)) {
+          seenReasoning.add(identity);
+          anchors.push({ position: visibleAnchor, fields: reasoningFields(item) });
+        }
       } else if ((item.type === "message" && item.role === "assistant")
         || ["function_call", "custom_tool_call", "computer_call", "local_shell_call"].includes(item.type)) {
         visibleAnchor += 1;
       }
-    }
+    });
   }
 
   return anchors;
@@ -244,10 +271,10 @@ function normalizeClaudeEvents(events, runRoot) {
             kind: "thinking",
             source: event,
             label: "Reasoning block",
-            redacted: true,
+            ...reasoningFields(block),
           });
         } else if (block.type === "text") {
-          const text = preview(block.text, maxPreviewChars, runRoot);
+          const text = fullText(block.text, runRoot);
           add({
             kind: "assistant",
             source: event,
@@ -269,7 +296,7 @@ function normalizeClaudeEvents(events, runRoot) {
         const rawResult = resultContent(block.content);
         const result = item.omitResult || /^diff --git /m.test(rawResult)
           ? { text: "[agent patch content omitted from the published trace]", truncated: false }
-          : preview(rawResult, maxPreviewChars, runRoot);
+          : fullText(rawResult, runRoot);
         item.result = {
           isError: Boolean(block.is_error),
           text: result.text,
@@ -282,20 +309,20 @@ function normalizeClaudeEvents(events, runRoot) {
         if (item) {
           const result = item.omitResult || /^diff --git /m.test(event.tool_use_result)
             ? { text: "[agent patch content omitted from the published trace]", truncated: false }
-            : preview(event.tool_use_result, maxPreviewChars, runRoot);
+            : fullText(event.tool_use_result, runRoot);
           item.result = { isError: false, text: result.text, truncated: result.truncated };
           attached = true;
         }
       }
       if (!attached && blocks.length) {
-        const text = preview(resultContent(blocks), maxPreviewChars, runRoot);
+        const text = fullText(resultContent(blocks), runRoot);
         add({ kind: "message", source: event, text: text.text, truncated: text.truncated });
       }
       continue;
     }
 
     if (event.type === "result") {
-      const text = preview(event.result, maxFinalChars, runRoot);
+      const text = fullText(event.result, runRoot);
       add({
         kind: "final",
         source: event,
@@ -332,8 +359,9 @@ function normalizeCodexEvents(events, runRoot, model, reasoningAnchors = []) {
   };
 
   const flushReasoning = () => {
-    while (reasoningIndex < reasoningAnchors.length && reasoningAnchors[reasoningIndex] <= visibleAnchor) {
-      add("thinking", { label: "Reasoning block", redacted: true });
+    while (reasoningIndex < reasoningAnchors.length && reasoningAnchors[reasoningIndex].position <= visibleAnchor) {
+      const reasoning = reasoningAnchors[reasoningIndex];
+      add("thinking", { label: "Reasoning block", ...reasoning.fields });
       reasoningIndex += 1;
     }
   };
@@ -353,7 +381,7 @@ function normalizeCodexEvents(events, runRoot, model, reasoningAnchors = []) {
     const item = event.item ?? {};
     flushReasoning();
     if (item.type === "agent_message") {
-      const output = preview(item.text, completedIndex === lastAgentMessage ? maxFinalChars : maxPreviewChars, runRoot);
+      const output = fullText(item.text, runRoot);
       addAnchored(completedIndex === lastAgentMessage ? "final" : "assistant", {
         text: output.text,
         truncated: output.truncated,
@@ -362,7 +390,7 @@ function normalizeCodexEvents(events, runRoot, model, reasoningAnchors = []) {
     }
 
     if (item.type === "reasoning") {
-      add("thinking", { label: "Reasoning block", redacted: true });
+      add("thinking", { label: "Reasoning block", ...reasoningFields(item) });
       return;
     }
 
@@ -371,11 +399,11 @@ function normalizeCodexEvents(events, runRoot, model, reasoningAnchors = []) {
       const rawResult = String(item.aggregated_output ?? "");
       const result = omitResult || /^diff --git /m.test(rawResult)
         ? { text: "[agent patch content omitted from the published trace]", truncated: false }
-        : preview(rawResult, maxPreviewChars, runRoot);
+        : fullText(rawResult, runRoot);
       addAnchored("tool", {
         toolUseId: item.id ?? null,
         name: "Shell",
-        input: { command: preview(item.command, 1800, runRoot).text },
+        input: { command: fullText(item.command, runRoot).text },
         result: {
           isError: item.status === "failed" || (typeof item.exit_code === "number" && item.exit_code !== 0),
           text: result.text,
@@ -399,20 +427,21 @@ function normalizeCodexEvents(events, runRoot, model, reasoningAnchors = []) {
 
     if (item.type === "todo_list") {
       const text = (item.items ?? []).map((todo) => `${todo.completed ? "[x]" : "[ ]"} ${todo.text}`).join("\n");
-      const output = preview(text, maxPreviewChars, runRoot);
+      const output = fullText(text, runRoot);
       addAnchored("message", { label: "Plan update", text: output.text, truncated: output.truncated });
       return;
     }
 
     if (item.type === "error") {
-      const output = preview(item.message, maxPreviewChars, runRoot);
+      const output = fullText(item.message, runRoot);
       add("message", { label: "Runtime notice", text: output.text, truncated: output.truncated });
     }
   });
 
   flushReasoning();
   while (reasoningIndex < reasoningAnchors.length) {
-    add("thinking", { label: "Reasoning block", redacted: true });
+    const reasoning = reasoningAnchors[reasoningIndex];
+    add("thinking", { label: "Reasoning block", ...reasoning.fields });
     reasoningIndex += 1;
   }
 

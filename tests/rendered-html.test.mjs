@@ -31,7 +31,7 @@ test("keeps trace entry points inside task details", async () => {
   assert.doesNotMatch(html, /Trace browser/);
 });
 
-test("publishes four sanitized model trace records per task", async () => {
+test("publishes four model trace records per task", async () => {
   const registry = JSON.parse(await readFile(new URL("../public/traces/index.json", import.meta.url), "utf8"));
   assert.deepEqual(registry.experiments.map((experiment) => experiment.id), ["claude-opus-5-max", "glm-5-2-max", "qwen3-8-27b-max", "gpt-5-6-sol-max"]);
 
@@ -51,19 +51,28 @@ test("publishes four sanitized model trace records per task", async () => {
       await access(new URL(entry.file, root));
       const text = await readFile(new URL(entry.file, root), "utf8");
       const trace = JSON.parse(text);
+      const nonReasoningText = JSON.stringify({ ...trace, events: trace.events.filter((event) => event.kind !== "thinking") });
       assert.equal(trace.task.publishedTaskId, entry.publishedTaskId);
       assert.equal(Object.hasOwn(trace, "workspace"), false);
       assert.equal(typeof trace.evaluation.verifierLog, "string");
       assert.match(trace.evaluation.verifierLog, /science-bench/);
-      assert.doesNotMatch(text, /\/Users\/fnlp/);
-      assert.doesNotMatch(text, /diff --git a\/source\//);
-      assert.doesNotMatch(text, /(?:artifacts\/)?model\.patch/);
-      assert.doesNotMatch(text, /api\.modelverse\.cn|\.sii\.edu\.cn|linux\/amd64|UCloud|host\.docker\.internal/);
+      assert.equal(trace.events.some((event) => event.truncated || event.result?.truncated), false, "Trace events retain complete text");
+      assert.doesNotMatch(nonReasoningText, /\/Users\/fnlp/);
+      assert.doesNotMatch(nonReasoningText, /diff --git a\/source\//);
+      assert.doesNotMatch(nonReasoningText, /(?:artifacts\/)?model\.patch/);
+      assert.doesNotMatch(nonReasoningText, /api\.modelverse\.cn|\.sii\.edu\.cn|linux\/amd64|UCloud|host\.docker\.internal/);
     }
   }
 
   const glmTask = JSON.parse(await readFile(new URL("../public/traces/glm-5-2-max/task-002.json", import.meta.url), "utf8"));
   assert.ok(glmTask.events.some((event) => event.kind === "thinking"), "GLM reasoning from .codex-home should be represented");
-  const gptTokenFillTask = JSON.parse(await readFile(new URL("../public/traces/gpt-5-6-sol-max/task-013.json", import.meta.url), "utf8"));
+  assert.ok(glmTask.events.some((event) => event.kind === "thinking" && event.text && event.redacted === false), "Readable GLM reasoning should be published");
+  assert.equal(glmTask.events.some((event) => Object.hasOwn(event, "position")), false, "Reasoning anchor positions stay internal");
+  const opusTask = JSON.parse(await readFile(new URL("../public/traces/claude-opus-5-max/task-002.json", import.meta.url), "utf8"));
+  assert.ok(opusTask.events.some((event) => event.kind === "thinking" && event.redacted === true), "Encrypted Opus reasoning remains unavailable");
+  const gptEncryptedTask = JSON.parse(await readFile(new URL("../public/traces/gpt-5-6-sol-max/task-001.json", import.meta.url), "utf8"));
+  assert.ok(gptEncryptedTask.events.some((event) => event.kind === "thinking" && event.reasoningStatus === "encrypted"), "Encrypted GPT Responses reasoning is identified explicitly");
+  const gptTokenFillTask = JSON.parse(await readFile(new URL("../public/traces/gpt-5-6-sol-max/task-002.json", import.meta.url), "utf8"));
   assert.ok(gptTokenFillTask.events.some((event) => event.kind === "thinking"), "GPT reasoning from hidden Codex rollout should be represented");
+  assert.ok(gptTokenFillTask.events.some((event) => event.kind === "thinking" && event.text && event.redacted === false), "Readable GPT reasoning should be published");
 });
