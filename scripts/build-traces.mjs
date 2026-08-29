@@ -167,21 +167,46 @@ function findFiles(root, predicate) {
   return files.sort();
 }
 
-// Codex's canonical trajectory can omit reasoning items even though the local
-// rollout stream retained them. Keep their positions and any readable text;
-// encrypted-only blocks remain represented without copying the ciphertext.
-function readCodexReasoningAnchors(runRoot) {
+function codexRolloutFiles(runRoot) {
   const homeRoots = [
     path.join(runRoot, ".codex-home"),
     path.join(runRoot, "artifacts/.codex-home"),
     path.join(runRoot, "artifacts/codex-home"),
   ];
-  const rolloutFiles = homeRoots
+  return homeRoots
     .flatMap((root) => findFiles(root, (_file, name) => /^rollout-.*\.jsonl$/.test(name)))
     .filter((file, index, files) => files.findIndex((candidate) => path.basename(candidate) === path.basename(file)) === index);
+}
+
+function rolloutMessageText(item) {
+  return (item?.content ?? [])
+    .map((block) => typeof block?.text === "string" ? block.text : "")
+    .join("");
+}
+
+function rolloutCommand(item) {
+  if (typeof item?.arguments !== "string") return "";
+  try {
+    const argumentsObject = JSON.parse(item.arguments);
+    return typeof argumentsObject?.cmd === "string" ? argumentsObject.cmd : "";
+  } catch {
+    return "";
+  }
+}
+
+// The canonical Codex trajectory omits per-event timestamps, while the local
+// rollout stream retains them. Keep readable reasoning and a typed timestamp
+// queue so normalized events can recover their actual elapsed times.
+function readCodexRolloutTimeline(runRoot) {
+  const rolloutFiles = codexRolloutFiles(runRoot);
   const anchors = [];
+  const messages = [];
+  const commands = [];
+  const patches = [];
+  const planUpdates = [];
   const seenReasoning = new Set();
   let visibleAnchor = 0;
+  let firstTimestamp = null;
 
   for (const file of rolloutFiles) {
     const lines = fs.readFileSync(file, "utf8").split(/\r?\n/);
@@ -193,22 +218,35 @@ function readCodexReasoningAnchors(runRoot) {
       } catch {
         return;
       }
+      const timestamp = normalizeTimestamp(event.timestamp);
+      if (timestamp && firstTimestamp === null) firstTimestamp = timestamp;
       if (event.type !== "response_item" || !event.payload) return;
       const item = event.payload;
       if (item.type === "reasoning") {
         const identity = item.id ?? `${file}:${lineIndex}`;
         if (!seenReasoning.has(identity)) {
           seenReasoning.add(identity);
-          anchors.push({ position: visibleAnchor, fields: reasoningFields(item) });
+          anchors.push({ position: visibleAnchor, timestamp, fields: reasoningFields(item) });
         }
-      } else if ((item.type === "message" && item.role === "assistant")
-        || ["function_call", "custom_tool_call", "computer_call", "local_shell_call"].includes(item.type)) {
+      } else if (item.type === "message" && item.role === "assistant") {
+        messages.push({ timestamp, text: rolloutMessageText(item) });
         visibleAnchor += 1;
+      } else if (item.type === "function_call") {
+        if (item.name === "update_plan") {
+          planUpdates.push({ timestamp });
+        } else if (item.name === "exec_command") {
+          const command = rolloutCommand(item);
+          (command.includes("apply_patch") ? patches : commands).push({ timestamp, command });
+          visibleAnchor += 1;
+        } else {
+          commands.push({ timestamp, command: rolloutCommand(item) });
+          visibleAnchor += 1;
+        }
       }
     });
   }
 
-  return anchors;
+  return { firstTimestamp, anchors, messages, commands, patches, planUpdates };
 }
 
 function normalizeClaudeEvents(events, runRoot) {
@@ -340,61 +378,122 @@ function normalizeClaudeEvents(events, runRoot) {
   });
 }
 
-function normalizeCodexEvents(events, runRoot, model, reasoningAnchors = []) {
+function shellCommandBody(command) {
+  const value = String(command ?? "").trim();
+  const match = value.match(/^\/usr\/bin\/bash -lc\s+([\s\S]+)$/);
+  if (!match) return value;
+  const body = match[1].trim();
+  if (body.startsWith('"')) {
+    try {
+      return JSON.parse(body);
+    } catch {
+      return body;
+    }
+  }
+  if (body.startsWith("'") && body.endsWith("'")) return body.slice(1, -1).replaceAll("'\\''", "'");
+  return body;
+}
+
+function commandFingerprint(command) {
+  return shellCommandBody(command)
+    .replace(/^cd \/workspace\/task(?:_\d+)? && /, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function commandsEquivalent(left, right) {
+  const leftFingerprint = commandFingerprint(left);
+  const rightFingerprint = commandFingerprint(right);
+  return Boolean(leftFingerprint && rightFingerprint)
+    && (leftFingerprint === rightFingerprint
+      || leftFingerprint.includes(rightFingerprint)
+      || rightFingerprint.includes(leftFingerprint));
+}
+
+function normalizeCodexEvents(events, runRoot, model, timeline = {}) {
   const completed = events.filter((event) => event.type === "item.completed");
   const lastAgentMessage = completed.findLastIndex((event) => event.item?.type === "agent_message");
   const normalized = [];
+  const reasoningAnchors = timeline.injectedReasoning ?? timeline.anchors ?? [];
+  const sourceReasoning = timeline.anchors ?? [];
+  const messageRecords = (timeline.messages ?? []).map((record) => ({ ...record, used: false }));
+  const commandRecords = (timeline.commands ?? []).map((record) => ({ ...record, used: false }));
+  const patchRecords = (timeline.patches ?? []).map((record) => ({ ...record, used: false }));
+  const firstTimestamp = timeline.firstTimestamp ?? null;
+  const firstTime = eventTimestamp({ timestamp: firstTimestamp });
   let reasoningIndex = 0;
+  let sourceReasoningIndex = 0;
   let visibleAnchor = 0;
 
-  const add = (kind, fields = {}) => {
+  const timingFields = (timestamp) => {
+    const normalizedTimestamp = normalizeTimestamp(timestamp);
+    const time = eventTimestamp({ timestamp: normalizedTimestamp });
+    return {
+      timestamp: normalizedTimestamp,
+      elapsedSec: firstTime !== null && time !== null
+        ? Math.max(0, Number(((time - firstTime) / 1000).toFixed(3)))
+        : null,
+    };
+  };
+
+  const add = (kind, fields = {}, timestamp = null) => {
     normalized.push({
       id: `event-${normalized.length + 1}`,
       sequence: normalized.length + 1,
       kind,
-      timestamp: null,
-      elapsedSec: 0,
+      ...timingFields(timestamp),
       ...fields,
     });
+  };
+
+  const consume = (records, matcher, fallback = true) => {
+    let index = records.findIndex((record) => !record.used && matcher(record));
+    if (index < 0 && fallback) index = records.findIndex((record) => !record.used);
+    if (index < 0) return null;
+    records[index].used = true;
+    return records[index];
   };
 
   const flushReasoning = () => {
     while (reasoningIndex < reasoningAnchors.length && reasoningAnchors[reasoningIndex].position <= visibleAnchor) {
       const reasoning = reasoningAnchors[reasoningIndex];
-      add("thinking", { label: "Reasoning block", ...reasoning.fields });
+      add("thinking", { label: "Reasoning block", ...reasoning.fields }, reasoning.timestamp);
       reasoningIndex += 1;
     }
   };
 
-  const addAnchored = (kind, fields = {}) => {
+  const addAnchored = (kind, fields = {}, timestamp = null) => {
     flushReasoning();
-    add(kind, fields);
+    add(kind, fields, timestamp);
     visibleAnchor += 1;
   };
 
   add("lifecycle", {
     label: "Session start",
     details: { cwd: "/workspace/task", model, tools: ["Shell", "File edit"] },
-  });
+  }, firstTimestamp);
 
   completed.forEach((event, completedIndex) => {
     const item = event.item ?? {};
     flushReasoning();
     if (item.type === "agent_message") {
       const output = fullText(item.text, runRoot);
+      const record = consume(messageRecords, (candidate) => candidate.text === item.text);
       addAnchored(completedIndex === lastAgentMessage ? "final" : "assistant", {
         text: output.text,
         truncated: output.truncated,
-      });
+      }, record?.timestamp ?? null);
       return;
     }
 
     if (item.type === "reasoning") {
-      add("thinking", { label: "Reasoning block", ...reasoningFields(item) });
+      const record = sourceReasoning[sourceReasoningIndex++] ?? null;
+      add("thinking", { label: "Reasoning block", ...reasoningFields(item) }, record?.timestamp ?? null);
       return;
     }
 
     if (item.type === "command_execution") {
+      const record = consume(commandRecords, (candidate) => commandsEquivalent(candidate.command, item.command));
       const omitResult = /(?:^|\/)artifacts\/model\.patch\b/.test(item.command ?? "");
       const rawResult = String(item.aggregated_output ?? "");
       const result = omitResult || /^diff --git /m.test(rawResult)
@@ -409,11 +508,13 @@ function normalizeCodexEvents(events, runRoot, model, reasoningAnchors = []) {
           text: result.text,
           truncated: result.truncated,
         },
-      });
+      }, record?.timestamp ?? null);
       return;
     }
 
     if (item.type === "file_change") {
+      const paths = (item.changes ?? []).map((change) => change.path).filter(Boolean);
+      const record = consume(patchRecords, (candidate) => paths.some((file) => candidate.command.includes(file)));
       addAnchored("tool", {
         toolUseId: item.id ?? null,
         name: "File edit",
@@ -421,14 +522,15 @@ function normalizeCodexEvents(events, runRoot, model, reasoningAnchors = []) {
           paths: (item.changes ?? []).map((change) => sanitizeText(change.path, runRoot)).join(", "),
         },
         result: { isError: item.status === "failed", text: item.status ?? "completed", truncated: false },
-      });
+      }, record?.timestamp ?? null);
       return;
     }
 
     if (item.type === "todo_list") {
       const text = (item.items ?? []).map((todo) => `${todo.completed ? "[x]" : "[ ]"} ${todo.text}`).join("\n");
       const output = fullText(text, runRoot);
-      addAnchored("message", { label: "Plan update", text: output.text, truncated: output.truncated });
+      const record = (timeline.planUpdates ?? []).at(-1);
+      addAnchored("message", { label: "Plan update", text: output.text, truncated: output.truncated }, record?.timestamp ?? null);
       return;
     }
 
@@ -441,7 +543,7 @@ function normalizeCodexEvents(events, runRoot, model, reasoningAnchors = []) {
   flushReasoning();
   while (reasoningIndex < reasoningAnchors.length) {
     const reasoning = reasoningAnchors[reasoningIndex];
-    add("thinking", { label: "Reasoning block", ...reasoning.fields });
+    add("thinking", { label: "Reasoning block", ...reasoning.fields }, reasoning.timestamp);
     reasoningIndex += 1;
   }
 
@@ -635,9 +737,12 @@ function buildTask(experiment, legacyTaskId, runMap) {
   const publishedTask = taskById.get(publishedTaskId);
   if (!publishedTask) throw new Error(`Missing published task ${publishedTaskId} in data/tasks.csv`);
   const trajectoryHasReasoning = trajectory.events?.some((event) => event.item?.type === "reasoning");
-  const reasoningAnchors = experiment.parser === "codex" && !trajectoryHasReasoning ? readCodexReasoningAnchors(runRoot) : [];
+  const codexTimeline = experiment.parser === "codex" ? readCodexRolloutTimeline(runRoot) : null;
   const events = experiment.parser === "codex"
-    ? normalizeCodexEvents(trajectory.events ?? [], runRoot, experiment.model, reasoningAnchors)
+    ? normalizeCodexEvents(trajectory.events ?? [], runRoot, experiment.model, {
+      ...(codexTimeline ?? {}),
+      injectedReasoning: trajectoryHasReasoning ? [] : (codexTimeline?.anchors ?? []),
+    })
     : normalizeClaudeEvents(trajectory.events ?? [], runRoot);
   const directUsage = trial.agent_run?.usage ?? {};
   const trajectoryUsage = trajectory.events?.findLast((event) => event.type === "turn.completed" && event.usage)?.usage ?? {};
@@ -746,4 +851,4 @@ for (const experiment of experiments) {
   console.log(`Wrote ${tasks.length} ${experiment.label} trace records.`);
 }
 
-fs.writeFileSync(path.join(repoRoot, "public/traces/index.json"), `${JSON.stringify({ version: 1, experiments: registry })}\n`);
+fs.writeFileSync(path.join(repoRoot, "public/traces/index.json"), `${JSON.stringify({ version: 1, experiments: registry }, null, 2)}\n`);

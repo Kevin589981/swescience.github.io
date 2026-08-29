@@ -36,7 +36,7 @@ type TraceEvent = {
   id: string;
   sequence: number;
   kind: "lifecycle" | "assistant" | "thinking" | "tool" | "message" | "final";
-  elapsedSec: number;
+  elapsedSec: number | null;
   timestamp: string | null;
   label?: string;
   text?: string;
@@ -125,7 +125,8 @@ function formatDuration(seconds: number | null | undefined) {
   return `${remainder}s`;
 }
 
-function formatElapsed(seconds: number) {
+function formatElapsed(seconds: number | null | undefined) {
+  if (seconds === null || seconds === undefined) return "-";
   const total = Math.max(0, Math.round(seconds));
   const hours = Math.floor(total / 3600);
   const minutes = Math.floor((total % 3600) / 60);
@@ -248,7 +249,7 @@ function TraceTimeline({ events }: { events: TraceEvent[] }) {
           <article className={`trace-event trace-event-${event.kind}`} id={event.id} key={event.id}>
             <div className="trace-event-rail"><span>{event.sequence}</span></div>
             <div className="trace-event-card">
-              <header><strong>{eventLabel(event)}</strong><time>+{formatElapsed(event.elapsedSec)}</time></header>
+              <header><strong>{eventLabel(event)}</strong><time>{event.elapsedSec === null ? "-" : `+${formatElapsed(event.elapsedSec)}`}</time></header>
               <EventBody event={event} />
             </div>
           </article>
