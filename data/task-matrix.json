@@ -10,7 +10,6 @@
   "selectionRule": "Models with benchmark.json overall Pass@1 above Nex N2 (24.37%).",
   "includedModels": [
     "opus",
-    "gpt",
     "glm",
     "qwen-3-8-27b"
   ],
@@ -37,26 +36,6 @@
       "tokens": {
         "input": 7.048,
         "output": 0.11
-      }
-    },
-    {
-      "id": "gpt",
-      "family": "GPT-5.6-sol",
-      "reasoningDepth": "max",
-      "harness": "Codex",
-      "scores": {
-        "public": 99.16,
-        "private": 78.82,
-        "fail2Pass": 72.3,
-        "pass2Pass": 97.66,
-        "overall": 46.22,
-        "issue": 36.54,
-        "expert": 59.18,
-        "engineering": 38.89
-      },
-      "tokens": {
-        "input": 4.199,
-        "output": 0.025
       }
     },
     {
@@ -144,19 +123,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 1,
-            "total": 3
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -203,19 +169,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 2,
-            "total": 10
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -262,19 +215,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 5,
-            "total": 9
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -321,19 +261,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 2,
-            "total": 6
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -380,19 +307,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 85,
-            "total": 93
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -439,19 +353,6 @@
           "reward": 1,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 93,
-            "total": 97
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -498,19 +399,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 13,
-            "total": 15
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -557,19 +445,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 7,
-            "total": 13
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -616,19 +491,6 @@
           "reward": 1,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 5,
-            "total": 5
-          },
-          "reward": 1,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -675,19 +537,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 6,
-            "total": 10
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -734,19 +583,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 4,
-            "total": 10
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -793,19 +629,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 1,
-            "total": 6
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -852,19 +675,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 23,
-            "total": 23
-          },
-          "reward": 1,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -911,19 +721,6 @@
           "reward": 1,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 2,
-            "total": 3
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -970,19 +767,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 37,
-            "total": 37
-          },
-          "reward": 1,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -1029,19 +813,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 3,
-            "total": 4
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -1088,19 +859,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 0,
-            "total": 7
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -1147,19 +905,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 4,
-            "total": 4
-          },
-          "reward": 1,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -1206,19 +951,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 3,
-            "total": 4
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -1265,19 +997,6 @@
           "reward": 1,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 8,
-            "total": 10
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -1324,19 +1043,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 7,
-            "total": 8
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -1383,19 +1089,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 2,
-            "total": 4
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -1442,19 +1135,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 5,
-            "total": 11
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -1501,19 +1181,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 6,
-            "total": 7
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -1560,19 +1227,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 5,
-            "total": 8
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -1619,19 +1273,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 2,
-            "total": 8
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -1678,19 +1319,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 0,
-            "total": 5
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -1737,19 +1365,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 0,
-            "total": 4
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -1796,19 +1411,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 7,
-            "total": 9
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -1855,19 +1457,6 @@
           "reward": 1,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 0,
-            "total": 3
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -1914,19 +1503,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 4,
-            "total": 6
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -1973,19 +1549,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 2,
-            "total": 4
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -2032,19 +1595,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 3,
-            "total": 5
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -2091,19 +1641,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 2,
-            "total": 5
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -2150,19 +1687,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 3,
-            "total": 4
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -2209,19 +1733,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 3,
-            "total": 10
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -2268,19 +1779,6 @@
           "reward": 1,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 4,
-            "total": 7
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -2327,19 +1825,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 1,
-            "total": 3
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -2386,19 +1871,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 1,
-            "total": 7
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -2445,19 +1917,6 @@
           "reward": 1,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 5,
-            "total": 5
-          },
-          "reward": 1,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -2504,19 +1963,6 @@
           "reward": 1,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 10,
-            "total": 15
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -2563,19 +2009,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 13,
-            "total": 14
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -2622,19 +2055,6 @@
           "reward": 1,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 38,
-            "total": 42
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -2681,19 +2101,6 @@
           "reward": 1,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 12,
-            "total": 13
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -2740,19 +2147,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 6,
-            "total": 7
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -2799,19 +2193,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 4,
-            "total": 8
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -2858,19 +2239,6 @@
           "reward": 1,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 7,
-            "total": 10
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -2917,19 +2285,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 5,
-            "total": 6
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -2976,19 +2331,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 6,
-            "total": 7
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -3035,19 +2377,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 2,
-            "total": 5
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -3094,19 +2423,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 1,
-            "total": 9
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -3153,19 +2469,6 @@
           "reward": 1,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 4,
-            "total": 4
-          },
-          "reward": 1,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -3212,19 +2515,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 0,
-            "total": 3
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -3271,19 +2561,6 @@
           "reward": 1,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 3,
-            "total": 6
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -3330,19 +2607,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 5,
-            "total": 6
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -3389,19 +2653,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 2,
-            "total": 7
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -3448,19 +2699,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 4,
-            "total": 8
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -3507,19 +2745,6 @@
           "reward": 1,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 17,
-            "total": 18
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -3566,19 +2791,6 @@
           "reward": 1,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 11,
-            "total": 17
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -3625,19 +2837,6 @@
           "reward": 1,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 2,
-            "total": 8
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -3684,19 +2883,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 4,
-            "total": 11
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -3743,19 +2929,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 9,
-            "total": 9
-          },
-          "reward": 1,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -3802,19 +2975,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 9,
-            "total": 9
-          },
-          "reward": 1,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -3861,19 +3021,6 @@
           "reward": 1,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 11,
-            "total": 11
-          },
-          "reward": 1,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -3920,19 +3067,6 @@
           "reward": 1,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 10,
-            "total": 10
-          },
-          "reward": 1,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -3979,19 +3113,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 10,
-            "total": 18
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -4038,19 +3159,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 2,
-            "total": 7
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -4097,19 +3205,6 @@
           "reward": 1,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 5,
-            "total": 6
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -4156,19 +3251,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 9,
-            "total": 16
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -4215,19 +3297,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 4,
-            "total": 6
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -4274,19 +3343,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 8,
-            "total": 11
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -4333,19 +3389,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 7,
-            "total": 13
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -4392,19 +3435,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 0,
-            "total": 1
-          },
-          "private": {
-            "passed": 12,
-            "total": 13
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -4451,19 +3481,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 5,
-            "total": 7
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -4510,19 +3527,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 8,
-            "total": 10
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -4569,19 +3573,6 @@
           "reward": 1,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 16,
-            "total": 16
-          },
-          "reward": 1,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -4628,19 +3619,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 8,
-            "total": 15
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -4687,19 +3665,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 4,
-            "total": 8
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -4746,19 +3711,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 15,
-            "total": 16
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -4805,19 +3757,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 8,
-            "total": 24
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -4864,19 +3803,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 3,
-            "total": 3
-          },
-          "reward": 1,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -4923,19 +3849,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 10,
-            "total": 11
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -4982,19 +3895,6 @@
           "reward": 1,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 15,
-            "total": 15
-          },
-          "reward": 1,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -5041,19 +3941,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 3,
-            "total": 13
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -5100,19 +3987,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 8,
-            "total": 9
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -5159,19 +4033,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 9,
-            "total": 14
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -5218,19 +4079,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 8,
-            "total": 8
-          },
-          "reward": 1,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -5277,19 +4125,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 6,
-            "total": 10
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -5336,19 +4171,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 21,
-            "total": 21
-          },
-          "reward": 1,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -5395,19 +4217,6 @@
           "reward": 1,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 41,
-            "total": 41
-          },
-          "reward": 1,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -5454,19 +4263,6 @@
           "reward": 1,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 10,
-            "total": 10
-          },
-          "reward": 1,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -5513,19 +4309,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 29,
-            "total": 29
-          },
-          "reward": 1,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -5572,19 +4355,6 @@
           "reward": 1,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 10,
-            "total": 10
-          },
-          "reward": 1,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -5631,19 +4401,6 @@
           "reward": 1,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 21,
-            "total": 21
-          },
-          "reward": 1,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -5690,19 +4447,6 @@
           "reward": 1,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 9,
-            "total": 9
-          },
-          "reward": 1,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -5749,19 +4493,6 @@
           "reward": 1,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 7,
-            "total": 7
-          },
-          "reward": 1,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -5808,19 +4539,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 7,
-            "total": 8
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -5867,19 +4585,6 @@
           "reward": 1,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 8,
-            "total": 8
-          },
-          "reward": 1,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -5926,19 +4631,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 12,
-            "total": 12
-          },
-          "reward": 1,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -5985,19 +4677,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 15,
-            "total": 15
-          },
-          "reward": 1,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -6044,19 +4723,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 12,
-            "total": 12
-          },
-          "reward": 1,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -6103,19 +4769,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 13,
-            "total": 14
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -6162,19 +4815,6 @@
           "reward": 1,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 5,
-            "total": 5
-          },
-          "reward": 1,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -6221,19 +4861,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 12,
-            "total": 12
-          },
-          "reward": 1,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -6280,19 +4907,6 @@
           "reward": 1,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 12,
-            "total": 12
-          },
-          "reward": 1,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -6339,19 +4953,6 @@
           "reward": 1,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 31,
-            "total": 31
-          },
-          "reward": 1,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -6398,19 +4999,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 5,
-            "total": 6
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -6457,19 +5045,6 @@
           "reward": 1,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 5,
-            "total": 5
-          },
-          "reward": 1,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -6516,19 +5091,6 @@
           "reward": 1,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 9,
-            "total": 10
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -6575,19 +5137,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 3,
-            "total": 5
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -6634,19 +5183,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 11,
-            "total": 11
-          },
-          "reward": 1,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -6693,19 +5229,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 5,
-            "total": 9
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -6752,19 +5275,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 6,
-            "total": 6
-          },
-          "reward": 1,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -6811,19 +5321,6 @@
           "reward": 1,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 4,
-            "total": 6
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -6870,19 +5367,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 10,
-            "total": 13
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -6929,19 +5413,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 1,
-            "total": 4
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -6988,19 +5459,6 @@
           "reward": 1,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 14,
-            "total": 15
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -7047,19 +5505,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 3,
-            "total": 6
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     },
@@ -7106,19 +5551,6 @@
           "reward": 0,
           "transition": null,
           "source": "Feishu: Qwen3.8-27B Public/Private audit"
-        },
-        "gpt": {
-          "public": {
-            "passed": 1,
-            "total": 1
-          },
-          "private": {
-            "passed": 6,
-            "total": 8
-          },
-          "reward": 0,
-          "transition": null,
-          "source": "Feishu: GPT-5.6-sol comparison audit"
         }
       }
     }

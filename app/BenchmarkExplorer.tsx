@@ -41,7 +41,6 @@ const FAMILY_COLORS: Record<string, string> = {
   "DeepSeek-V4-Pro": "#f0a202",
   "DeepSeek-V4-flash": "#159b76",
   "GLM-5.2": "#d83c91",
-  "GPT-5.6-sol": "#1967d2",
   "Kimi-K3": "#7c3aed",
   "Nex N2": "#0ea5b7",
   "Qwen3.5-397B": "#d97706",

@@ -535,7 +535,7 @@ function locateGptRun(entry) {
   throw new Error(`Missing or ambiguous GPT run ${entry.runName} in ${taskRoot}`);
 }
 
-const experiments = [
+const baseExperiments = [
   {
     id: "claude-opus-5-max",
     label: "Claude Opus 5 Max",
@@ -563,6 +563,11 @@ const experiments = [
     outputDir: "qwen3-8-27b-max",
     auditFile: path.join(reportsRoot, "qwen3.8-27b-responses-withaux-002-120-audit/selected_runs_and_token_usage.json"),
   },
+];
+
+// GPT-5.6-sol xhigh runs remain available as an explicit opt-in input for a
+// later release, but are excluded from the default publication tree.
+const optionalExperiments = [
   {
     id: "gpt-5-6-sol-max",
     label: "GPT-5.6-sol Max",
@@ -573,6 +578,8 @@ const experiments = [
     selectionFile: gptSelectionFile,
   },
 ];
+const publishGptXhigh = process.env.PUBLISH_GPT_XHIGH === "1";
+const experiments = publishGptXhigh ? [...baseExperiments, ...optionalExperiments] : baseExperiments;
 
 function selectedRunMap(experiment) {
   if (experiment.selectionFile) {

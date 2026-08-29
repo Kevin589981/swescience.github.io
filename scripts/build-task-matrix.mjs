@@ -54,7 +54,10 @@ const benchmark = JSON.parse(read(path.join(repoRoot, "data/benchmark.json")));
 const nex = benchmark.models.find((model) => model.id === "nex");
 if (!nex) throw new Error("Nex N2 reference model is missing from benchmark.json");
 const targetIds = benchmark.models.filter((model) => model.scores.overall > nex.scores.overall).map((model) => model.id);
-const includedIds = ["opus", "gpt", "glm", "qwen-3-8-27b"];
+const publishGptXhigh = process.env.PUBLISH_GPT_XHIGH === "1";
+const includedIds = publishGptXhigh
+  ? ["opus", "gpt", "glm", "qwen-3-8-27b"]
+  : ["opus", "glm", "qwen-3-8-27b"];
 const pendingIds = targetIds.filter((id) => !includedIds.includes(id));
 
 const feishuSources = [
@@ -62,7 +65,7 @@ const feishuSources = [
   { id: "glm", file: paths.glmFeishu, source: "Feishu: GLM-5.2 Public/Private audit" },
   { id: "qwen-3-8-27b", file: paths.qwenFeishu, source: "Feishu: Qwen3.8-27B Public/Private audit" },
 ].map((entry) => ({ ...entry, rows: parseFeishuRows(entry.file) }));
-const gptRows = parseFeishuGpt(paths.gptFeishu);
+const gptRows = publishGptXhigh ? parseFeishuGpt(paths.gptFeishu) : null;
 
 const taskIds = [...feishuSources[0].rows.keys()].sort();
 if (taskIds.length !== 119) throw new Error(`Expected 119 tasks, found ${taskIds.length}`);
@@ -83,9 +86,11 @@ for (const taskId of taskIds) {
     taskResults[entry.id] = { ...result, transition: null, source: entry.source };
   }
 
-  const gpt = gptRows.get(taskId);
-  if (!gpt) throw new Error(`Missing Feishu result for GPT task ${taskId}`);
-  taskResults.gpt = { ...gpt, transition: null, source: "Feishu: GPT-5.6-sol comparison audit" };
+  if (publishGptXhigh) {
+    const gpt = gptRows.get(taskId);
+    if (!gpt) throw new Error(`Missing Feishu result for GPT task ${taskId}`);
+    taskResults.gpt = { ...gpt, transition: null, source: "Feishu: GPT-5.6-sol comparison audit" };
+  }
 
   results[publishedId] = {
     publishedTaskId: publishedId,
@@ -96,7 +101,7 @@ for (const taskId of taskIds) {
   };
 }
 
-const models = ["opus", "gpt", "glm", "qwen-3-8-27b"].map((id) => benchmark.models.find((model) => model.id === id)).filter(Boolean);
+const models = includedIds.map((id) => benchmark.models.find((model) => model.id === id)).filter(Boolean);
 const output = {
   version: 1,
   generatedAt: new Date().toISOString().slice(0, 10),

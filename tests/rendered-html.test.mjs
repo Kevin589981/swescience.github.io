@@ -31,9 +31,9 @@ test("keeps trace entry points inside task details", async () => {
   assert.doesNotMatch(html, /Trace browser/);
 });
 
-test("publishes four model trace records per task", async () => {
+test("publishes the current model trace records per task", async () => {
   const registry = JSON.parse(await readFile(new URL("../public/traces/index.json", import.meta.url), "utf8"));
-  assert.deepEqual(registry.experiments.map((experiment) => experiment.id), ["claude-opus-5-max", "glm-5-2-max", "qwen3-8-27b-max", "gpt-5-6-sol-max"]);
+  assert.deepEqual(registry.experiments.map((experiment) => experiment.id), ["claude-opus-5-max", "glm-5-2-max", "qwen3-8-27b-max"]);
 
   const builder = await readFile(new URL("../scripts/build-traces.mjs", import.meta.url), "utf8");
   assert.match(builder, /legacyTaskId === "120" \? "001" : legacyTaskId/);
@@ -70,9 +70,4 @@ test("publishes four model trace records per task", async () => {
   assert.equal(glmTask.events.some((event) => Object.hasOwn(event, "position")), false, "Reasoning anchor positions stay internal");
   const opusTask = JSON.parse(await readFile(new URL("../public/traces/claude-opus-5-max/task-002.json", import.meta.url), "utf8"));
   assert.ok(opusTask.events.some((event) => event.kind === "thinking" && event.redacted === true), "Encrypted Opus reasoning remains unavailable");
-  const gptEncryptedTask = JSON.parse(await readFile(new URL("../public/traces/gpt-5-6-sol-max/task-001.json", import.meta.url), "utf8"));
-  assert.ok(gptEncryptedTask.events.some((event) => event.kind === "thinking" && event.reasoningStatus === "encrypted"), "Encrypted GPT Responses reasoning is identified explicitly");
-  const gptTokenFillTask = JSON.parse(await readFile(new URL("../public/traces/gpt-5-6-sol-max/task-002.json", import.meta.url), "utf8"));
-  assert.ok(gptTokenFillTask.events.some((event) => event.kind === "thinking"), "GPT reasoning from hidden Codex rollout should be represented");
-  assert.ok(gptTokenFillTask.events.some((event) => event.kind === "thinking" && event.text && event.redacted === false), "Readable GPT reasoning should be published");
 });

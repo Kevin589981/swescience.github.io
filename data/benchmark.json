@@ -40,14 +40,6 @@
       "tokens": { "input": 3.345, "output": 0.094 }
     },
     {
-      "id": "gpt",
-      "family": "GPT-5.6-sol",
-      "reasoningDepth": "max",
-      "harness": "Codex",
-      "scores": { "public": 99.16, "private": 78.82, "fail2Pass": 72.3, "pass2Pass": 97.66, "overall": 46.22, "issue": 36.54, "expert": 59.18, "engineering": 38.89 },
-      "tokens": { "input": 4.199, "output": 0.025 }
-    },
-    {
       "id": "nex",
       "family": "Nex N2",
       "reasoningDepth": "default",
