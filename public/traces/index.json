@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "experiments": [
+    {
+      "id": "claude-opus-5-max",
+      "label": "Claude Opus 5 Max",
+      "harness": "Claude Code",
+      "path": "claude-opus-5-max",
+      "taskCount": 119
+    },
+    {
+      "id": "glm-5-2-max",
+      "label": "GLM-5.2 Max",
+      "harness": "Codex",
+      "path": "glm-5-2-max",
+      "taskCount": 119
+    },
+    {
+      "id": "qwen3-8-27b-max",
+      "label": "Qwen3.8-27B Max",
+      "harness": "Claude Code",
+      "path": "qwen3-8-27b-max",
+      "taskCount": 119
+    }
+  ]
+}

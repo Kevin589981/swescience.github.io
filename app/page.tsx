@@ -1,6 +1,7 @@
 import { benchmarkData } from "@/lib/benchmark";
 import { BenchmarkExplorer } from "./BenchmarkExplorer";
 import { AnimatedStat, ThemeToggle } from "./SiteEnhancements";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -17,6 +18,9 @@ export default function Home() {
           <a href="https://github.com/OpenMOSS/SWE-bench-Science" target="_blank" rel="noreferrer">
             GitHub <span aria-hidden="true">↗</span>
           </a>
+          <Link href="/task-matrix/gradient/" aria-label="Open task-level Pass@1 matrix">
+            Task matrix <span aria-hidden="true">↗</span>
+          </Link>
           <ThemeToggle />
         </nav>
       </header>
