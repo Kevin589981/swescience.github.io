@@ -70,6 +70,44 @@ test("publishes the current model trace records per task", async () => {
   assert.ok(glmTask.events.some((event) => event.elapsedSec > 0), "GLM rollout timestamps should produce elapsed event times");
   assert.match(glmTask.events.find((event) => event.kind === "lifecycle").timestamp ?? "", /^\d{4}-\d{2}-\d{2}T/);
   assert.equal(glmTask.events.some((event) => Object.hasOwn(event, "position")), false, "Reasoning anchor positions stay internal");
+  const glmRerunUsageTask = JSON.parse(await readFile(new URL("../public/traces/glm-5-2-max/task-004.json", import.meta.url), "utf8"));
+  assert.deepEqual(
+    {
+      input: glmRerunUsageTask.usage.inputTokens,
+      output: glmRerunUsageTask.usage.outputTokens,
+      total: glmRerunUsageTask.usage.totalTokens,
+      cacheRead: glmRerunUsageTask.usage.cacheReadTokens,
+      calls: glmRerunUsageTask.usage.callCount,
+    },
+    { input: 6099057, output: 179227, total: 6278284, cacheRead: 5667520, calls: 121 },
+    "GLM trace usage should come from the Feishu token-source table",
+  );
+  assert.equal(glmRerunUsageTask.evaluation.private.passed, 2, "GLM evaluation should remain from the selected evaluation run");
   const opusTask = JSON.parse(await readFile(new URL("../public/traces/claude-opus-5-max/task-002.json", import.meta.url), "utf8"));
   assert.ok(opusTask.events.some((event) => event.kind === "thinking" && event.redacted === true), "Encrypted Opus reasoning remains unavailable");
+});
+
+test("keeps matrix metrics aligned with every published trace", async () => {
+  const matrix = JSON.parse(await readFile(new URL("../data/task-matrix.json", import.meta.url), "utf8"));
+  const experiments = {
+    opus: "claude-opus-5-max",
+    glm: "glm-5-2-max",
+    "qwen-3-8-27b": "qwen3-8-27b-max",
+  };
+  assert.equal(matrix.tasks.length, 119);
+  assert.deepEqual(matrix.tasks.map((task) => task.publishedTaskId), Array.from({ length: 119 }, (_, index) => String(index + 1).padStart(3, "0")));
+  assert.equal(matrix.tasks.find((task) => task.publishedTaskId === "001").legacyTaskId, "120");
+  assert.equal(matrix.tasks.find((task) => task.publishedTaskId === "076").legacyTaskId, "076");
+
+  for (const task of matrix.tasks) {
+    for (const [modelId, experiment] of Object.entries(experiments)) {
+      const trace = JSON.parse(await readFile(new URL(`../public/traces/${experiment}/task-${task.publishedTaskId}.json`, import.meta.url), "utf8"));
+      const result = task.results[modelId];
+      assert.deepEqual(
+        [result.public.passed, result.public.total, result.private.passed, result.private.total, result.reward],
+        [trace.evaluation.public.passed, trace.evaluation.public.collected, trace.evaluation.private.passed, trace.evaluation.private.collected, trace.evaluation.reward],
+        `${modelId} task ${task.publishedTaskId} matrix/trace mismatch`,
+      );
+    }
+  }
 });

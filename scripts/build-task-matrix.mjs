@@ -2,13 +2,16 @@ import fs from "node:fs";
 import path from "node:path";
 
 const repoRoot = path.resolve(new URL("..", import.meta.url).pathname);
-const feishuSourcesRoot = process.env.FEISHU_SOURCES_DIR ?? "/tmp";
+const benchmarkRoot = process.env.BENCHMARK_ROOT ?? "/Users/fnlp/workspace/agent/opus-test";
 
 const paths = {
-  opusFeishu: path.join(feishuSourcesRoot, "opus-per-task.json"),
-  gptFeishu: path.join(feishuSourcesRoot, "gpt-per-task.json"),
-  glmFeishu: path.join(feishuSourcesRoot, "glm-per-task.json"),
-  qwenFeishu: path.join(feishuSourcesRoot, "qwen-per-task.json"),
+  opus: process.env.OPUS_SELECTION_FILE
+    ?? path.join(benchmarkRoot, "reports/ucloud-opus-max-002-120-audit/selected_runs.json"),
+  glm: process.env.GLM_SELECTION_FILE
+    ?? path.join(benchmarkRoot, "reports/glm-5.2-max-with_auxiliary-002-120-audit/selected_runs_and_evidence.json"),
+  qwen: process.env.QWEN_SELECTION_FILE
+    ?? path.join(benchmarkRoot, "reports/qwen3.8-27b-responses-withaux-002-120-audit/selected_runs_and_token_usage.json"),
+  gpt: process.env.GPT_SELECTION_FILE ?? path.join("/tmp", "gpt-per-task.json"),
 };
 
 function read(file) {
@@ -16,27 +19,33 @@ function read(file) {
   return fs.readFileSync(file, "utf8");
 }
 
-function parseFraction(value) {
-  const match = value.match(/^(\d+)\/(\d+)$/);
-  return match ? { passed: Number(match[1]), total: Number(match[2]) } : null;
+function metric(value, passedKey = "passed", totalKey = "collected") {
+  if (!value || value[passedKey] === undefined || value[totalKey] === undefined) return null;
+  return { passed: Number(value[passedKey]), total: Number(value[totalKey]) };
 }
 
-function parseFeishuRows(file) {
-  const content = JSON.parse(read(file)).data.document.content;
+function parseSelectedRuns(file) {
+  const raw = JSON.parse(read(file));
+  const entries = Array.isArray(raw) ? raw : raw.tasks;
+  if (!Array.isArray(entries) || entries.length !== 119) throw new Error(`Expected 119 selected runs in ${file}`);
   const rows = new Map();
-  for (const line of content.split(/\r?\n/)) {
-    const fields = line.split("|").map((field) => field.trim());
-    const taskMatch = fields[1]?.match(/(?:\\\[)?(\d{3})(?:\\\])?/);
-    if (!taskMatch) continue;
-    const fractions = fields.map(parseFraction).filter(Boolean);
-    if (fractions.length < 2) continue;
-    const rewardField = fields.find((field, index) => index > 1 && /^[01]$/.test(field));
-    rows.set(taskMatch[1], { public: fractions[0], private: fractions[1], reward: Number(rewardField ?? 0) });
+  for (const entry of entries) {
+    const taskId = String(entry.task_id ?? entry.task ?? "").replace(/^task_/, "").padStart(3, "0");
+    if (!/^\d{3}$/.test(taskId)) throw new Error(`Selected run has invalid task id in ${file}`);
+    const publicMetric = metric(entry.public)
+      ?? metric(entry, "public_passed_count", "public_collected")
+      ?? metric(entry, "public_passed", "public_collected");
+    const privateMetric = metric(entry.private)
+      ?? metric(entry, "private_passed_count", "private_collected")
+      ?? metric(entry, "private_passed", "private_collected");
+    if (!publicMetric || !privateMetric) throw new Error(`Selected run has incomplete metrics for task ${taskId} in ${file}`);
+    rows.set(taskId, { public: publicMetric, private: privateMetric, reward: Number(entry.reward ?? 0) });
   }
+  if (rows.size !== 119) throw new Error(`Selected run file has duplicate task ids: ${file}`);
   return rows;
 }
 
-function parseFeishuGpt(file) {
+function parseGptRows(file) {
   const content = JSON.parse(read(file)).data.document.content;
   const rows = new Map();
   for (const line of content.split(/\r?\n/)) {
@@ -60,14 +69,14 @@ const includedIds = publishGptXhigh
   : ["opus", "glm", "qwen-3-8-27b"];
 const pendingIds = targetIds.filter((id) => !includedIds.includes(id) && (publishGptXhigh || id !== "gpt"));
 
-const feishuSources = [
-  { id: "opus", file: paths.opusFeishu, source: "Feishu: Claude Opus Max Public/Private audit" },
-  { id: "glm", file: paths.glmFeishu, source: "Feishu: GLM-5.2 Public/Private audit" },
-  { id: "qwen-3-8-27b", file: paths.qwenFeishu, source: "Feishu: Qwen3.8-27B Public/Private audit" },
-].map((entry) => ({ ...entry, rows: parseFeishuRows(entry.file) }));
-const gptRows = publishGptXhigh ? parseFeishuGpt(paths.gptFeishu) : null;
+const selectedSources = [
+  { id: "opus", file: paths.opus, source: "Selected Claude Opus Max public/private audit" },
+  { id: "glm", file: paths.glm, source: "Selected GLM-5.2 public/private audit" },
+  { id: "qwen-3-8-27b", file: paths.qwen, source: "Selected Qwen3.8-27B public/private audit" },
+].map((entry) => ({ ...entry, rows: parseSelectedRuns(entry.file) }));
+const gptRows = publishGptXhigh ? parseGptRows(paths.gpt) : null;
 
-const taskIds = [...feishuSources[0].rows.keys()].sort();
+const taskIds = [...selectedSources[0].rows.keys()].sort();
 if (taskIds.length !== 119) throw new Error(`Expected 119 tasks, found ${taskIds.length}`);
 const ablationIds = new Set();
 for (let id = 2; id <= 82; id += 1) ablationIds.add(String(id).padStart(3, "0"));
@@ -76,26 +85,23 @@ for (let id = 97; id <= 101; id += 1) ablationIds.add(String(id).padStart(3, "0"
 
 const results = {};
 for (const taskId of taskIds) {
-  const oldId = Number(taskId);
-  const publishedId = String(121 - oldId).padStart(3, "0");
-  const row = feishuSources[0].rows.get(taskId);
+  const publishedId = taskId === "120" ? "001" : taskId;
   const taskResults = {};
-  for (const entry of feishuSources) {
+  for (const entry of selectedSources) {
     const result = entry.rows.get(taskId);
-    if (!result) throw new Error(`Missing Feishu result for ${entry.id} task ${taskId}`);
+    if (!result) throw new Error(`Missing selected result for ${entry.id} task ${taskId}`);
     taskResults[entry.id] = { ...result, transition: null, source: entry.source };
   }
 
   if (publishGptXhigh) {
     const gpt = gptRows.get(taskId);
-    if (!gpt) throw new Error(`Missing Feishu result for GPT task ${taskId}`);
-    taskResults.gpt = { ...gpt, transition: null, source: "Feishu: GPT-5.6-sol comparison audit" };
+    if (!gpt) throw new Error(`Missing selected result for GPT task ${taskId}`);
+    taskResults.gpt = { ...gpt, transition: null, source: "Selected GPT-5.6-sol comparison audit" };
   }
 
   results[publishedId] = {
     publishedTaskId: publishedId,
     legacyTaskId: taskId,
-    taskType: row.task_type,
     scientificKnowledgeAblation: ablationIds.has(publishedId),
     results: taskResults,
   };
