@@ -58,7 +58,7 @@ const publishGptXhigh = process.env.PUBLISH_GPT_XHIGH === "1";
 const includedIds = publishGptXhigh
   ? ["opus", "gpt", "glm", "qwen-3-8-27b"]
   : ["opus", "glm", "qwen-3-8-27b"];
-const pendingIds = targetIds.filter((id) => !includedIds.includes(id));
+const pendingIds = targetIds.filter((id) => !includedIds.includes(id) && (publishGptXhigh || id !== "gpt"));
 
 const feishuSources = [
   { id: "opus", file: paths.opusFeishu, source: "Feishu: Claude Opus Max Public/Private audit" },
