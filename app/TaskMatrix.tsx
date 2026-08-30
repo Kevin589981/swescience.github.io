@@ -37,6 +37,8 @@ type MatrixPayload = {
 const data = matrixData as MatrixPayload;
 const MODEL_COLORS: Record<string, string> = {
   opus: "#a96f62",
+  "deepseek-pro": "#7d8f9f",
+  kimi: "#8a806b",
   glm: "#96758a",
   "qwen-3-8-27b": "#628d82",
 };
@@ -65,6 +67,8 @@ function formatMetric(metric: Metric) {
 function traceHref(taskId: string, modelId: string, harness: string) {
   const experimentByModel: Record<string, string> = {
     opus: "claude-opus-5-max",
+    "deepseek-pro": "deepseek-v4-pro-max",
+    kimi: "kimi-k3-max",
     glm: "glm-5-2-max",
     "qwen-3-8-27b": "qwen3-8-27b-max",
   };
@@ -112,7 +116,7 @@ function TaskDetail({ task, models }: { task: MatrixTask; models: MatrixModel[] 
                     </span>
                   </td>
                   <td>
-                    {["opus", "glm", "qwen-3-8-27b"].includes(model.id) ? (
+                    {["opus", "deepseek-pro", "kimi", "glm", "qwen-3-8-27b"].includes(model.id) ? (
                       <a className="task-trace-link" href={traceHref(task.publishedTaskId, model.id, model.harness)}>
                         Open trace <span aria-hidden="true">↗</span>
                       </a>
