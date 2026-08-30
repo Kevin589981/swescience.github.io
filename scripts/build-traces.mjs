@@ -22,8 +22,31 @@ const tokenUsageFiles = {
     ?? path.join(reportsRoot, "glm-5.2-max-with_auxiliary-002-120-audit/token_usage_by_run.csv"),
 };
 
+const localResultRoots = {
+  kimi: process.env.KIMI_RESULTS_ROOT
+    ?? "/Users/fnlp/Downloads/kimi_k3_ds_v4_pro_max_traces_20260829/kimi-k3-max",
+  deepseek: process.env.DEEPSEEK_RESULTS_ROOT
+    ?? "/Users/fnlp/Downloads/kimi_k3_ds_v4_pro_max_traces_20260829/deepseek-v4-pro-max",
+};
+
 function readJson(file) {
-  return JSON.parse(fs.readFileSync(file, "utf8"));
+  const text = fs.readFileSync(file, "utf8");
+  try {
+    return JSON.parse(text);
+  } catch (error) {
+    // Kimi's exported stream can contain bare non-finite numeric values in a
+    // few tool-output fragments; treat those fragments as JSON nulls.
+    const normalized = text.replace(/(^|[,\[:])\s*-?(?:Infinity|NaN)(?=\s*[,\]}])/g, "$1null");
+    if (normalized === text) throw error;
+    return JSON.parse(normalized);
+  }
+}
+
+function runArtifact(runRoot, name) {
+  const candidates = [path.join(runRoot, "logs", name), path.join(runRoot, name)];
+  const file = candidates.find((candidate) => fs.existsSync(candidate));
+  if (!file) throw new Error(`Missing ${name} under selected run ${runRoot}`);
+  return file;
 }
 
 function parseCsv(text) {
@@ -422,6 +445,102 @@ function normalizeClaudeEvents(events, runRoot) {
   });
 }
 
+function normalizeKimiEvents(events, runRoot) {
+  const normalized = [];
+  const toolItems = new Map();
+  let activeTool = null;
+  const assistantContentIndexes = events
+    .map((event, index) => event?.role === "assistant" && event.content ? index : -1)
+    .filter((index) => index >= 0);
+  const lastAssistantContent = assistantContentIndexes.at(-1);
+
+  const add = (event) => {
+    const item = {
+      id: `event-${normalized.length + 1}`,
+      sequence: normalized.length + 1,
+      kind: event.kind,
+      timestamp: null,
+      elapsedSec: null,
+    };
+    for (const [key, value] of Object.entries(event)) {
+      if (key !== "kind" && value !== undefined) item[key] = value;
+    }
+    normalized.push(item);
+    return item;
+  };
+
+  const parseArguments = (value) => {
+    if (typeof value !== "string" || !value) return {};
+    try {
+      return JSON.parse(value);
+    } catch {
+      return { arguments: value };
+    }
+  };
+
+  events.forEach((event, eventIndex) => {
+    if (!event || typeof event !== "object") return;
+    if (event.role === "assistant") {
+      activeTool = null;
+      if (event.content) {
+        const output = fullText(event.content, runRoot);
+        add({
+          kind: eventIndex === lastAssistantContent ? "final" : "assistant",
+          text: output.text,
+          truncated: output.truncated,
+        });
+      }
+      for (const call of event.tool_calls ?? []) {
+        const functionCall = call.function ?? {};
+        const input = parseArguments(functionCall.arguments);
+        const item = add({
+          kind: "tool",
+          toolUseId: call.id ?? null,
+          name: functionCall.name ?? "Tool",
+          input: safeInput(input, runRoot),
+          omitResult: Object.values(input).some((value) => typeof value === "string" && /(?:^|\/)model\.patch\b/.test(value)),
+        });
+        toolItems.set(call.id, item);
+        activeTool = item;
+      }
+      return;
+    }
+
+    if (event.role === "tool") {
+      const item = toolItems.get(event.tool_call_id) ?? activeTool;
+      if (!item) {
+        const output = fullText(event.content, runRoot);
+        add({ kind: "message", label: "Tool result", text: output.text, truncated: output.truncated });
+        return;
+      }
+      const rawResult = resultContent(event.content);
+      const output = item.omitResult || /^diff --git /m.test(rawResult)
+        ? { text: "[agent patch content omitted from the published trace]", truncated: false }
+        : fullText(rawResult, runRoot);
+      item.result = { isError: false, text: output.text, truncated: output.truncated };
+      activeTool = item;
+      return;
+    }
+
+    if (event.type === "text") {
+      const output = fullText(event.text, runRoot);
+      if (activeTool && !activeTool.result) {
+        activeTool.result = { isError: false, text: output.text, truncated: output.truncated };
+      } else if (activeTool && activeTool.result) {
+        activeTool.result.text += `\n${output.text}`;
+      } else if (output.text) {
+        add({ kind: "message", label: "Tool output", text: output.text, truncated: output.truncated });
+      }
+    }
+  });
+
+  return normalized.map((event) => {
+    const output = { ...event };
+    delete output.omitResult;
+    return output;
+  });
+}
+
 function shellCommandBody(command) {
   const value = String(command ?? "").trim();
   const match = value.match(/^\/usr\/bin\/bash -lc\s+([\s\S]+)$/);
@@ -685,6 +804,24 @@ const baseExperiments = [
     tokenUsageFile: tokenUsageFiles.opus,
   },
   {
+    id: "deepseek-v4-pro-max",
+    label: "DeepSeek-V4-Pro Max",
+    model: "DeepSeek-V4-Pro",
+    harness: "Claude Code",
+    parser: "claude",
+    outputDir: "deepseek-v4-pro-max",
+    resultsRoot: localResultRoots.deepseek,
+  },
+  {
+    id: "kimi-k3-max",
+    label: "Kimi-K3 Max",
+    model: "Kimi-K3",
+    harness: "Kimi Code",
+    parser: "kimi",
+    outputDir: "kimi-k3-max",
+    resultsRoot: localResultRoots.kimi,
+  },
+  {
     id: "glm-5-2-max",
     label: "GLM-5.2 Max",
     model: "GLM-5.2",
@@ -744,6 +881,34 @@ function selectedRunMap(experiment) {
     }
     return new Map(entries.map((entry) => [entry.legacyTaskId, entry]));
   }
+  if (experiment.resultsRoot) {
+    if (!fs.existsSync(experiment.resultsRoot)) throw new Error(`Missing ${experiment.id} results directory: ${experiment.resultsRoot}`);
+    const directories = fs.readdirSync(experiment.resultsRoot, { withFileTypes: true })
+      .filter((entry) => entry.isDirectory() && /^task_\d{3}$/.test(entry.name))
+      .map((entry) => entry.name);
+    if (directories.length !== 120) throw new Error(`Expected 120 ${experiment.id} task directories in ${experiment.resultsRoot}`);
+    const selected = new Map();
+    for (const directory of directories) {
+      const taskId = directory.replace(/^task_/, "");
+      const result = readJson(path.join(experiment.resultsRoot, directory, "result.json"));
+      const currentScope = String(result.current_release_scope_001_119);
+      const historicalScope = String(result.historical_eval_scope_002_120);
+      if (taskId === "001" && (currentScope !== "true" || historicalScope !== "false")) {
+        throw new Error(`${experiment.id} task_001 does not have current-release-only scope`);
+      }
+      if (taskId === "120" && (currentScope !== "false" || historicalScope !== "true")) {
+        throw new Error(`${experiment.id} task_120 does not have historical-only scope`);
+      }
+      if (Number(taskId) >= 2 && Number(taskId) <= 119 && (currentScope !== "true" || historicalScope !== "true")) {
+        throw new Error(`${experiment.id} task_${taskId} is not shared by both evaluation scopes`);
+      }
+      if (taskId !== "001") selected.set(taskId, path.join(experiment.resultsRoot, directory));
+    }
+    if (selected.size !== 119 || selected.has("001") || !selected.has("120")) {
+      throw new Error(`${experiment.id} results do not contain exactly the historical 002-120 scope`);
+    }
+    return selected;
+  }
   if (!experiment.auditFile) return null;
   const selected = readJson(experiment.auditFile);
   const entries = Array.isArray(selected) ? selected : selected.tasks;
@@ -769,22 +934,24 @@ function locateSelectedRun(experiment, legacyTaskId, runMap) {
 
 function buildTask(experiment, legacyTaskId, runMap, tokenUsageMap) {
   const runRoot = locateSelectedRun(experiment, legacyTaskId, runMap);
-  const trial = readJson(path.join(runRoot, "trial.json"));
-  const trajectory = readJson(path.join(runRoot, "logs/trajectory.json"));
-  const verifierLog = fs.readFileSync(path.join(runRoot, "logs/verifier.log"), "utf8");
+  const trial = readJson(runArtifact(runRoot, "trial.json"));
+  const trajectory = readJson(runArtifact(runRoot, "trajectory.json"));
+  const verifierLog = fs.readFileSync(runArtifact(runRoot, "verifier.log"), "utf8");
   const publishedTaskId = legacyTaskId === "120" ? "001" : legacyTaskId;
   const publishedTask = taskById.get(publishedTaskId);
   if (!publishedTask) throw new Error(`Missing published task ${publishedTaskId} in data/tasks.csv`);
-  const trajectoryHasReasoning = trajectory.events?.some((event) => event.item?.type === "reasoning");
+  const trajectoryHasReasoning = trajectory.events?.some((event) => event?.item?.type === "reasoning");
   const codexTimeline = experiment.parser === "codex" ? readCodexRolloutTimeline(runRoot) : null;
   const events = experiment.parser === "codex"
     ? normalizeCodexEvents(trajectory.events ?? [], runRoot, experiment.model, {
       ...(codexTimeline ?? {}),
       injectedReasoning: trajectoryHasReasoning ? [] : (codexTimeline?.anchors ?? []),
     })
+    : experiment.parser === "kimi"
+      ? normalizeKimiEvents(trajectory.events ?? [], runRoot)
     : normalizeClaudeEvents(trajectory.events ?? [], runRoot);
   const directUsage = trial.agent_run?.usage ?? {};
-  const trajectoryUsage = trajectory.events?.findLast((event) => event.type === "turn.completed" && event.usage)?.usage ?? {};
+  const trajectoryUsage = trajectory.events?.findLast((event) => event?.type === "turn.completed" && event.usage)?.usage ?? {};
   const tokenUsage = tokenUsageMap?.get(legacyTaskId) ?? null;
   const inputTokens = directUsage.input_tokens ?? trajectoryUsage.input_tokens ?? null;
   const outputTokens = directUsage.output_tokens ?? trajectoryUsage.output_tokens ?? null;

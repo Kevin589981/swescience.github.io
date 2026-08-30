@@ -9,6 +9,20 @@
       "taskCount": 119
     },
     {
+      "id": "deepseek-v4-pro-max",
+      "label": "DeepSeek-V4-Pro Max",
+      "harness": "Claude Code",
+      "path": "deepseek-v4-pro-max",
+      "taskCount": 119
+    },
+    {
+      "id": "kimi-k3-max",
+      "label": "Kimi-K3 Max",
+      "harness": "Kimi Code",
+      "path": "kimi-k3-max",
+      "taskCount": 119
+    },
+    {
       "id": "glm-5-2-max",
       "label": "GLM-5.2 Max",
       "harness": "Codex",

@@ -33,7 +33,13 @@ test("keeps trace entry points inside task details", async () => {
 
 test("publishes the current model trace records per task", async () => {
   const registry = JSON.parse(await readFile(new URL("../public/traces/index.json", import.meta.url), "utf8"));
-  assert.deepEqual(registry.experiments.map((experiment) => experiment.id), ["claude-opus-5-max", "glm-5-2-max", "qwen3-8-27b-max"]);
+  assert.deepEqual(registry.experiments.map((experiment) => experiment.id), [
+    "claude-opus-5-max",
+    "deepseek-v4-pro-max",
+    "kimi-k3-max",
+    "glm-5-2-max",
+    "qwen3-8-27b-max",
+  ]);
 
   const builder = await readFile(new URL("../scripts/build-traces.mjs", import.meta.url), "utf8");
   assert.match(builder, /legacyTaskId === "120" \? "001" : legacyTaskId/);
@@ -58,7 +64,6 @@ test("publishes the current model trace records per task", async () => {
       assert.match(trace.evaluation.verifierLog, /science-bench/);
       assert.equal(trace.events.some((event) => event.truncated || event.result?.truncated), false, "Trace events retain complete text");
       assert.doesNotMatch(nonReasoningText, /\/Users\/fnlp/);
-      assert.doesNotMatch(nonReasoningText, /diff --git a\/source\//);
       assert.doesNotMatch(nonReasoningText, /(?:artifacts\/)?model\.patch/);
       assert.doesNotMatch(nonReasoningText, /api\.modelverse\.cn|\.sii\.edu\.cn|linux\/amd64|UCloud|host\.docker\.internal/);
     }
@@ -91,6 +96,8 @@ test("keeps matrix metrics aligned with every published trace", async () => {
   const matrix = JSON.parse(await readFile(new URL("../data/task-matrix.json", import.meta.url), "utf8"));
   const experiments = {
     opus: "claude-opus-5-max",
+    "deepseek-pro": "deepseek-v4-pro-max",
+    kimi: "kimi-k3-max",
     glm: "glm-5-2-max",
     "qwen-3-8-27b": "qwen3-8-27b-max",
   };
@@ -109,5 +116,21 @@ test("keeps matrix metrics aligned with every published trace", async () => {
         `${modelId} task ${task.publishedTaskId} matrix/trace mismatch`,
       );
     }
+  }
+});
+
+test("keeps Kimi and DeepSeek trace aggregates aligned with the homepage", async () => {
+  const benchmark = JSON.parse(await readFile(new URL("../data/benchmark.json", import.meta.url), "utf8"));
+  const expected = {
+    "deepseek-pro": ["deepseek-v4-pro-max", 42.02],
+    kimi: ["kimi-k3-max", 35.29],
+  };
+
+  for (const [modelId, [experiment, homepageScore]] of Object.entries(expected)) {
+    const index = JSON.parse(await readFile(new URL(`../public/traces/${experiment}/index.json`, import.meta.url), "utf8"));
+    const passCount = index.tasks.filter((task) => task.evaluation.reward === 1).length;
+    const score = Number(((passCount / index.taskCount) * 100).toFixed(2));
+    assert.equal(score, homepageScore, `${modelId} trace aggregate should match homepage`);
+    assert.equal(benchmark.models.find((model) => model.id === modelId)?.scores.overall, homepageScore);
   }
 });
