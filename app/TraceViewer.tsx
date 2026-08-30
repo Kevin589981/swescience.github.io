@@ -231,7 +231,7 @@ function EventBody({ event }: { event: TraceEvent }) {
 }
 
 function TraceTimeline({ events }: { events: TraceEvent[] }) {
-  const [viewMode, setViewMode] = useState<"focus" | "full">("focus");
+  const [viewMode, setViewMode] = useState<"focus" | "full">("full");
   const focusEvents = useMemo(() => events.filter(isFocusEvent), [events]);
   const visibleEvents = viewMode === "full" ? events : focusEvents;
 
@@ -240,7 +240,6 @@ function TraceTimeline({ events }: { events: TraceEvent[] }) {
       <div className="trace-panel-heading">
         <div><span className="trace-eyebrow">Run trace</span><h2>{visibleEvents.length}{viewMode === "focus" && visibleEvents.length !== events.length ? ` of ${events.length}` : ""} normalized events</h2></div>
         <div className="trace-view-toggle" role="group" aria-label="Trace event visibility">
-          <button type="button" className={viewMode === "focus" ? "active" : ""} aria-pressed={viewMode === "focus"} onClick={() => setViewMode("focus")}>Focus <span aria-hidden="true">{focusEvents.length}</span></button>
           <button type="button" className={viewMode === "full" ? "active" : ""} aria-pressed={viewMode === "full"} onClick={() => setViewMode("full")}>Full <span aria-hidden="true">{events.length}</span></button>
         </div>
       </div>

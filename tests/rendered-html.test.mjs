@@ -10,7 +10,7 @@ test("renders the SWE-bench Science project page", async () => {
   assert.match(html, /119/);
   assert.match(html, /huggingface\.co\/datasets\/OpenMOSS-Team\/SWE-bench-Science/);
   assert.match(html, /github\.com\/OpenMOSS\/SWE-bench-Science/);
-  assert.match(html, /task-matrix\/gradient/);
+  assert.doesNotMatch(html, /task-matrix\/gradient/);
   assert.doesNotMatch(html, /task-matrix\/trace/);
 });
 
@@ -21,6 +21,10 @@ test("exports the task trace viewer", async () => {
   assert.match(html, /Task matrix/);
   assert.doesNotMatch(html, /Workspace/);
   assert.doesNotMatch(html, /legacy|UCloud|linux\/amd64|api\.modelverse\.cn/);
+
+  const traceViewer = await readFile(new URL("../app/TraceViewer.tsx", import.meta.url), "utf8");
+  assert.match(traceViewer, /useState<"focus" \| "full">\("full"\)/);
+  assert.doesNotMatch(traceViewer, />Focus\s*</);
 });
 
 test("keeps trace entry points inside task details", async () => {
