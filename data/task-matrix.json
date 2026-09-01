@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-08-30",
+  "generatedAt": "2026-09-01",
   "referenceModel": {
     "id": "nex",
     "label": "Nex N2",
@@ -11,6 +11,7 @@
   "includedModels": [
     "opus",
     "deepseek-pro",
+    "gpt",
     "kimi",
     "glm",
     "qwen-3-8-27b"
@@ -55,6 +56,26 @@
       "tokens": {
         "input": 11.43,
         "output": 0.092
+      }
+    },
+    {
+      "id": "gpt",
+      "family": "GPT-5.6-sol",
+      "reasoningDepth": "max",
+      "harness": "Codex",
+      "scores": {
+        "public": 98.32,
+        "private": 75.57,
+        "fail2Pass": 69.98,
+        "pass2Pass": 96.3,
+        "overall": 40.34,
+        "issue": 34.62,
+        "expert": 46.94,
+        "engineering": 38.89
+      },
+      "tokens": {
+        "input": 3.921,
+        "output": 0.027
       }
     },
     {
@@ -188,6 +209,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 1,
+            "total": 3
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -260,6 +294,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 8
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -332,6 +379,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -404,6 +464,19 @@
           "reward": 1,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 15,
+            "total": 15
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -476,6 +549,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 1,
+            "total": 4
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -548,6 +634,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 0,
+            "total": 1
+          },
+          "private": {
+            "passed": 0,
+            "total": 13
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -620,6 +719,19 @@
           "reward": 1,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -692,6 +804,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 1,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -764,6 +889,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 9
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -836,6 +974,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 11,
+            "total": 11
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -908,6 +1059,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 5
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -980,6 +1144,19 @@
           "reward": 1,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 9,
+            "total": 10
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -1052,6 +1229,19 @@
           "reward": 1,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 5
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -1124,6 +1314,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -1196,6 +1399,19 @@
           "reward": 1,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 11,
+            "total": 31
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -1268,6 +1484,19 @@
           "reward": 1,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 12,
+            "total": 12
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -1340,6 +1569,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 12,
+            "total": 12
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -1412,6 +1654,19 @@
           "reward": 1,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 5
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -1484,6 +1739,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 13,
+            "total": 14
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -1556,6 +1824,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 12,
+            "total": 12
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -1628,6 +1909,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 11,
+            "total": 15
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -1700,6 +1994,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 12,
+            "total": 12
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -1772,6 +2079,19 @@
           "reward": 1,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 8
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -1844,6 +2164,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 8
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -1916,6 +2249,19 @@
           "reward": 1,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 7,
+            "total": 7
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -1988,6 +2334,19 @@
           "reward": 1,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 9,
+            "total": 9
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -2060,6 +2419,19 @@
           "reward": 1,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 21,
+            "total": 21
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -2132,6 +2504,19 @@
           "reward": 1,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 10,
+            "total": 10
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -2204,6 +2589,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 29,
+            "total": 29
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -2276,6 +2674,19 @@
           "reward": 1,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 10,
+            "total": 10
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -2348,6 +2759,19 @@
           "reward": 1,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 41,
+            "total": 41
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -2420,6 +2844,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 21,
+            "total": 21
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -2492,6 +2929,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 7,
+            "total": 10
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -2564,6 +3014,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 8
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -2636,6 +3099,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 14,
+            "total": 14
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -2708,6 +3184,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 9
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -2780,6 +3269,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 10,
+            "total": 13
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -2852,6 +3354,19 @@
           "reward": 1,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 15,
+            "total": 15
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -2924,6 +3439,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 10,
+            "total": 11
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -2996,6 +3524,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 1,
+            "total": 3
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -3068,6 +3609,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 24
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -3140,6 +3694,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 15,
+            "total": 16
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -3212,6 +3779,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 8
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -3284,6 +3864,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 9,
+            "total": 15
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -3356,6 +3949,19 @@
           "reward": 1,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 16,
+            "total": 16
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -3428,6 +4034,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 6,
+            "total": 10
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -3500,6 +4119,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 6,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -3572,6 +4204,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 12,
+            "total": 13
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -3644,6 +4289,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 13,
+            "total": 13
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -3716,6 +4374,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 11
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -3788,6 +4459,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 6,
+            "total": 6
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -3860,6 +4544,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 15,
+            "total": 16
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -3932,6 +4629,19 @@
           "reward": 1,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 6,
+            "total": 6
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -4004,6 +4714,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -4076,6 +4799,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 10,
+            "total": 18
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -4148,6 +4884,19 @@
           "reward": 1,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 10,
+            "total": 10
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -4220,6 +4969,19 @@
           "reward": 1,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 11,
+            "total": 11
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -4292,6 +5054,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 9,
+            "total": 9
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -4364,6 +5139,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 9
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -4436,6 +5224,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 0,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 11
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -4508,6 +5309,19 @@
           "reward": 1,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 8
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -4580,6 +5394,19 @@
           "reward": 1,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 17,
+            "total": 17
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -4652,6 +5479,19 @@
           "reward": 1,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 17,
+            "total": 18
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -4724,6 +5564,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 8
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -4796,6 +5649,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 6,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -4868,6 +5734,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -4940,6 +5819,19 @@
           "reward": 1,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -5012,6 +5904,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 3
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -5084,6 +5989,19 @@
           "reward": 1,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 4
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -5156,6 +6074,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 9
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -5228,6 +6159,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 5
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -5300,6 +6244,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 6,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -5372,6 +6329,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -5444,6 +6414,19 @@
           "reward": 1,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 10,
+            "total": 10
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -5516,6 +6499,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 8
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -5588,6 +6584,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 6,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -5660,6 +6669,19 @@
           "reward": 1,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 13,
+            "total": 13
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -5732,6 +6754,19 @@
           "reward": 1,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 42,
+            "total": 42
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -5804,6 +6839,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 13,
+            "total": 14
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -5876,6 +6924,19 @@
           "reward": 1,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 10,
+            "total": 15
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -5948,6 +7009,19 @@
           "reward": 1,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 5
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -6020,6 +7094,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 1,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -6092,6 +7179,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 1,
+            "total": 3
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -6164,6 +7264,19 @@
           "reward": 1,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -6236,6 +7349,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 10
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -6308,6 +7434,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 4
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -6380,6 +7519,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 5
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -6452,6 +7604,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 5
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -6524,6 +7689,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 4
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -6596,6 +7774,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -6668,6 +7859,19 @@
           "reward": 1,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 3
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -6740,6 +7944,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 8,
+            "total": 9
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -6812,6 +8029,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 4
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -6884,6 +8114,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 0,
+            "total": 5
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -6956,6 +8199,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 8
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -7028,6 +8284,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 8
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -7100,6 +8369,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 6,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -7172,6 +8454,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 11,
+            "total": 11
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -7244,6 +8539,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 4
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -7316,6 +8624,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 7,
+            "total": 8
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -7388,6 +8709,19 @@
           "reward": 1,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 10,
+            "total": 10
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -7460,6 +8794,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 3,
+            "total": 4
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -7532,6 +8879,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 4
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -7604,6 +8964,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 0,
+            "total": 7
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -7676,6 +9049,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 4
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -7748,6 +9134,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 32,
+            "total": 37
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -7820,6 +9219,19 @@
           "reward": 1,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 3
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -7892,6 +9304,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 23,
+            "total": 23
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -7964,6 +9389,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 1,
+            "total": 6
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -8036,6 +9474,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 4,
+            "total": 10
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -8108,6 +9559,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 6,
+            "total": 10
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -8180,6 +9644,19 @@
           "reward": 1,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 5,
+            "total": 5
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -8252,6 +9729,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 7,
+            "total": 13
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -8324,6 +9814,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 13,
+            "total": 15
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -8396,6 +9899,19 @@
           "reward": 1,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 97,
+            "total": 97
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -8468,6 +9984,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 75,
+            "total": 93
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -8540,6 +10069,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 6,
+            "total": 6
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -8612,6 +10154,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 9,
+            "total": 9
+          },
+          "reward": 1,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     },
@@ -8684,6 +10239,19 @@
           "reward": 0,
           "transition": null,
           "source": "Selected Qwen3.8-27B public/private audit"
+        },
+        "gpt": {
+          "public": {
+            "passed": 1,
+            "total": 1
+          },
+          "private": {
+            "passed": 2,
+            "total": 10
+          },
+          "reward": 0,
+          "transition": null,
+          "source": "Offline GPT-5.6-sol Max rerun audit"
         }
       }
     }

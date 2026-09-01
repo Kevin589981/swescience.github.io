@@ -138,3 +138,21 @@ test("keeps Kimi and DeepSeek trace aggregates aligned with the homepage", async
     assert.equal(benchmark.models.find((model) => model.id === modelId)?.scores.overall, homepageScore);
   }
 });
+
+test("publishes the offline GPT Max rerun in the matrix without a trace entry", async () => {
+  const benchmark = JSON.parse(await readFile(new URL("../data/benchmark.json", import.meta.url), "utf8"));
+  const matrix = JSON.parse(await readFile(new URL("../data/task-matrix.json", import.meta.url), "utf8"));
+  const registry = JSON.parse(await readFile(new URL("../public/traces/index.json", import.meta.url), "utf8"));
+  const component = await readFile(new URL("../app/TaskMatrix.tsx", import.meta.url), "utf8");
+  const gpt = benchmark.models.find((model) => model.id === "gpt");
+  const passCount = matrix.tasks.filter((task) => task.results.gpt.reward === 1).length;
+
+  assert.ok(matrix.includedModels.includes("gpt"));
+  assert.ok(!matrix.pendingModels.includes("gpt"));
+  assert.equal(passCount, 48);
+  assert.equal(Number(((passCount / matrix.tasks.length) * 100).toFixed(2)), gpt.scores.overall);
+  assert.equal(gpt.scores.overall, 40.34);
+  assert.equal(matrix.tasks[0].results.gpt.source, "Offline GPT-5.6-sol Max rerun audit");
+  assert.equal(registry.experiments.some((experiment) => experiment.id.includes("gpt")), false);
+  assert.doesNotMatch(component, /gpt:\s*"gpt-[^"]+"/);
+});

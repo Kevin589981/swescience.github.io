@@ -15,7 +15,8 @@ const paths = {
     ?? path.join(benchmarkRoot, "reports/glm-5.2-max-with_auxiliary-002-120-audit/selected_runs_and_evidence.json"),
   qwen: process.env.QWEN_SELECTION_FILE
     ?? path.join(benchmarkRoot, "reports/qwen3.8-27b-responses-withaux-002-120-audit/selected_runs_and_token_usage.json"),
-  gpt: process.env.GPT_SELECTION_FILE ?? path.join("/tmp", "gpt-per-task.json"),
+  gpt: process.env.GPT_MAX_RESULTS_FILE
+    ?? "/Users/fnlp/Downloads/task_results_gpt56_sol_max_with_aux.csv",
 };
 
 function read(file) {
@@ -26,6 +27,40 @@ function read(file) {
 function metric(value, passedKey = "passed", totalKey = "collected") {
   if (!value || value[passedKey] === undefined || value[totalKey] === undefined) return null;
   return { passed: Number(value[passedKey]), total: Number(value[totalKey]) };
+}
+
+function parseCsv(text) {
+  const rows = [];
+  let row = [];
+  let field = "";
+  let quoted = false;
+  for (let index = 0; index < text.length; index += 1) {
+    const character = text[index];
+    if (quoted) {
+      if (character === '"' && text[index + 1] === '"') {
+        field += '"';
+        index += 1;
+      } else if (character === '"') quoted = false;
+      else field += character;
+    } else if (character === '"') quoted = true;
+    else if (character === ",") {
+      row.push(field);
+      field = "";
+    } else if (character === "\n") {
+      row.push(field.replace(/\r$/, ""));
+      rows.push(row);
+      row = [];
+      field = "";
+    } else field += character;
+  }
+  if (field.length || row.length) {
+    row.push(field.replace(/\r$/, ""));
+    rows.push(row);
+  }
+  const [headers, ...records] = rows;
+  return records.filter((record) => record.some(Boolean)).map((record) => (
+    Object.fromEntries(headers.map((header, index) => [header, record[index] ?? ""]))
+  ));
 }
 
 function parseSelectedRuns(file) {
@@ -100,16 +135,43 @@ function parseLocalResults(root, label) {
   return rows;
 }
 
-function parseGptRows(file) {
-  const content = JSON.parse(read(file)).data.document.content;
+function parseGptMaxRows(file, referenceRows) {
+  const records = parseCsv(read(file));
   const rows = new Map();
-  for (const line of content.split(/\r?\n/)) {
-    const match = line.match(/^\| (\d{3}) \| [^|]*?\bpublic (\d+)\/(\d+).*?\bprivate (\d+)\/(\d+).*?\breward (\d+) \|/);
-    if (match) rows.set(match[1], {
-      public: { passed: Number(match[2]), total: Number(match[3]) },
-      private: { passed: Number(match[4]), total: Number(match[5]) },
-      reward: Number(match[6]),
+  for (const record of records) {
+    if (record.task === "macro_average") continue;
+    const taskId = normalizeTaskId(record.task);
+    if (!/^\d{3}$/.test(taskId) || Number(taskId) < 2 || Number(taskId) > 120) {
+      throw new Error(`GPT Max CSV has invalid task id: ${record.task}`);
+    }
+    if (rows.has(taskId)) throw new Error(`GPT Max CSV has duplicate task ${taskId}`);
+    const reference = referenceRows.get(taskId);
+    if (!reference) throw new Error(`GPT Max CSV task ${taskId} has no canonical test totals`);
+    const publicRatio = Number(record.with_aux_public);
+    const privateRatio = Number(record.with_aux_private);
+    const reward = Number(record.with_aux_pass_at_1);
+    if (![publicRatio, privateRatio, reward].every(Number.isFinite)
+      || publicRatio < 0 || publicRatio > 1 || privateRatio < 0 || privateRatio > 1
+      || ![0, 1].includes(reward)) {
+      throw new Error(`GPT Max CSV task ${taskId} has invalid metrics`);
+    }
+    const publicPassed = publicRatio * reference.public.total;
+    const privatePassed = privateRatio * reference.private.total;
+    if (Math.abs(publicPassed - Math.round(publicPassed)) > 1e-8
+      || Math.abs(privatePassed - Math.round(privatePassed)) > 1e-8) {
+      throw new Error(`GPT Max CSV task ${taskId} is incompatible with canonical test totals`);
+    }
+    if (reward !== Number(Math.round(privatePassed) === reference.private.total)) {
+      throw new Error(`GPT Max CSV task ${taskId} Pass@1 disagrees with its private-test ratio`);
+    }
+    rows.set(taskId, {
+      public: { passed: Math.round(publicPassed), total: reference.public.total },
+      private: { passed: Math.round(privatePassed), total: reference.private.total },
+      reward,
     });
+  }
+  if (rows.size !== 119 || !rows.has("002") || !rows.has("120")) {
+    throw new Error(`Expected GPT Max CSV to contain exactly tasks 002-120, found ${rows.size}`);
   }
   return rows;
 }
@@ -118,11 +180,8 @@ const benchmark = JSON.parse(read(path.join(repoRoot, "data/benchmark.json")));
 const nex = benchmark.models.find((model) => model.id === "nex");
 if (!nex) throw new Error("Nex N2 reference model is missing from benchmark.json");
 const targetIds = benchmark.models.filter((model) => model.scores.overall > nex.scores.overall).map((model) => model.id);
-const publishGptXhigh = process.env.PUBLISH_GPT_XHIGH === "1";
-const includedIds = publishGptXhigh
-  ? ["opus", "gpt", "deepseek-pro", "kimi", "glm", "qwen-3-8-27b"]
-  : ["opus", "deepseek-pro", "kimi", "glm", "qwen-3-8-27b"];
-const pendingIds = targetIds.filter((id) => !includedIds.includes(id) && (publishGptXhigh || id !== "gpt"));
+const includedIds = ["opus", "deepseek-pro", "gpt", "kimi", "glm", "qwen-3-8-27b"];
+const pendingIds = targetIds.filter((id) => !includedIds.includes(id));
 
 const selectedSources = [
   { id: "opus", file: paths.opus, source: "Selected Claude Opus Max public/private audit" },
@@ -131,7 +190,7 @@ const selectedSources = [
   { id: "glm", file: paths.glm, source: "Selected GLM-5.2 public/private audit" },
   { id: "qwen-3-8-27b", file: paths.qwen, source: "Selected Qwen3.8-27B public/private audit" },
 ].map((entry) => ({ ...entry, rows: entry.root ? parseLocalResults(entry.root, entry.id) : parseSelectedRuns(entry.file) }));
-const gptRows = publishGptXhigh ? parseGptRows(paths.gpt) : null;
+const gptRows = parseGptMaxRows(paths.gpt, selectedSources[0].rows);
 
 const taskIds = [...selectedSources[0].rows.keys()].sort();
 if (taskIds.length !== 119) throw new Error(`Expected 119 tasks, found ${taskIds.length}`);
@@ -150,11 +209,9 @@ for (const taskId of taskIds) {
     taskResults[entry.id] = { ...result, transition: null, source: entry.source };
   }
 
-  if (publishGptXhigh) {
-    const gpt = gptRows.get(taskId);
-    if (!gpt) throw new Error(`Missing selected result for GPT task ${taskId}`);
-    taskResults.gpt = { ...gpt, transition: null, source: "Selected GPT-5.6-sol comparison audit" };
-  }
+  const gpt = gptRows.get(taskId);
+  if (!gpt) throw new Error(`Missing selected result for GPT Max task ${taskId}`);
+  taskResults.gpt = { ...gpt, transition: null, source: "Offline GPT-5.6-sol Max rerun audit" };
 
   results[publishedId] = {
     publishedTaskId: publishedId,
