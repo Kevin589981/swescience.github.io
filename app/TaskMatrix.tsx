@@ -68,6 +68,7 @@ function formatMetric(metric: Metric) {
 function traceHref(taskId: string, modelId: string, harness: string) {
   const experimentByModel: Record<string, string> = {
     opus: "claude-opus-5-max",
+    gpt: "gpt-5-6-sol-max",
     "deepseek-pro": "deepseek-v4-pro-max",
     kimi: "kimi-k3-max",
     glm: "glm-5-2-max",
@@ -117,7 +118,7 @@ function TaskDetail({ task, models }: { task: MatrixTask; models: MatrixModel[] 
                     </span>
                   </td>
                   <td>
-                    {["opus", "deepseek-pro", "kimi", "glm", "qwen-3-8-27b"].includes(model.id) ? (
+                    {["opus", "gpt", "deepseek-pro", "kimi", "glm", "qwen-3-8-27b"].includes(model.id) ? (
                       <a className="task-trace-link" href={traceHref(task.publishedTaskId, model.id, model.harness)}>
                         Open trace <span aria-hidden="true">↗</span>
                       </a>
