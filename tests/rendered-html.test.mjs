@@ -43,7 +43,7 @@ test("publishes the current model trace records per task", async () => {
     "deepseek-v4-pro-max",
     "kimi-k3-max",
     "glm-5-2-max",
-    "qwen3-8-27b-max",
+    "qwen3-8-27b-xhigh",
   ]);
 
   const builder = await readFile(new URL("../scripts/build-traces.mjs", import.meta.url), "utf8");
@@ -111,7 +111,7 @@ test("keeps matrix metrics aligned with every published trace", async () => {
     "deepseek-pro": "deepseek-v4-pro-max",
     kimi: "kimi-k3-max",
     glm: "glm-5-2-max",
-    "qwen-3-8-27b": "qwen3-8-27b-max",
+    "qwen-3-8-27b": "qwen3-8-27b-xhigh",
   };
   assert.equal(matrix.tasks.length, 119);
   assert.deepEqual(matrix.tasks.map((task) => task.publishedTaskId), Array.from({ length: 119 }, (_, index) => String(index + 1).padStart(3, "0")));

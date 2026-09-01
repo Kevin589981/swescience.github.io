@@ -972,12 +972,12 @@ const baseExperiments = [
     tokenUsageFile: tokenUsageFiles.glm,
   },
   {
-    id: "qwen3-8-27b-max",
-    label: "Qwen3.8-27B Max",
+    id: "qwen3-8-27b-xhigh",
+    label: "Qwen3.8-27B xhigh",
     model: "Qwen3.8-27B",
     harness: "Claude Code",
     parser: "claude",
-    outputDir: "qwen3-8-27b-max",
+    outputDir: "qwen3-8-27b-xhigh",
     auditFile: path.join(reportsRoot, "qwen3.8-27b-responses-withaux-002-120-audit/selected_runs_and_token_usage.json"),
   },
 ];

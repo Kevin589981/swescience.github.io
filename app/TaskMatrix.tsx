@@ -72,7 +72,7 @@ function traceHref(taskId: string, modelId: string, harness: string) {
     "deepseek-pro": "deepseek-v4-pro-max",
     kimi: "kimi-k3-max",
     glm: "glm-5-2-max",
-    "qwen-3-8-27b": "qwen3-8-27b-max",
+    "qwen-3-8-27b": "qwen3-8-27b-xhigh",
   };
   const params = new URLSearchParams({ task: taskId, experiment: experimentByModel[modelId] ?? "", model: modelId, harness });
   return `/task-matrix/trace?${params.toString()}`;

@@ -37,10 +37,10 @@
       "taskCount": 119
     },
     {
-      "id": "qwen3-8-27b-max",
-      "label": "Qwen3.8-27B Max",
+      "id": "qwen3-8-27b-xhigh",
+      "label": "Qwen3.8-27B xhigh",
       "harness": "Claude Code",
-      "path": "qwen3-8-27b-max",
+      "path": "qwen3-8-27b-xhigh",
       "taskCount": 119
     }
   ]
