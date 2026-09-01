@@ -10,7 +10,7 @@ test("renders the SWE-bench Science project page", async () => {
   assert.match(html, /119/);
   assert.match(html, /huggingface\.co\/datasets\/OpenMOSS-Team\/SWE-bench-Science/);
   assert.match(html, /github\.com\/OpenMOSS\/SWE-bench-Science/);
-  assert.doesNotMatch(html, /task-matrix\/gradient/);
+  assert.match(html, /task-matrix\/gradient/);
   assert.doesNotMatch(html, /task-matrix\/trace/);
 });
 
