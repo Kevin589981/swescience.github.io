@@ -37,6 +37,7 @@ type MatrixPayload = {
 const data = matrixData as MatrixPayload;
 const MODEL_COLORS: Record<string, string> = {
   opus: "#a96f62",
+  gpt: "#527fa4",
   "deepseek-pro": "#7d8f9f",
   kimi: "#8a806b",
   glm: "#96758a",
