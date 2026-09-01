@@ -382,11 +382,16 @@ function normalizeClaudeEvents(events, runRoot) {
           });
           toolItems.set(block.id, item);
         } else if (block.type === "thinking") {
+          const fields = reasoningFields(block);
+          // Claude-compatible exports may contain empty thinking markers around
+          // real blocks. They carry neither plaintext nor encrypted content and
+          // should not become misleading "unavailable" cards in the viewer.
+          if (fields.reasoningStatus === "unavailable") continue;
           add({
             kind: "thinking",
             source: event,
             label: "Reasoning block",
-            ...reasoningFields(block),
+            ...fields,
           });
         } else if (block.type === "text") {
           const text = fullText(block.text, runRoot);

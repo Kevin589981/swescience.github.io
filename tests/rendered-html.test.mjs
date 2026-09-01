@@ -94,7 +94,7 @@ test("publishes the current model trace records per task", async () => {
   );
   assert.equal(glmRerunUsageTask.evaluation.private.passed, 2, "GLM evaluation should remain from the selected evaluation run");
   const opusTask = JSON.parse(await readFile(new URL("../public/traces/claude-opus-5-max/task-002.json", import.meta.url), "utf8"));
-  assert.ok(opusTask.events.some((event) => event.kind === "thinking" && event.redacted === true), "Encrypted Opus reasoning remains unavailable");
+  assert.equal(opusTask.events.some((event) => event.kind === "thinking" && event.reasoningStatus === "unavailable"), false, "Empty Opus thinking markers should not be published");
   const kimiTask = JSON.parse(await readFile(new URL("../public/traces/kimi-k3-max/task-002.json", import.meta.url), "utf8"));
   assert.ok(kimiTask.events.some((event) => event.kind === "thinking" && event.redacted === false && event.text), "Kimi thinking.jsonl reasoning should be published");
   assert.ok(kimiTask.events.some((event) => event.kind === "thinking" && event.elapsedSec > 0), "Kimi wire timestamps should produce elapsed event times");
