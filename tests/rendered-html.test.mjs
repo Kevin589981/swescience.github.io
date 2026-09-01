@@ -10,7 +10,7 @@ test("renders the SWE-bench Science project page", async () => {
   assert.match(html, /119/);
   assert.match(html, /huggingface\.co\/datasets\/OpenMOSS-Team\/SWE-bench-Science/);
   assert.match(html, /github\.com\/OpenMOSS\/SWE-bench-Science/);
-  assert.doesNotMatch(html, /task-matrix\/gradient/);
+  assert.match(html, /task-matrix\/gradient/);
   assert.doesNotMatch(html, /task-matrix\/trace/);
 });
 
@@ -39,6 +39,7 @@ test("publishes the current model trace records per task", async () => {
   const registry = JSON.parse(await readFile(new URL("../public/traces/index.json", import.meta.url), "utf8"));
   assert.deepEqual(registry.experiments.map((experiment) => experiment.id), [
     "claude-opus-5-max",
+    "gpt-5-6-sol-max",
     "deepseek-v4-pro-max",
     "kimi-k3-max",
     "glm-5-2-max",
@@ -93,13 +94,20 @@ test("publishes the current model trace records per task", async () => {
   );
   assert.equal(glmRerunUsageTask.evaluation.private.passed, 2, "GLM evaluation should remain from the selected evaluation run");
   const opusTask = JSON.parse(await readFile(new URL("../public/traces/claude-opus-5-max/task-002.json", import.meta.url), "utf8"));
-  assert.ok(opusTask.events.some((event) => event.kind === "thinking" && event.redacted === true), "Encrypted Opus reasoning remains unavailable");
+  assert.equal(opusTask.events.some((event) => event.kind === "thinking" && event.reasoningStatus === "unavailable"), false, "Empty Opus thinking markers should not be published");
+  const kimiTask = JSON.parse(await readFile(new URL("../public/traces/kimi-k3-max/task-002.json", import.meta.url), "utf8"));
+  assert.ok(kimiTask.events.some((event) => event.kind === "thinking" && event.redacted === false && event.text), "Kimi thinking.jsonl reasoning should be published");
+  assert.ok(kimiTask.events.some((event) => event.kind === "thinking" && event.elapsedSec > 0), "Kimi wire timestamps should produce elapsed event times");
+  const gptTask = JSON.parse(await readFile(new URL("../public/traces/gpt-5-6-sol-max/task-002.json", import.meta.url), "utf8"));
+  assert.ok(gptTask.events.some((event) => event.kind === "thinking" && event.redacted === true && event.reasoningStatus === "encrypted"), "GPT encrypted reasoning should remain explicitly marked");
+  assert.ok(gptTask.events.some((event) => event.kind === "thinking" && event.elapsedSec > 0), "GPT rollout timestamps should produce elapsed event times");
 });
 
 test("keeps matrix metrics aligned with every published trace", async () => {
   const matrix = JSON.parse(await readFile(new URL("../data/task-matrix.json", import.meta.url), "utf8"));
   const experiments = {
     opus: "claude-opus-5-max",
+    gpt: "gpt-5-6-sol-max",
     "deepseek-pro": "deepseek-v4-pro-max",
     kimi: "kimi-k3-max",
     glm: "glm-5-2-max",
@@ -123,9 +131,10 @@ test("keeps matrix metrics aligned with every published trace", async () => {
   }
 });
 
-test("keeps Kimi and DeepSeek trace aggregates aligned with the homepage", async () => {
+test("keeps GPT, Kimi, and DeepSeek trace aggregates aligned with the homepage", async () => {
   const benchmark = JSON.parse(await readFile(new URL("../data/benchmark.json", import.meta.url), "utf8"));
   const expected = {
+    gpt: ["gpt-5-6-sol-max", 40.34],
     "deepseek-pro": ["deepseek-v4-pro-max", 42.02],
     kimi: ["kimi-k3-max", 35.29],
   };
@@ -139,7 +148,7 @@ test("keeps Kimi and DeepSeek trace aggregates aligned with the homepage", async
   }
 });
 
-test("publishes the offline GPT Max rerun in the matrix without a trace entry", async () => {
+test("publishes the offline GPT Max rerun in the matrix with a matching trace entry", async () => {
   const benchmark = JSON.parse(await readFile(new URL("../data/benchmark.json", import.meta.url), "utf8"));
   const matrix = JSON.parse(await readFile(new URL("../data/task-matrix.json", import.meta.url), "utf8"));
   const registry = JSON.parse(await readFile(new URL("../public/traces/index.json", import.meta.url), "utf8"));
@@ -153,6 +162,6 @@ test("publishes the offline GPT Max rerun in the matrix without a trace entry", 
   assert.equal(Number(((passCount / matrix.tasks.length) * 100).toFixed(2)), gpt.scores.overall);
   assert.equal(gpt.scores.overall, 40.34);
   assert.equal(matrix.tasks[0].results.gpt.source, "Offline GPT-5.6-sol Max rerun audit");
-  assert.equal(registry.experiments.some((experiment) => experiment.id.includes("gpt")), false);
-  assert.doesNotMatch(component, /gpt:\s*"gpt-[^"]+"/);
+  assert.ok(registry.experiments.some((experiment) => experiment.id === "gpt-5-6-sol-max"));
+  assert.match(component, /gpt:\s*"gpt-5-6-sol-max"/);
 });

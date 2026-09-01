@@ -9,6 +9,13 @@
       "taskCount": 119
     },
     {
+      "id": "gpt-5-6-sol-max",
+      "label": "GPT-5.6-sol Max",
+      "harness": "Codex",
+      "path": "gpt-5-6-sol-max",
+      "taskCount": 119
+    },
+    {
       "id": "deepseek-v4-pro-max",
       "label": "DeepSeek-V4-Pro Max",
       "harness": "Claude Code",

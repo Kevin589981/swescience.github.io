@@ -14,6 +14,8 @@ const gptWslArchive = process.env.GPT_WSL_ARCHIVE ?? "/Users/fnlp/Downloads/wsl_
 const gptWslRunsRoot = process.env.GPT_WSL_RUNS_ROOT ?? null;
 let gptExtractedRunsRoot = null;
 const obsoleteOutputRoot = path.join(repoRoot, "public/traces/opus-5-max-ucloud");
+const uniformTracesRoot = process.env.UNIFORM_TRACES_ROOT
+  ?? "/Users/fnlp/Downloads/gpt56_sol_kimi_k3_ds_v4_pro_max_uniform_traces_20260901";
 
 const tokenUsageFiles = {
   opus: process.env.OPUS_TOKEN_USAGE_FILE
@@ -24,9 +26,11 @@ const tokenUsageFiles = {
 
 const localResultRoots = {
   kimi: process.env.KIMI_RESULTS_ROOT
-    ?? "/Users/fnlp/Downloads/kimi_k3_ds_v4_pro_max_traces_20260829/kimi-k3-max",
+    ?? path.join(uniformTracesRoot, "kimi-k3-max"),
   deepseek: process.env.DEEPSEEK_RESULTS_ROOT
-    ?? "/Users/fnlp/Downloads/kimi_k3_ds_v4_pro_max_traces_20260829/deepseek-v4-pro-max",
+    ?? path.join(uniformTracesRoot, "deepseek-v4-pro-max"),
+  gpt: process.env.GPT_RESULTS_ROOT
+    ?? path.join(uniformTracesRoot, "gpt-5.6-sol-max"),
 };
 
 function readJson(file) {
@@ -133,6 +137,7 @@ function sanitizeText(value, runRoot) {
   return String(value ?? "")
     .replaceAll(runRoot, "<run>")
     .replace(/\/Users\/[^\s/]+\/workspace\/agent\/opus-test/g, "<host-workspace>")
+    .replace(/\/mnt\/shared-storage-user\/[A-Za-z0-9_./-]+/g, "<source-workspace>")
     .replace(/\/workspace\/task_\d+/g, "/workspace/task")
     .replace(/\/app\/private_tests\/task_\d+/g, "/verifier/private_tests")
     .replace(/\/claude-home\//g, "<agent-home>/")
@@ -213,6 +218,10 @@ function eventTimestamp(event) {
 
 function normalizeTimestamp(value) {
   if (!value) return null;
+  if (typeof value === "number" || /^\d+(?:\.\d+)?$/.test(String(value))) {
+    const epoch = Number(value);
+    if (Number.isFinite(epoch)) return new Date(epoch < 1e12 ? epoch * 1000 : epoch).toISOString();
+  }
   const normalized = String(value).replace(/NZ$/, "Z");
   const time = Date.parse(normalized);
   return Number.isFinite(time) ? new Date(time).toISOString() : null;
@@ -239,6 +248,7 @@ function codexRolloutFiles(runRoot) {
     path.join(runRoot, ".codex-home"),
     path.join(runRoot, "artifacts/.codex-home"),
     path.join(runRoot, "artifacts/codex-home"),
+    path.join(runRoot, "raw_session"),
   ];
   return homeRoots
     .flatMap((root) => findFiles(root, (_file, name) => /^rollout-.*\.jsonl$/.test(name)))
@@ -372,11 +382,16 @@ function normalizeClaudeEvents(events, runRoot) {
           });
           toolItems.set(block.id, item);
         } else if (block.type === "thinking") {
+          const fields = reasoningFields(block);
+          // Claude-compatible exports may contain empty thinking markers around
+          // real blocks. They carry neither plaintext nor encrypted content and
+          // should not become misleading "unavailable" cards in the viewer.
+          if (fields.reasoningStatus === "unavailable") continue;
           add({
             kind: "thinking",
             source: event,
             label: "Reasoning block",
-            ...reasoningFields(block),
+            ...fields,
           });
         } else if (block.type === "text") {
           const text = fullText(block.text, runRoot);
@@ -445,7 +460,76 @@ function normalizeClaudeEvents(events, runRoot) {
   });
 }
 
-function normalizeKimiEvents(events, runRoot) {
+function readKimiTimeline(runRoot) {
+  const thinking = [];
+  const assistantTexts = [];
+  const toolCalls = [];
+  const toolResults = [];
+  const wireFiles = findFiles(path.join(runRoot, "raw_session"), (_file, name) => name === "wire.jsonl");
+  const wireTimes = [];
+
+  for (const file of wireFiles) {
+    const lines = fs.readFileSync(file, "utf8").split(/\r?\n/);
+    lines.forEach((line, lineIndex) => {
+      if (!line) return;
+      let wrapper;
+      try {
+        wrapper = JSON.parse(line);
+      } catch {
+        return;
+      }
+      const event = wrapper?.event ?? wrapper;
+      if (!event || typeof event !== "object") return;
+      const timestamp = normalizeTimestamp(wrapper.time ?? event.timestamp);
+      const sourceOrder = Number.isFinite(Number(lineIndex)) ? lineIndex : 0;
+      if (timestamp) wireTimes.push(timestamp);
+      if (event.type === "content.part") {
+        const part = event.part ?? {};
+        if (part.type === "text" && typeof part.text === "string" && part.text) {
+          assistantTexts.push({ text: part.text, timestamp, sourceOrder });
+        }
+      } else if (event.type === "tool.call") {
+        toolCalls.push({
+          id: event.toolCallId ?? event.id ?? null,
+          name: event.name ?? "Tool",
+          timestamp,
+          sourceOrder,
+        });
+      } else if (event.type === "tool.result") {
+        toolResults.push({
+          id: event.toolCallId ?? event.id ?? null,
+          timestamp,
+          sourceOrder,
+        });
+      }
+    });
+  }
+
+  const thinkingPath = path.join(runRoot, "thinking.jsonl");
+  if (fs.existsSync(thinkingPath)) {
+    const lines = fs.readFileSync(thinkingPath, "utf8").split(/\r?\n/);
+    lines.forEach((line, lineIndex) => {
+      if (!line) return;
+      let record;
+      try {
+        record = JSON.parse(line);
+      } catch {
+        return;
+      }
+      if (typeof record.thinking !== "string" || !record.thinking) return;
+      thinking.push({
+        timestamp: normalizeTimestamp(record.time),
+        sourceOrder: numericOrNull(record.source_event_index) ?? lineIndex,
+        fields: reasoningFields({ text: record.thinking }),
+      });
+    });
+  }
+
+  const firstTimestamp = wireTimes.sort()[0] ?? thinking.find((record) => record.timestamp)?.timestamp ?? null;
+  return { firstTimestamp, thinking, assistantTexts, toolCalls, toolResults };
+}
+
+function normalizeKimiEvents(events, runRoot, timeline = {}) {
   const normalized = [];
   const toolItems = new Map();
   let activeTool = null;
@@ -454,13 +538,22 @@ function normalizeKimiEvents(events, runRoot) {
     .filter((index) => index >= 0);
   const lastAssistantContent = assistantContentIndexes.at(-1);
 
-  const add = (event) => {
+  const assistantRecords = (timeline.assistantTexts ?? []).map((record) => ({ ...record, used: false }));
+  const toolCallRecords = (timeline.toolCalls ?? []).map((record) => ({ ...record, used: false }));
+  const toolResultRecords = (timeline.toolResults ?? []).map((record) => ({ ...record, used: false }));
+  const firstTime = eventTimestamp({ timestamp: timeline.firstTimestamp });
+  let fallbackOrder = 100000;
+
+  const add = (event, timing = {}) => {
     const item = {
       id: `event-${normalized.length + 1}`,
       sequence: normalized.length + 1,
       kind: event.kind,
-      timestamp: null,
-      elapsedSec: null,
+      timestamp: normalizeTimestamp(timing.timestamp),
+      elapsedSec: firstTime !== null && eventTimestamp({ timestamp: timing.timestamp }) !== null
+        ? Math.max(0, Number(((eventTimestamp({ timestamp: timing.timestamp }) - firstTime) / 1000).toFixed(3)))
+        : null,
+      __sourceOrder: timing.sourceOrder ?? fallbackOrder++,
     };
     for (const [key, value] of Object.entries(event)) {
       if (key !== "kind" && value !== undefined) item[key] = value;
@@ -468,6 +561,19 @@ function normalizeKimiEvents(events, runRoot) {
     normalized.push(item);
     return item;
   };
+
+  const consume = (records, matcher) => {
+    const index = records.findIndex((record) => !record.used && matcher(record));
+    if (index < 0) return null;
+    records[index].used = true;
+    return records[index];
+  };
+
+  add({
+    kind: "lifecycle",
+    label: "Session start",
+    details: { cwd: "/workspace/task", model: "Kimi-K3", tools: ["Read", "Bash", "Edit"] },
+  }, { timestamp: timeline.firstTimestamp, sourceOrder: -1 });
 
   const parseArguments = (value) => {
     if (typeof value !== "string" || !value) return {};
@@ -484,22 +590,27 @@ function normalizeKimiEvents(events, runRoot) {
       activeTool = null;
       if (event.content) {
         const output = fullText(event.content, runRoot);
+        const record = consume(assistantRecords, (candidate) => candidate.text === event.content)
+          ?? consume(assistantRecords, () => true);
         add({
           kind: eventIndex === lastAssistantContent ? "final" : "assistant",
           text: output.text,
           truncated: output.truncated,
-        });
+        }, record ?? {});
       }
       for (const call of event.tool_calls ?? []) {
         const functionCall = call.function ?? {};
         const input = parseArguments(functionCall.arguments);
+        const record = consume(toolCallRecords, (candidate) => candidate.id === call.id)
+          ?? consume(toolCallRecords, (candidate) => candidate.name === functionCall.name)
+          ?? consume(toolCallRecords, () => true);
         const item = add({
           kind: "tool",
           toolUseId: call.id ?? null,
           name: functionCall.name ?? "Tool",
           input: safeInput(input, runRoot),
           omitResult: Object.values(input).some((value) => typeof value === "string" && /(?:^|\/)model\.patch\b/.test(value)),
-        });
+        }, record ?? {});
         toolItems.set(call.id, item);
         activeTool = item;
       }
@@ -514,10 +625,17 @@ function normalizeKimiEvents(events, runRoot) {
         return;
       }
       const rawResult = resultContent(event.content);
+      const resultRecord = consume(toolResultRecords, (candidate) => candidate.id === event.tool_call_id)
+        ?? consume(toolResultRecords, () => true);
       const output = item.omitResult || /^diff --git /m.test(rawResult)
         ? { text: "[agent patch content omitted from the published trace]", truncated: false }
         : fullText(rawResult, runRoot);
-      item.result = { isError: false, text: output.text, truncated: output.truncated };
+      item.result = {
+        isError: false,
+        text: output.text,
+        truncated: output.truncated,
+        ...(resultRecord?.timestamp ? { timestamp: resultRecord.timestamp } : {}),
+      };
       activeTool = item;
       return;
     }
@@ -529,14 +647,27 @@ function normalizeKimiEvents(events, runRoot) {
       } else if (activeTool && activeTool.result) {
         activeTool.result.text += `\n${output.text}`;
       } else if (output.text) {
-        add({ kind: "message", label: "Tool output", text: output.text, truncated: output.truncated });
+        const record = consume(assistantRecords, (candidate) => candidate.text === event.text)
+          ?? consume(assistantRecords, () => true);
+        add({ kind: "message", label: "Tool output", text: output.text, truncated: output.truncated }, record ?? {});
       }
     }
   });
 
-  return normalized.map((event) => {
+  for (const record of timeline.thinking ?? []) {
+    add({ kind: "thinking", label: "Reasoning block", ...record.fields }, record);
+  }
+
+  const kindPriority = { lifecycle: 0, thinking: 1, assistant: 2, tool: 3, message: 4, final: 5 };
+  normalized.sort((left, right) => left.__sourceOrder - right.__sourceOrder
+    || (kindPriority[left.kind] ?? 9) - (kindPriority[right.kind] ?? 9)
+    || left.sequence - right.sequence);
+  return normalized.map((event, index) => {
     const output = { ...event };
     delete output.omitResult;
+    delete output.__sourceOrder;
+    output.id = `event-${index + 1}`;
+    output.sequence = index + 1;
     return output;
   });
 }
@@ -804,6 +935,15 @@ const baseExperiments = [
     tokenUsageFile: tokenUsageFiles.opus,
   },
   {
+    id: "gpt-5-6-sol-max",
+    label: "GPT-5.6-sol Max",
+    model: "GPT-5.6-sol",
+    harness: "Codex",
+    parser: "codex",
+    outputDir: "gpt-5-6-sol-max",
+    resultsRoot: localResultRoots.gpt,
+  },
+  {
     id: "deepseek-v4-pro-max",
     label: "DeepSeek-V4-Pro Max",
     model: "DeepSeek-V4-Pro",
@@ -846,12 +986,12 @@ const baseExperiments = [
 // later release, but are excluded from the default publication tree.
 const optionalExperiments = [
   {
-    id: "gpt-5-6-sol-max",
-    label: "GPT-5.6-sol Max",
+    id: "gpt-5-6-sol-xhigh",
+    label: "GPT-5.6-sol xhigh",
     model: "GPT-5.6-sol",
     harness: "Codex",
     parser: "codex",
-    outputDir: "gpt-5-6-sol-max",
+    outputDir: "gpt-5-6-sol-xhigh",
     selectionFile: gptSelectionFile,
   },
 ];
@@ -942,13 +1082,14 @@ function buildTask(experiment, legacyTaskId, runMap, tokenUsageMap) {
   if (!publishedTask) throw new Error(`Missing published task ${publishedTaskId} in data/tasks.csv`);
   const trajectoryHasReasoning = trajectory.events?.some((event) => event?.item?.type === "reasoning");
   const codexTimeline = experiment.parser === "codex" ? readCodexRolloutTimeline(runRoot) : null;
+  const kimiTimeline = experiment.parser === "kimi" ? readKimiTimeline(runRoot) : null;
   const events = experiment.parser === "codex"
     ? normalizeCodexEvents(trajectory.events ?? [], runRoot, experiment.model, {
       ...(codexTimeline ?? {}),
       injectedReasoning: trajectoryHasReasoning ? [] : (codexTimeline?.anchors ?? []),
     })
     : experiment.parser === "kimi"
-      ? normalizeKimiEvents(trajectory.events ?? [], runRoot)
+      ? normalizeKimiEvents(trajectory.events ?? [], runRoot, kimiTimeline ?? {})
     : normalizeClaudeEvents(trajectory.events ?? [], runRoot);
   const directUsage = trial.agent_run?.usage ?? {};
   const trajectoryUsage = trajectory.events?.findLast((event) => event?.type === "turn.completed" && event.usage)?.usage ?? {};
