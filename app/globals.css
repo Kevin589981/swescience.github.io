@@ -224,6 +224,10 @@ tbody tr:hover, tbody tr.active-row { background: var(--row-hover); }
 .hard70-score strong { color: var(--ink); font-family: var(--font-geist-mono); font-size: 13px; font-weight: 750; }
 .hard70-bar { position: relative; display: block; height: 12px; overflow: hidden; background: var(--row-hover); }
 .hard70-bar i { position: absolute; inset: 0 auto 0 0; display: block; background: var(--accent-dark); }
+.hard70-task-list { border-bottom: 1px solid var(--line); color: var(--muted); }
+.hard70-task-list summary { padding: 16px 0; cursor: pointer; font-family: var(--font-geist-mono); font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+.hard70-task-list summary:hover { color: var(--ink); }
+.hard70-task-list p { margin: 0; padding: 0 0 18px; color: var(--body-copy); font-family: var(--font-geist-mono); font-size: 11px; line-height: 1.85; }
 
 footer { display: flex; justify-content: space-between; padding: 26px clamp(20px, 4vw, 64px); border-top: 1px solid var(--line); background: #0c1210; color: #98a19e; font-family: var(--font-geist-mono); font-size: 10px; text-transform: uppercase; }
 
