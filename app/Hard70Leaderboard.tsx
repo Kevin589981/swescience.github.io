@@ -78,6 +78,11 @@ export function Hard70Leaderboard() {
           </tbody>
         </table>
       </div>
+
+      <details className="hard70-task-list">
+        <summary>Tasks in Hard70 ({hard70.taskIds.length})</summary>
+        <p>{hard70.taskIds.join(", ")}</p>
+      </details>
     </section>
   );
 }

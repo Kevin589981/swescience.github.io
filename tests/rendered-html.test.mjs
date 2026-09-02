@@ -17,6 +17,9 @@ test("renders the SWE-bench Science project page", async () => {
   assert.match(html, /21\.43%/);
   assert.match(html, /20\.00%/);
   assert.match(html, /14\.29%/);
+  assert.match(html, /<summary>Tasks in Hard70/);
+  assert.match(html, /001, 002, 003, 005/);
+  assert.match(html, /114, 116, 117, 119/);
   assert.doesNotMatch(html, /task-matrix\/trace/);
 });
 
