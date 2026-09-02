@@ -1,5 +1,6 @@
 import { benchmarkData } from "@/lib/benchmark";
 import { BenchmarkExplorer } from "./BenchmarkExplorer";
+import { Hard70Leaderboard } from "./Hard70Leaderboard";
 import { AnimatedStat, ThemeToggle } from "./SiteEnhancements";
 import Link from "next/link";
 
@@ -41,6 +42,8 @@ export default function Home() {
       </section>
 
       <BenchmarkExplorer data={benchmarkData} />
+
+      <Hard70Leaderboard />
 
       <footer>
         <span>SWE-bench Science</span>
