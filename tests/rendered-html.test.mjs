@@ -11,7 +11,30 @@ test("renders the SWE-bench Science project page", async () => {
   assert.match(html, /huggingface\.co\/datasets\/OpenMOSS-Team\/SWE-bench-Science/);
   assert.match(html, /github\.com\/OpenMOSS\/SWE-bench-Science/);
   assert.match(html, /task-matrix\/gradient/);
+  assert.match(html, /Hard70/);
+  assert.match(html, /id="hard70"/);
+  assert.match(html, /Pass@1 on the 70-task hard subset/);
+  assert.match(html, /21\.43%/);
+  assert.match(html, /20\.00%/);
+  assert.match(html, /14\.29%/);
   assert.doesNotMatch(html, /task-matrix\/trace/);
+});
+
+test("computes the Hard70 leaderboard from task-level results", async () => {
+  const hard70 = JSON.parse(await readFile(new URL("../data/hard70.json", import.meta.url), "utf8"));
+  const matrix = JSON.parse(await readFile(new URL("../data/task-matrix.json", import.meta.url), "utf8"));
+  assert.equal(hard70.taskIds.length, 70);
+  assert.equal(new Set(hard70.taskIds).size, 70);
+  assert.deepEqual(hard70.modelIds, ["opus", "deepseek-pro", "gpt", "kimi", "glm", "qwen-3-8-27b"]);
+
+  const expectedPassCounts = { opus: 15, "deepseek-pro": 14, gpt: 10, kimi: 5, glm: 4, "qwen-3-8-27b": 4 };
+  for (const [modelId, expected] of Object.entries(expectedPassCounts)) {
+    const passed = matrix.tasks
+      .filter((task) => hard70.taskIds.includes(task.publishedTaskId))
+      .filter((task) => task.results[modelId].reward === 1)
+      .length;
+    assert.equal(passed, expected, `${modelId} Hard70 pass count`);
+  }
 });
 
 test("exports the task trace viewer", async () => {
